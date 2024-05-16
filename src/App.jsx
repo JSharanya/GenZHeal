@@ -10,6 +10,7 @@ import SignIn from './pages/SignIn/SignIn'
 import SignUp from './pages/SignUp/SignUp'
 import DashboardLayout from './pages/AdminPanel/DashboardLayout'
 
+
 function App() {
 
 
@@ -24,13 +25,11 @@ function App() {
       <Route path='/payment' element={<Payment/>}/>
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/signup' element={<SignUp/>}/>
-     
+  
     </Routes>
-    <Routes>
-    <Route path='/admin/dashboard' element={<DashboardLayout/>}>
-        <Route/>
-
-      </Route></Routes>
+   
+  
+   
     </BrowserRouter>
   )
 }

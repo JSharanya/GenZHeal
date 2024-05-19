@@ -9,6 +9,7 @@ import Payment from './pages/Payment/Payment'
 import SignIn from './pages/SignIn/SignIn'
 import SignUp from './pages/SignUp/SignUp'
 import DashboardLayout from './pages/AdminPanel/DashboardLayout'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
     </Routes>
    
   
+
    
     </BrowserRouter>
   )

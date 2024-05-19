@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
-import Header from './components/Header'
 import Appointment from './pages/Appointment/Appointment'
 import Froum from './pages/Forum/Froum'
 import Virtualclub from './pages/Virtualclub/Virtualclub'
 import Payment from './pages/Payment/Payment'
 import SignIn from './pages/SignIn/SignIn'
 import SignUp from './pages/SignUp/SignUp'
-import DashboardLayout from './pages/AdminPanel/DashboardLayout'
-import Footer from './components/Footer'
+import DashboardLayout from './pages/AdminPanel/AdminLayout/DashboardLayout'
+import Dashboard from './pages/AdminPanel/Dashboard'
+
 
 
 function App() {
@@ -26,6 +26,11 @@ function App() {
       <Route path='/payment' element={<Payment/>}/>
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/signup' element={<SignUp/>}/>
+  
+
+      <Route path='/admin/dashboard' element={<DashboardLayout/>}>
+        <Route path='/admin/dashboard' element={<Dashboard/>}/>
+      </Route>
   
     </Routes>
    

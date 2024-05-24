@@ -28,8 +28,9 @@ function App() {
       <Route path='/signup' element={<SignUp/>}/>
   
 
+      
       <Route path='/admin/dashboard' element={<DashboardLayout/>}>
-        <Route path='/admin/dashboard' element={<Dashboard/>}/>
+      <Route path='/admin/dashboard' element={<Dashboard/>}/>
       </Route>
   
     </Routes>

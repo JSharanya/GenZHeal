@@ -9,6 +9,7 @@ import SignIn from './pages/SignIn/SignIn'
 import SignUp from './pages/SignUp/SignUp'
 import DashboardLayout from './pages/AdminPanel/AdminLayout/DashboardLayout'
 import Dashboard from './pages/AdminPanel/Dashboard'
+import './styles/custom.css'
 
 
 

@@ -1,0 +1,20 @@
+[
+    {
+      "id": 1,
+      "question": "Which device is required for the Internet connection?",
+      "option": ["Modem","Router","LAN Cable", "Pen Drive"],
+      "correctOption":"Modem"
+    },
+    {
+      "id": 2,
+      "question": "Which device is required for the Internet connection?",
+      "option": ["Modem","Router","LAN Cable", "Pen Drive"],
+      "correctOption":"LAN Cable"
+    },
+    {
+      "id": 3,
+      "question": "Which device is required for the Internet connection?",
+      "option": ["Modem","Router","LAN Cable", "Pen Drive"],
+      "correctOption":"Pen Drive"
+    }
+  ]

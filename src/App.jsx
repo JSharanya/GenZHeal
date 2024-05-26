@@ -10,6 +10,7 @@ import SignUp from './pages/SignUp/SignUp'
 import DashboardLayout from './pages/AdminPanel/AdminLayout/DashboardLayout'
 import Dashboard from './pages/AdminPanel/Dashboard'
 import './styles/custom.css'
+import Quiz from './pages/Quiz/Quiz'
 
 
 
@@ -27,6 +28,7 @@ function App() {
       <Route path='/payment' element={<Payment/>}/>
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/signup' element={<SignUp/>}/>
+      <Route path='/qize' element={<Quiz/>}/>
   
 
       

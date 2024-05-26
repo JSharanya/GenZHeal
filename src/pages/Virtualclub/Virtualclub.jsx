@@ -8,18 +8,18 @@ const Virtualclub = () => {
         <Header />
       </div>
       <div>
-        <div class=" mt-20 py-52 px-1 md:px-8 object-cover object-center  inset-0 bg-black bg-opacity-50 text-center relative overflow-auto bg-gradient-overlay ">
-          <h1 class="text-5xl font-bold leading-tight mb-4 text-bermuda">
+        <div className=" mt-20 py-52 px-1 md:px-8 object-cover object-center  inset-0 bg-black bg-opacity-50 text-center relative overflow-auto bg-gradient-overlay ">
+          <h1 className="text-5xl font-bold leading-tight mb-4 text-bermuda">
             Virtual Clam Club
           </h1>
-          <div class="w-11/12 md:w-3/4 lg:max-w-3xl m-auto">
-            <div class="relative z-30 text-base text-black">
-              <p class="text-lg text-gray-300 mb-8">
+          <div className="w-11/12 md:w-3/4 lg:max-w-3xl m-auto">
+            <div className="relative z-30 text-base text-black">
+              <p className="text-lg text-gray-300 mb-8">
                 Discover amazing features and services that await you.
               </p>
               <a
                 href="#"
-                class="bg-bermuda text-gray-900 hover:bg-blue-300 py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+                className="bg-bermuda text-gray-900 hover:bg-blue-300 py-2 px-6 rounded-full text-lg z-50 relative font-semibold transition r duration-300  transform hover:scale-105 hover:shadow-lg"
               >
                 Get Started
               </a>
@@ -27,16 +27,16 @@ const Virtualclub = () => {
           </div>
         </div>
       </div>
-      <div class="w-full min-h-screen  bg-white  rounded-lg flex overflow-x-auto custom-scrollbar">
-        <div class="w-64 px-4">
-          <div class="h-16 flex items-center">
+      <div className="w-full min-h-screen  bg-white  rounded-lg flex overflow-x-auto custom-scrollbar">
+        <div className="w-64 px-4">
+          <div className="h-16 flex items-center">
             {/* <a
               href="#"
-              class="w-48 mx-auto bg-blue-500 hover:bg-blue-700 flex items-center justify-center text-gray-100 py-2 rounded space-x-2 transition duration-150"
+              className="w-48 mx-auto bg-blue-500 hover:bg-blue-700 flex items-center justify-center text-gray-100 py-2 rounded space-x-2 transition duration-150"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -51,14 +51,14 @@ const Virtualclub = () => {
               <span>Compose</span>
             </a> */}
           </div>
-          <div class="px-2 pt-4 pb-8 border-r border-gray-300 min-h-screen ">
-            <ul class="space-y-2">
+          <div className="px-2 pt-4 pb-8 border-r border-gray-300 min-h-screen ">
+            <ul className="space-y-2">
               <li>
-                <a class="bg-bermuda bg-opacity-60 text-black flex items-center justify-center mb-3 space-x-1 py-1.5 px-4 rounded cursor-pointer">
-                  <span class="flex items-center space-x-2">
+                <a className="bg-bermuda bg-opacity-60 text-black flex items-center justify-center mb-3 space-x-1 py-1.5 px-4 rounded cursor-pointer">
+                  <span className="flex items-center space-x-2">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
+                      className="h-5 w-5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -72,27 +72,27 @@ const Virtualclub = () => {
                     </svg> */}
                     <span>Categories</span>
                   </span>
-                  {/* <span class="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
+                  {/* <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
                     3
                   </span> */}
                 </a>
               </li>
 
               <li>
-                {/* <h3 class="mb-3 py-1 px-4 rounded space-x-1 font-semibold items-center text-gray-900 dark:text-white">
+                {/* <h3 className="mb-3 py-1 px-4 rounded space-x-1 font-semibold items-center text-gray-900 dark:text-white">
                   Technology
                 </h3> */}
-                <ul class="w-44 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                <ul className="w-44 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -105,22 +105,22 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         All
                       </label>
                     </div>
                   </li>
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -137,22 +137,22 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         Artical
                       </label>
                     </div>
                   </li>
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -169,22 +169,22 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         Video
                       </label>
                     </div>
                   </li>
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -202,7 +202,7 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         Audio
                       </label>
@@ -212,13 +212,13 @@ const Virtualclub = () => {
               </li>
             </ul>
 
-            <ul class="space-y-2">
+            <ul className="space-y-2">
               <li>
-                <a class="bg-bermuda bg-opacity-60 text-black flex items-center justify-center mb-3 mt-4 space-x-1 py-1.5 px-4 rounded cursor-pointer">
-                  <span class="flex items-center space-x-2">
+                <a className="bg-bermuda bg-opacity-60 text-black flex items-center justify-center mb-3 mt-4 space-x-1 py-1.5 px-4 rounded cursor-pointer">
+                  <span className="flex items-center space-x-2">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
+                      className="h-5 w-5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -232,27 +232,27 @@ const Virtualclub = () => {
                     </svg> */}
                     <span>Categories</span>
                   </span>
-                  {/* <span class="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
+                  {/* <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
                     3
                   </span> */}
                 </a>
               </li>
 
               <li>
-                {/* <h3 class="mb-3 py-1 px-4 rounded space-x-1 font-semibold items-center text-gray-900 dark:text-white">
+                {/* <h3 className="mb-3 py-1 px-4 rounded space-x-1 font-semibold items-center text-gray-900 dark:text-white">
                   Technology
                 </h3> */}
-                <ul class="w-44 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                <ul className="w-44 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -265,22 +265,22 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         All
                       </label>
                     </div>
                   </li>
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -297,22 +297,22 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         Artical
                       </label>
                     </div>
                   </li>
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -329,22 +329,22 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         Video
                       </label>
                     </div>
                   </li>
-                  <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
-                    <div class="flex items-center ps-3">
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
-                        class="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -362,7 +362,7 @@ const Virtualclub = () => {
 
                       <label
                         for="vue-checkbox"
-                        class="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         Audio
                       </label>
@@ -373,12 +373,12 @@ const Virtualclub = () => {
             </ul>
           </div>
         </div>
-        <div class="flex-1 px-2">
-          <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
-            <div class="border-b mb-5 flex justify-between text-sm">
-              <div class="text-indigo-600 flex items-center pb-2 pr-2 border-b-2 border-indigo-6400 uppercase">
+        <div className="flex-1 px-2">
+          <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
+            <div className="border-b mb-5 flex justify-between text-sm">
+              <div className="text-indigo-600 flex items-center pb-2 pr-2 border-b-2 border-indigo-6400 uppercase">
                 <svg
-                  class="h-6 mr-3"
+                  className="h-6 mr-3"
                   version="1.1"
                   id="Capa_1"
                   xmlns="http://www.w3.org/2000/svg"
@@ -412,172 +412,172 @@ const Virtualclub = () => {
                     </path>
                   </g>
                 </svg>
-                <a href="#" class="font-semibold inline-block">
+                <a href="#" className="font-semibold inline-block">
                   virtual club
                 </a>
               </div>
               <a href="#">See All</a>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-              <div class="rounded overflow-hidden shadow-lg flex flex-col">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+              <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
-                <div class="relative">
+                <div className="relative">
                   <a href="#">
                     <img
-                      class="w-full"
+                      className="w-full"
                       src="https://www.verywellhealth.com/thmb/O9Jf7NHIjmQlevzFLb0Ki9GmAtQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1301448265-4f6fe4dcc72c415dac170062bc2d58b4.jpg"
                       alt="Sunset in the mountains"
                     />
-                    <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+                    <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                   </a>
                   <a href="#!">
-                    <div class="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                    <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
                       Video
                     </div>
                   </a>
                 </div>
-                <div class="px-6 py-4 mb-auto">
+                <div className="px-6 py-4 mb-auto">
                   <a
                     href="#"
-                    class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
+                    className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                   >
                     The Process of Counseling and Therapy
                   </a>
-                  <p class="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
                 </div>
-                <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
+                <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
               </div>
 
-              <div class="rounded overflow-hidden shadow-lg flex flex-col">
+              <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
-                <div class="relative">
+                <div className="relative">
                   <a href="#">
                     <img
-                      class="w-full"
+                      className="w-full"
                       src="https://www.topcounselingschools.org/wp-content/uploads/2020/06/shutterstock_1696375255-1024x683.jpg"
                       alt="Sunset in the mountains"
                     />
-                    <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+                    <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                   </a>
                   <a href="#!">
-                    <div class="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                    <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
                       Artical
                     </div>
                   </a>
                 </div>
-                <div class="px-6 py-4 mb-auto">
+                <div className="px-6 py-4 mb-auto">
                   <a
                     href="#"
-                    class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
+                    className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                   >
                     Theories of Counseling and Therapy: An Experiential Approach
                   </a>
-                  <p class="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
                 </div>
-                <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
+                <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
               </div>
 
-              <div class="rounded overflow-hidden shadow-lg flex flex-col">
+              <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
-                <div class="relative">
+                <div className="relative">
                   <a href="#">
                     <img
-                      class="w-full"
+                      className="w-full"
                       src="https://www.grace-counseling.com/wp-content/uploads/2021/08/5-Benefits-of-an-Individual-Therapy-Program.jpg"
                       alt="Sunset in the mountains"
                     />
-                    <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+                    <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                   </a>
                   <a href="#!">
-                    <div class="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                    <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
                       Audio
                     </div>
                   </a>
                 </div>
-                <div class="px-6 py-4 mb-auto">
+                <div className="px-6 py-4 mb-auto">
                   <a
                     href="#"
-                    class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
+                    className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                   >
                     Master Therapists: Exploring Expertise in Therapy and ...
                   </a>
-                  <p class="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
                 </div>
-                <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
+                <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
               </div>
 
-              <div class="rounded overflow-hidden shadow-lg flex flex-col">
+              <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
-                <div class="relative">
+                <div className="relative">
                   <a href="#">
                     <img
-                      class="w-full"
+                      className="w-full"
                       src="https://www.grace-counseling.com/wp-content/uploads/2021/08/5-Benefits-of-an-Individual-Therapy-Program.jpg"
                       alt="Sunset in the mountains"
                     />
-                    <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+                    <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                   </a>
                   <a href="#!">
-                    <div class="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                    <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
                       Audio
                     </div>
                   </a>
                 </div>
-                <div class="px-6 py-4 mb-auto">
+                <div className="px-6 py-4 mb-auto">
                   <a
                     href="#"
-                    class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
+                    className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                   >
                     Master Therapists: Exploring Expertise in Therapy and ...
                   </a>
-                  <p class="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
                 </div>
-                <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
+                <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
               </div>
 
-              <div class="rounded overflow-hidden shadow-lg flex flex-col">
+              <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
-                <div class="relative">
+                <div className="relative">
                   <a href="#">
                     <img
-                      class="w-full"
+                      className="w-full"
                       src="https://www.verywellhealth.com/thmb/O9Jf7NHIjmQlevzFLb0Ki9GmAtQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1301448265-4f6fe4dcc72c415dac170062bc2d58b4.jpg"
                       alt="Sunset in the mountains"
                     />
-                    <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+                    <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                   </a>
                   <a href="#!">
-                    <div class="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                    <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
                       Video
                     </div>
                   </a>
                 </div>
-                <div class="px-6 py-4 mb-auto">
+                <div className="px-6 py-4 mb-auto">
                   <a
                     href="#"
-                    class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
+                    className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                   >
                     The Process of Counseling and Therapy
                   </a>
-                  <p class="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry.
                   </p>
                 </div>
-                <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
+                <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
               </div>
 
 

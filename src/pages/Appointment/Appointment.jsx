@@ -6,7 +6,7 @@ const Appointment = () => {
 
   return (
     <div>
-      Hello
+      Hello,hi
     
     </div>
   )

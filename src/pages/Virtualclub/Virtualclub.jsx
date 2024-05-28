@@ -19,7 +19,7 @@ const Virtualclub = () => {
               </p>
               <a
                 href="#"
-                className="bg-bermuda text-gray-900 hover:bg-blue-300 py-2 px-6 rounded-full text-lg z-50 relative font-semibold transition r duration-300  transform hover:scale-105 hover:shadow-lg"
+                className="bg-bermuda text-gray-900 hover:bg-blue-300 py-2 px-6 rounded-full text-lg z-100 relative font-semibold transition r duration-300  transform hover:scale-105 hover:shadow-lg"
               >
                 Get Started
               </a>
@@ -423,8 +423,9 @@ const Virtualclub = () => {
               <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
                 <div className="relative">
-                  <a href="#">
+                  <a href="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4">
                     <img
+                      
                       className="w-full"
                       src="https://www.verywellhealth.com/thmb/O9Jf7NHIjmQlevzFLb0Ki9GmAtQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1301448265-4f6fe4dcc72c415dac170062bc2d58b4.jpg"
                       alt="Sunset in the mountains"
@@ -439,7 +440,7 @@ const Virtualclub = () => {
                 </div>
                 <div className="px-6 py-4 mb-auto">
                   <a
-                    href="#"
+                    href="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
                     className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                   >
                     The Process of Counseling and Therapy

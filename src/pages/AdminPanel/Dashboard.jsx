@@ -16,7 +16,7 @@ const Dashboard = () => {
       <div className="flex h-screen">
       
         {/* Sidebar */}
-        <aside className="bg-gray-200 w-64 p-4 h-full">
+        <aside className="bg-gray-200 w-64 p-4 h-full fixed">
 
 <img
   width="600"
@@ -73,6 +73,26 @@ const Dashboard = () => {
     </li>
 
     <li className="mb-4">
+      <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('messages')}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="feather feather-message-circle mr-2">
+          <path d="M21 12.79c0 5.34-7 9.71-7 9.71s-7-4.37-7-9.71c0-2.68 2.47-7.29 7-9.29 4.53 2 7 6.61 7 9.29z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>Messages</span>
+      </button>
+    </li>
+
+    <li className="mb-4">
       <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('patients')}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -91,26 +111,6 @@ const Dashboard = () => {
           <path d="M23 13H20"></path>
         </svg>
         <span>Patients</span>
-      </button>
-    </li>
-
-    <li className="mb-4">
-      <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('messages')}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="feather feather-message-circle mr-2">
-          <path d="M21 12.79c0 5.34-7 9.71-7 9.71s-7-4.37-7-9.71c0-2.68 2.47-7.29 7-9.29 4.53 2 7 6.61 7 9.29z"></path>
-          <circle cx="12" cy="10" r="3"></circle>
-        </svg>
-        <span>Messages</span>
       </button>
     </li>
 
@@ -183,7 +183,7 @@ const Dashboard = () => {
 
 
         {/* Main content */}
-        <section className="mt-8 flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="ml-80 mt-8 flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
   {/* Main content */}
   
     {/* <div>
@@ -197,28 +197,31 @@ const Dashboard = () => {
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 ">
       <div class="flex flex-wrap justify-between -mx-2 p-8">
       <div class="w-full sm:w-1/2 lg:w-1/2 px-2">
-  <div class="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
+  <div class="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
   
     <div class="flex justify-between mb-2">
       <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
         Appointments
       </h3>
-      <p class="text-base font-medium text-body-color">Today</p>
+      {/* <p class="text-base font-medium text-body-color">Today</p> */}
     </div>
-    <div class="w-full px-2 mb-2 mt-4">
-  <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-    <img
-      width="30"
-      src={p1img}
-      alt="patient1"
-      className="rounded-full mr-3"
-    />
-    <p class="text-base font-medium text-body-color">Sankavi</p>
-    <p class="ml-auto mr-2">finished</p>
-  </div>
-</div>
 
-<div class="w-full px-2 mb-2 mt-4">
+    <div class="h-72 overflow-y-auto">
+     
+      <div class="w-full px-2 mb-2 mt-4">
+        <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
+          <img
+            width="30"
+            src={p1img}
+            alt="patient1"
+            className="rounded-full mr-3"
+          />
+          <p class="text-base font-medium text-body-color">Sankavi</p>
+          <p class="ml-auto mr-2">finished</p>
+        </div>
+      </div>
+
+     <div class="w-full px-2 mb-2 mt-4">
   <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
     <img
       width="30"
@@ -256,13 +259,42 @@ const Dashboard = () => {
     <p class="ml-auto mr-2">01:00</p>
   </div>
 </div>
+
+<div class="w-full px-2 mb-2 mt-4">
+  <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
+    <img
+      width="30"
+      src={p1img}
+      alt="patient1"
+      className="rounded-full mr-3"
+    />
+    <p class="text-base font-medium text-body-color">Sangu</p>
+    <p class="ml-auto mr-2">01:00</p>
+  </div>
+</div>
+
+<div class="w-full px-2 mb-2 mt-4">
+  <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
+    <img
+      width="30"
+      src={p1img}
+      alt="patient1"
+      className="rounded-full mr-3"
+    />
+    <p class="text-base font-medium text-body-color">Sangu</p>
+    <p class="ml-auto mr-2">01:00</p>
+  </div>
+</div>
+
+    </div>
+
   </div>
 </div>
 
 
 
 <div class="w-full sm:w-1/2 lg:w-1/2 px-2 ">
-  <div class="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
+  <div class="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
   
     <div class="flex justify-between mb-2">
       <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
@@ -270,6 +302,8 @@ const Dashboard = () => {
       </h3>
       <p class="text-base font-medium text-body-color">See all</p>
     </div>
+
+    <div class="h-72 overflow-y-auto">
     <div class="w-full px-2 mb-2 mt-4">
   <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
     <img
@@ -322,6 +356,33 @@ const Dashboard = () => {
   </div>
 </div>
 
+<div class="w-full px-2 mb-2 mt-4">
+  <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
+    <img
+      width="30"
+      src={p1img}
+      alt="patient1"
+      className="rounded-full mr-3"
+    />
+    <p class="text-base font-medium text-body-color">Sankavi</p>
+    <span class="inline-block bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center ml-auto mr-2">1</span>
+  </div>
+</div>
+
+<div class="w-full px-2 mb-2 mt-4">
+  <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
+    <img
+      width="30"
+      src={p1img}
+      alt="patient1"
+      className="rounded-full mr-3"
+    />
+    <p class="text-base font-medium text-body-color">Sankavi</p>
+    <span class="inline-block bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center ml-auto mr-2">1</span>
+  </div>
+</div>
+
+</div>
 
   </div>
 </div>
@@ -337,8 +398,8 @@ const Dashboard = () => {
       <p class="text-base font-medium text-body-color">See all</p>
     </div>
 
-    <div class="flex justify-between">
-      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500">
+    <div class="flex overflow-x-auto space-x-8 pb-4 px-4">
+      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
         <img
           width="150"
           src={p1img}
@@ -353,7 +414,7 @@ const Dashboard = () => {
         </button>
       </div>
       
-      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500">
+      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
         <img
           width="150"
           src={p1img}
@@ -364,45 +425,293 @@ const Dashboard = () => {
           Sankavi
         </p>
         <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-        See detail
+          See detail
+        </button>
+      </div>
+
+      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
+        <img
+          width="150"
+          src={p1img}
+          alt="patient1"
+          className="rounded-full mb-3"
+        />
+        <p class="text-base font-medium text-body-color mb-1">
+          Sankavi
+        </p>
+        <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+          See detail
+        </button>
+      </div>
+
+      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
+        <img
+          width="150"
+          src={p1img}
+          alt="patient1"
+          className="rounded-full mb-3"
+        />
+        <p class="text-base font-medium text-body-color mb-1">
+          Sankavi
+        </p>
+        <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+          See detail
+        </button>
+      </div>
+
+      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
+        <img
+          width="150"
+          src={p1img}
+          alt="patient1"
+          className="rounded-full mb-3"
+        />
+        <p class="text-base font-medium text-body-color mb-1">
+          Sankavi
+        </p>
+        <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+          See detail
+        </button>
+      </div>
+
+      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
+        <img
+          width="150"
+          src={p1img}
+          alt="patient1"
+          className="rounded-full mb-3"
+        />
+        <p class="text-base font-medium text-body-color mb-1">
+          Sankavi
+        </p>
+        <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+          See detail
         </button>
       </div>
       
-      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500">
-        <img
-          width="150"
-          src={p1img}
-          alt="patient1"
-          className="rounded-full mb-3"
-        />
-        <p class="text-base font-medium text-body-color mb-1">
-          Sankavi
-        </p>
-        <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-        See detail
-        </button>
-      </div>
-      
-      <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500">
-        <img
-          width="150"
-          src={p1img}
-          alt="patient1"
-          className="rounded-full mb-3"
-        />
-        <p class="text-base font-medium text-body-color mb-1">
-          Sankavi
-        </p>
-        <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-        See detail
-        </button>
-      </div>
+
     </div>
 
   </div>
 </div>
 
 
+
+<div className="w-full px-2">
+      <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
+        <div className="flex justify-between mb-2">
+          <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
+            Documents
+          </h3>
+          <p className="text-base font-medium text-body-color">See all</p>
+        </div>
+        
+        <div class="h-72 overflow-y-auto">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Patient Name
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Date
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  document
+                </th>
+                <th scope="col" className="relative px-6 py-3">
+                  <span className="sr-only">Edit</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+              
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">Patient 1</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">01/01/2021</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-500">
+                    patient1.pdf
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
 
   </div>
 </div>

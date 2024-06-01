@@ -11,6 +11,9 @@ import DashboardLayout from './pages/AdminPanel/AdminLayout/DashboardLayout'
 import Dashboard from './pages/AdminPanel/Dashboard'
 import './styles/custom.css'
 import Quiz from './pages/Quiz/Quiz'
+import UserDashboard from './pages/UserProfile/UserDashboard'
+import UserProfile from './pages/UserProfile/UserProfile'
+import './pages/UserProfile/Profile.css'
 
 
 
@@ -30,7 +33,9 @@ function App() {
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/qize' element={<Quiz/>}/>
   
-
+      <Route path='userdashboard' element={<UserDashboard/>}>
+      <Route path='userdashboard' element={<UserProfile/>}/>
+      </Route>
       
       <Route path='/admin/dashboard' element={<DashboardLayout/>}>
       <Route path='/admin/dashboard' element={<Dashboard/>}/>

@@ -1,12 +1,12 @@
-import {useContext} from 'react'
-import { StepperContext } from '../../contexts/StepperContext'
+import {useContext} from 'react';
+import {StepperContext} from '../../contexts/StepperContext';
 
 export default function Account() {
-  const {userData, setUserData}= useContext(StepperContext)
-  const handleChange =(e)=>{
-    const {name, value} =e.target
-setUserData({...userData,[name]: value})
-  }
+  const {userData, setUserData}= useContext(StepperContext);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
   return (
     <div className='flex flex-col'>
 
@@ -20,7 +20,8 @@ setUserData({...userData,[name]: value})
           value={userData["Name"] || ""}
           name="Name"
           placeholder="Name"
-          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'/>
+          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'
+          />
         </div>
       </div>
 
@@ -34,7 +35,8 @@ setUserData({...userData,[name]: value})
           value={userData["Email_Address"] || ""}
           name="Email_Address"
           placeholder="Email Address"
-          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'/>
+          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'
+          />
         </div>
       </div>
 
@@ -48,7 +50,8 @@ setUserData({...userData,[name]: value})
           value={userData["Address"] || ""}
           name="Address"
           placeholder="Address"
-          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'/>
+          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'
+          />
         </div>
       </div>
 
@@ -62,7 +65,8 @@ setUserData({...userData,[name]: value})
           value={userData["Contact_Number"] || ""}
           name="Contact_Number"
           placeholder="Contact Number"
-          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'/>
+          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'
+          />
         </div>
       </div>
 
@@ -75,12 +79,14 @@ setUserData({...userData,[name]: value})
           onChange={handleChange}
           value={userData["Age"] || ""}
           name="Age"
+          //type = Integer
           placeholder="Age"
-          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'/>
+          className='p-1 px-2 appearance-none outline-none w-full text-gray-800'
+          />
         </div>
       </div>
     
     </div>
-  )
+  );
 }
 

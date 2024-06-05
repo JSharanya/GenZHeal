@@ -263,7 +263,9 @@ const Dashboard = () => {
                       <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                         Appointments
                       </h3>
-                      {/* <p class="text-base font-medium text-body-color">Today</p> */}
+                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                     </div>
 
                     <div class="h-72 overflow-y-auto">
@@ -360,7 +362,9 @@ const Dashboard = () => {
                       <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                         Messages
                       </h3>
-                      {/* <p class="text-base font-medium text-body-color">See all</p> */}
+                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                     </div>
 
                     <div class="h-72 overflow-y-auto">
@@ -456,7 +460,9 @@ const Dashboard = () => {
                   <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                     Patients
                   </h3>
-                  {/* <p class="text-base font-medium text-body-color">See all</p> */}
+                  <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                 </div>
 
                 <div class="flex overflow-x-auto space-x-8 pb-4 px-4">
@@ -559,7 +565,9 @@ const Dashboard = () => {
                   <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                     Documents
                   </h3>
-                  {/* <p className="text-base font-medium text-body-color">See all</p> */}
+                  <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                 </div>
 
                 <div class="h-72 overflow-y-auto">
@@ -775,7 +783,9 @@ const Dashboard = () => {
                     <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Virtualclub
                     </h3>
-                    <a href="#" className="text-indigo-600 hover:text-indigo-900">Add file</a>
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Add file
+                      </button>
                   </div>
 
                   <div class="h-72 overflow-y-auto">
@@ -815,7 +825,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -839,7 +849,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -863,7 +873,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -887,7 +897,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -911,7 +921,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -935,7 +945,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -959,7 +969,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -983,7 +993,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1007,7 +1017,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1103,7 +1113,9 @@ const Dashboard = () => {
                     <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Appointments
                     </h3>
-                    {/* <p class="text-base font-medium text-body-color">Today</p> */}
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                   </div>
 
                   <div class="h-72 overflow-y-auto">
@@ -1201,7 +1213,9 @@ const Dashboard = () => {
                     <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Messages
                     </h3>
-                    {/* <p class="text-base font-medium text-body-color">See all</p> */}
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                   </div>
 
                   <div class="h-72 overflow-y-auto">
@@ -1298,7 +1312,9 @@ const Dashboard = () => {
                     <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Patients
                     </h3>
-                    {/* <p class="text-base font-medium text-body-color">See all</p> */}
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                   </div>
 
                   <div class="flex overflow-x-auto space-x-8 pb-4 px-4">
@@ -1407,7 +1423,9 @@ const Dashboard = () => {
                     <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Documents
                     </h3>
-                    {/* <p className="text-base font-medium text-body-color">See all</p> */}
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                   </div>
 
                   <div class="h-72 overflow-y-auto">
@@ -1687,7 +1705,9 @@ const Dashboard = () => {
                     <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Virtualclub
                     </h3>
-                    <a href="#" className="text-indigo-600 hover:text-indigo-900">Add file</a>
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                   </div>
 
                   <div class="h-72 overflow-y-auto">
@@ -1727,7 +1747,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1751,7 +1771,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1775,7 +1795,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1799,7 +1819,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1823,7 +1843,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1847,7 +1867,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1871,7 +1891,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1895,7 +1915,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1919,7 +1939,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">

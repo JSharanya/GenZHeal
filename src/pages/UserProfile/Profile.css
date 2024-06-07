@@ -1,119 +1,177 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .App {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .UserDashboard {
-    width: 200px;
-    background-color: #f5e1e1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    flex-shrink: 0;
-  }
-  
-  .Profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .UserName {
-    margin: 10px 0 5px 0;
-    font-size: 16px;
-  }
-  
-  .UserEmail {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .Menu {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .MenuItem {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    cursor: pointer;
-    color: #333;
-    
-  }
-  
-  .MenuItem:hover {
-    background-color: #ddd;
-  }
-  
-  .Icon {
-    margin-right: 10px;
-  }
-  
-  .Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #70a2da;
-    padding: 10px;
-    color: white;
-    width: calc(100% - 200px);
-    position: fixed;
-    left: 200px; 
-    top: 0;
-    z-index: 1;
-  }
-  
-  .SearchBar {
-    padding: 5px;
-    width: 300px;
-    border: none;
-    border-radius: 5px;
-    color: #000; 
-    background-color: white; 
-  }
-  
-  .NotificationIcon {
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .MainContent {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    margin-top: 60px; 
-    width: calc(100% - 200px); 
-    margin-left: 200px; 
-  }
-  
-  .UserProfile {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .Card {
-    background-color: #d6f5d6;
-    padding: 20px;
-    width: 45%;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 18px;
-  }
-  
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.UserDashboard {
+  width: 250px;
+  background-color: #f5e1e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-shrink: 0;
+}
+
+.Profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.UserName {
+  margin: 10px 0 5px 0;
+  font-size: 16px;
+}
+
+.UserEmail {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.Menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.MenuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+  color: #333;
+}
+
+.MenuItem:hover {
+  background-color: #ddd;
+}
+
+.Icon {
+  margin-right: 10px;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #70a2da;
+  padding: 10px;
+  color: white;
+  width: calc(100% - 250px);
+  position: fixed;
+  left: 250px; 
+  top: 0;
+  z-index: 1;
+}
+
+.SearchBar {
+  padding: 5px;
+  width: 300px;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  background-color: white;
+}
+
+.NotificationIcon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.MainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  margin-top: 60px;
+  width: calc(100% - 250px);
+  margin-left: 250px;
+}
+
+.UserProfile {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.Card {
+  background-color: #bfe2bf;
+  padding: 20px;
+  width: 45%;
+  border: 1px solid #423e3e;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.EditProfileForm {
+  background: hsl(165, 32%, 80%);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.EditProfileForm h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.FormRow {
+  margin-bottom: 15px;
+}
+
+.FormRow label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.FormRow input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.FormButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FormButtons button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.FormButtons button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.FormButtons button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+.Placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 24px;
+  color: #888;
+}

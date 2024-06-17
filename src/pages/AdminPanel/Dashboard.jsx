@@ -1,5 +1,6 @@
 // import React from 'react';
 import React, { useState, useRef } from 'react';
+import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt } from 'react-icons/fa';
 import docimg from "../../images/doctor.png";
 import p1img from "../../images/patient1.jpeg";
 import p2img from "../../images/patient2.png";
@@ -79,148 +80,51 @@ const Dashboard = () => {
             <br />
             <ul>
               <li className="mb-4">
-                <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('dashboard')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-home mr-2">
-                    <path d="M19 21V8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v13"></path>
-                    <path d="M7 2l7.5 7.5L22 2"></path>
-                  </svg>
-                  <span>Dashboard</span>
-                </button>
-              </li>
+  <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('dashboard')}>
+  <FaTachometerAlt className="Icon" />
+    <span>Dashboard</span>
+  </button>
+</li>
+
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('appointment')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-calendar mr-2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                  </svg>
+                <FaCalendarAlt className="Icon" />
                   <span>Appointment</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('messages')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-message-circle mr-2">
-                    <path d="M21 12.79c0 5.34-7 9.71-7 9.71s-7-4.37-7-9.71c0-2.68 2.47-7.29 7-9.29 4.53 2 7 6.61 7 9.29z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
+                <FaComments className="Icon" />
                   <span>Messages</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('patients')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-users mr-2">
-                    <path d="M17 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h10l4 4v8z"></path>
-                    <circle cx="9" cy="9" r="4"></circle>
-                    <path d="M23 21v-2"></path>
-                    <path d="M23 13H20"></path>
-                  </svg>
+                <FaUsers className="Icon" />
                   <span>Patients</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('documents')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-file-text mr-2">
-                    <path d="M14 2H5C3.89 2 3 2.9 3 4v16c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V8l-5-6z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                  </svg>
+                <FaRegFileAlt className="Icon" />
                   <span>Documents</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('virtualclub')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-settings mr-2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a10 10 0 1 1-2.8 2.8"></path>
-                  </svg>
+                <FaFilm className="Icon" />
                   <span>virtualclub</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('settings')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-settings mr-2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a10 10 0 1 1-2.8 2.8"></path>
-                  </svg>
+                <FaCog className="Icon" />
                   <span>Settings</span>
                 </button>
               </li>
@@ -229,20 +133,7 @@ const Dashboard = () => {
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('logout')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-log-out mr-2">
-                    <path d="M19 21V8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v13"></path>
-                    <path d="M7 2l7.5 7.5L22 2"></path>
-                  </svg>
+                <FaSignOutAlt className="Icon" />
                   <span>Logout</span>
                 </button>
               </li>

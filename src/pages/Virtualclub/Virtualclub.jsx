@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 
 const Virtualclub = () => {
+  const [virtualclubs, setVirtualclubs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+
+  useEffect(() => {
+    const fetchVirtualclub = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/virualclub/all-virual');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setVirtualclubs(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchVirtualclub();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div>
       <div>
@@ -419,41 +446,46 @@ const Virtualclub = () => {
               <a href="#">See All</a>
             </div>
 
+
+            {/* this  */}
+
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-              <div className="rounded overflow-hidden shadow-lg flex flex-col">
+             {virtualclubs.map((virtualclub) =>
+                <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
                 <div className="relative">
-                  <a href="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4">
+                  <a href={virtualclub.link}>
                     <img
                       
                       className="w-full"
-                      src="https://www.verywellhealth.com/thmb/O9Jf7NHIjmQlevzFLb0Ki9GmAtQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1301448265-4f6fe4dcc72c415dac170062bc2d58b4.jpg"
+                      src={virtualclub.image}
                       alt="Sunset in the mountains"
                     />
                     <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                   </a>
                   <a href="#!">
                     <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                      Video
+                    {virtualclub.category}
                     </div>
                   </a>
                 </div>
                 <div className="px-6 py-4 mb-auto">
                   <a
-                    href="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                    href={virtualclub.link}
                     className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                   >
-                    The Process of Counseling and Therapy
+                   {virtualclub.title}
                   </a>
                   <p className="text-gray-500 text-sm">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
+                  {virtualclub.content}
                   </p>
                 </div>
                 <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
               </div>
+             
+             )}
 
-              <div className="rounded overflow-hidden shadow-lg flex flex-col">
+              {/* <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
                 <div className="relative">
                   <a href="#">
@@ -483,9 +515,9 @@ const Virtualclub = () => {
                   </p>
                 </div>
                 <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
-              </div>
+              </div> */}
 
-              <div className="rounded overflow-hidden shadow-lg flex flex-col">
+              {/* <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
                 <div className="relative">
                   <a href="#">
@@ -515,9 +547,9 @@ const Virtualclub = () => {
                   </p>
                 </div>
                 <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
-              </div>
+              </div> */}
 
-              <div className="rounded overflow-hidden shadow-lg flex flex-col">
+              {/* <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
                 <div className="relative">
                   <a href="#">
@@ -547,9 +579,9 @@ const Virtualclub = () => {
                   </p>
                 </div>
                 <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
-              </div>
+              </div> */}
 
-              <div className="rounded overflow-hidden shadow-lg flex flex-col">
+              {/* <div className="rounded overflow-hidden shadow-lg flex flex-col">
                 <a href="#"></a>
                 <div className="relative">
                   <a href="#">
@@ -579,7 +611,7 @@ const Virtualclub = () => {
                   </p>
                 </div>
                 <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100"></div>
-              </div>
+              </div> */}
 
 
             </div>

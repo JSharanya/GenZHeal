@@ -1,20 +1,33 @@
 [
     {
       "id": 1,
-      "question": "Which device is required for the Internet connection?",
-      "option": ["Modem","Router","LAN Cable", "Pen Drive"],
-      "correctOption":"Modem"
+      "question": "Do you have trouble changing any unhealthy habits (smoking or drinking too much) or unwanted behaviors (fear of flying or procrastination)? ",
+      "option": ["Never","Sometimes","Often", "Very Often"],
+      "correctOption":["Never", "Sometimes"]
+      
     },
     {
       "id": 2,
-      "question": "Which device is required for the Internet connection?",
-      "option": ["Modem","Router","LAN Cable", "Pen Drive"],
-      "correctOption":"LAN Cable"
+      "question": "Do you experience feelings of hopelessness or despair? ",
+      "option": ["Never","Sometimes","Often", "Very Often"],
+      "correctOption":["Never"]
     },
     {
       "id": 3,
-      "question": "Which device is required for the Internet connection?",
-      "option": ["Modem","Router","LAN Cable", "Pen Drive"],
-      "correctOption":"Pen Drive"
+      "question": "Do you struggle to manage your emotions in relationships? ",
+      "option": ["Never","Sometimes","Often", "Very Often"],
+      "correctOption":["Never"]
+    },
+    {
+      "id": 4,
+      "question": "Do you experience excessive worry or fear throughout the day?",
+      "option": ["Never","Sometimes","Often", "Very Often"],
+      "correctOption":["Never"]
+    },
+    {
+      "id": 5,
+      "question": "Do you feel overwhelmed by responsibilities or life events? ",
+      "option": ["Never","Sometimes","Often", "Very Often"],
+      "correctOption":["Never"]
     }
   ]

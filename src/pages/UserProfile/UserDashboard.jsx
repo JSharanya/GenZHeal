@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { FaUserCircle, FaCog, FaCalendarAlt, FaHistory, FaComments, FaSignOutAlt, FaClock } from 'react-icons/fa';
+import UserProfile from './UserProfile'
 import './Profile.css';
 
 const UserDashboard = () => {
+  const [activeMenu, setActiveMenu] = useState('');
+  
+    const handleMenuClick = (menuItem) => {
+      setActiveMenu(menuItem);
+    };
   return (
     <div className="App">
       <div className="UserDashboard">
@@ -12,13 +18,13 @@ const UserDashboard = () => {
           <p className="UserEmail">yourname@gmail.com</p>
         </div>
         <div className="Menu">
-          <div className="MenuItem"><FaUserCircle className="Icon" /> My Profile</div>
-          <div className="MenuItem"><FaCog className="Icon" /> Settings</div>
-          <div className="MenuItem"><FaCalendarAlt className="Icon" /> Appointments</div>
-          <div className="MenuItem"><FaClock className="Icon" /> Sessions</div>
-          <div className="MenuItem"><FaHistory className="Icon" /> TreatmentHistory</div>
-          <div className="MenuItem"><FaComments className="Icon" /> Chat</div>
-          <div className="MenuItem"><FaSignOutAlt className="Icon" /> Log Out</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('My Profile')}><FaUserCircle className="Icon" /> My Profile</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('Settings')}><FaCog className="Icon" /> Settings</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('Appointments')}><FaCalendarAlt className="Icon" /> Appointments</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('Sessions')}><FaClock className="Icon" /> Sessions</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('TreatmentHistory')}><FaHistory className="Icon" /> TreatmentHistory</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('Chat')}><FaComments className="Icon" /> Chat</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('Log Out')}><FaSignOutAlt className="Icon" /> Log Out</div>
         </div>
       </div>
       <div className="MainContent">
@@ -26,10 +32,11 @@ const UserDashboard = () => {
           <input className="SearchBar" placeholder="Search here" />
           <div className="NotificationIcon">🔔</div>
         </header>
-        <div className="UserProfile">
-          <div className="Card">Appointments</div>
-          <div className="Card">Chats</div>
-        </div>
+       
+        {['My Profile', 'Settings'].includes(activeMenu) && (
+          <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />
+        )}
+        {activeMenu === '' && <div className="Placeholder">Select menu</div>}  
       </div>
     </div>
   );

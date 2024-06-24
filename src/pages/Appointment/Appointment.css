@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.react-datepicker__input-container input,
+.react-time-picker__wrapper input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e0;
+  margin-top: 0.25rem;
+  outline: 0;
+  border-radius: 0.375rem;
+  transition: border-color 0.2s ease;
+}
+
+.react-datepicker__input-container input:focus,
+.react-time-picker__wrapper input:focus {
+  border-color: #3b82f6;
+}
+
+.react-time-picker__clock {
+  z-index: 10;
+}

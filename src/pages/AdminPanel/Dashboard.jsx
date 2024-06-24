@@ -149,7 +149,7 @@ const Dashboard = () => {
 
           <div ref={dashboardRef} className={`${activeSection === 'dashboard' ? 'block' : 'hidden'}`} >
             <div class="pt-24">
-              <h1>Hello Mr.S.Suthakaran</h1>
+              <h1>Hello! Mr.S.Suthakaran</h1>
               <p>Welcome to the  GenZheal dashboard.</p>
             </div>
 

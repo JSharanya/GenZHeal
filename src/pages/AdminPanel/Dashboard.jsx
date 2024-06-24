@@ -80,51 +80,51 @@ const Dashboard = () => {
             <br />
             <ul>
               <li className="mb-4">
-  <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('dashboard')}>
-  <FaTachometerAlt className="Icon" />
-    <span>Dashboard</span>
-  </button>
-</li>
+                <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('dashboard')}>
+                  <FaTachometerAlt className="Icon" />
+                  <span>Dashboard</span>
+                </button>
+              </li>
 
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('appointment')}>
-                <FaCalendarAlt className="Icon" />
+                  <FaCalendarAlt className="Icon" />
                   <span>Appointment</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('messages')}>
-                <FaComments className="Icon" />
+                  <FaComments className="Icon" />
                   <span>Messages</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('patients')}>
-                <FaUsers className="Icon" />
+                  <FaUsers className="Icon" />
                   <span>Patients</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('documents')}>
-                <FaRegFileAlt className="Icon" />
+                  <FaRegFileAlt className="Icon" />
                   <span>Documents</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('virtualclub')}>
-                <FaFilm className="Icon" />
+                  <FaFilm className="Icon" />
                   <span>virtualclub</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('settings')}>
-                <FaCog className="Icon" />
+                  <FaCog className="Icon" />
                   <span>Settings</span>
                 </button>
               </li>
@@ -133,7 +133,7 @@ const Dashboard = () => {
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('logout')}>
-                <FaSignOutAlt className="Icon" />
+                  <FaSignOutAlt className="Icon" />
                   <span>Logout</span>
                 </button>
               </li>
@@ -746,7 +746,7 @@ const Dashboard = () => {
                   <form className="mt-4">
                     <div className="mb-4">
                       <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                        Document Name
+                        Item Name
                       </label>
                       <input
                         type="text"
@@ -774,6 +774,42 @@ const Dashboard = () => {
                         type="text"
                         id="documentType"
                         name="documentType"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                        Category
+                      </label>
+                      <select
+                        id="category"
+                        name="category"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      >
+                        <option value="video">Video</option>
+                        <option value="article">Article</option>
+                        <option value="music">Music</option>
+                      </select>
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                        Content
+                      </label>
+                      <textarea
+                        id="content"
+                        name="content"
+                        rows="4"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                        Image Link
+                      </label>
+                      <input
+                        type="text"
+                        id="imageLink"
+                        name="imageLink"
                         className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                     </div>
@@ -1306,110 +1342,110 @@ const Dashboard = () => {
 
 
             <div ref={patientsRef} className={`${activeSection === 'patients' ? 'block' : 'hidden'}`}>
-  <div className="w-full px-2 pt-24">
-    <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
+              <div className="w-full px-2 pt-24">
+                <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
 
-      <div className="flex justify-between mb-2">
-        <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
-          Patients
-        </h3>
-        <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-          Edit
-        </button>
-      </div>
+                  <div className="flex justify-between mb-2">
+                    <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
+                      Patients
+                    </h3>
+                    <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                      Edit
+                    </button>
+                  </div>
 
-      <div className="flex flex-wrap -mx-4">
-        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-          <img
-            width="150"
-            src={p1img}
-            alt="patient1"
-            className="rounded-full mb-3"
-          />
-          <p className="text-base font-medium text-body-color mb-1">
-            Sankavi
-          </p>
-          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-            See detail
-          </button>
-        </div>
+                  <div className="flex flex-wrap -mx-4">
+                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+                      <img
+                        width="150"
+                        src={p1img}
+                        alt="patient1"
+                        className="rounded-full mb-3"
+                      />
+                      <p className="text-base font-medium text-body-color mb-1">
+                        Sankavi
+                      </p>
+                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        See detail
+                      </button>
+                    </div>
 
-        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-          <img
-            width="150"
-            src={p1img}
-            alt="patient1"
-            className="rounded-full mb-3"
-          />
-          <p className="text-base font-medium text-body-color mb-1">
-            Sankavi
-          </p>
-          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-            See detail
-          </button>
-        </div>
-
-
-        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-          <img
-            width="150"
-            src={p1img}
-            alt="patient1"
-            className="rounded-full mb-3"
-          />
-          <p className="text-base font-medium text-body-color mb-1">
-            Sankavi
-          </p>
-          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-            See detail
-          </button>
-        </div>
-
-        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-          <img
-            width="150"
-            src={p1img}
-            alt="patient1"
-            className="rounded-full mb-3"
-          />
-          <p className="text-base font-medium text-body-color mb-1">
-            Sankavi
-          </p>
-          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-            See detail
-          </button>
-        </div>
-
-        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-          <img
-            width="150"
-            src={p1img}
-            alt="patient1"
-            className="rounded-full mb-3"
-          />
-          <p className="text-base font-medium text-body-color mb-1">
-            Sankavi
-          </p>
-          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-            See detail
-          </button>
-        </div>
+                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+                      <img
+                        width="150"
+                        src={p1img}
+                        alt="patient1"
+                        className="rounded-full mb-3"
+                      />
+                      <p className="text-base font-medium text-body-color mb-1">
+                        Sankavi
+                      </p>
+                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        See detail
+                      </button>
+                    </div>
 
 
-        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-          <img
-            width="150"
-            src={p1img}
-            alt="patient1"
-            className="rounded-full mb-3"
-          />
-          <p className="text-base font-medium text-body-color mb-1">
-            Sankavi
-          </p>
-          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-            See detail
-          </button>
-        </div>
+                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+                      <img
+                        width="150"
+                        src={p1img}
+                        alt="patient1"
+                        className="rounded-full mb-3"
+                      />
+                      <p className="text-base font-medium text-body-color mb-1">
+                        Sankavi
+                      </p>
+                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        See detail
+                      </button>
+                    </div>
+
+                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+                      <img
+                        width="150"
+                        src={p1img}
+                        alt="patient1"
+                        className="rounded-full mb-3"
+                      />
+                      <p className="text-base font-medium text-body-color mb-1">
+                        Sankavi
+                      </p>
+                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        See detail
+                      </button>
+                    </div>
+
+                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+                      <img
+                        width="150"
+                        src={p1img}
+                        alt="patient1"
+                        className="rounded-full mb-3"
+                      />
+                      <p className="text-base font-medium text-body-color mb-1">
+                        Sankavi
+                      </p>
+                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        See detail
+                      </button>
+                    </div>
+
+
+                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+                      <img
+                        width="150"
+                        src={p1img}
+                        alt="patient1"
+                        className="rounded-full mb-3"
+                      />
+                      <p className="text-base font-medium text-body-color mb-1">
+                        Sankavi
+                      </p>
+                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        See detail
+                      </button>
+                    </div>
 
 
 
@@ -1801,6 +1837,42 @@ const Dashboard = () => {
                           type="text"
                           id="documentType"
                           name="documentType"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                          Category
+                        </label>
+                        <select
+                          id="category"
+                          name="category"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                          <option value="video">Video</option>
+                          <option value="article">Article</option>
+                          <option value="music">Music</option>
+                        </select>
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                          Content
+                        </label>
+                        <textarea
+                          id="content"
+                          name="content"
+                          rows="4"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                          Image Link
+                        </label>
+                        <input
+                          type="text"
+                          id="imageLink"
+                          name="imageLink"
                           className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
                       </div>

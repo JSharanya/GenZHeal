@@ -14,7 +14,7 @@ import Quiz from './pages/Quiz/Quiz'
 import UserDashboard from './pages/UserProfile/UserDashboard'
 import UserProfile from './pages/UserProfile/UserProfile'
 import './pages/UserProfile/Profile.css'
-import Aboutus from './pages/Aboutus/Aboutus'
+import Aboutus from './pages/AboutUs/Aboutus'
 
 
 

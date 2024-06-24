@@ -1,11 +1,14 @@
 // import React from 'react';
 import React, { useState, useRef } from 'react';
+import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt } from 'react-icons/fa';
 import docimg from "../../images/doctor.png";
 import p1img from "../../images/patient1.jpeg";
 import p2img from "../../images/patient2.png";
 
+
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [showForm, setShowForm] = useState(false);
 
   const appointmentRef = useRef(null);
   const dashboardRef = useRef(null);
@@ -14,6 +17,10 @@ const Dashboard = () => {
   const documentsRef = useRef(null);
   const settingsRef = useRef(null);
   const virtualclubRef = useRef(null);
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
 
   const navigateTo = (section) => {
     setActiveSection(section);
@@ -42,7 +49,9 @@ const Dashboard = () => {
       default:
         break;
     }
+
   };
+
 
   return (
     <div className="h-full pt-0 mt-0">
@@ -71,170 +80,60 @@ const Dashboard = () => {
             <br />
             <ul>
               <li className="mb-4">
-                <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('dashboard')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-home mr-2">
-                    <path d="M19 21V8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v13"></path>
-                    <path d="M7 2l7.5 7.5L22 2"></path>
-                  </svg>
-                  <span>Dashboard</span>
-                </button>
-              </li>
+  <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('dashboard')}>
+  <FaTachometerAlt className="Icon" />
+    <span>Dashboard</span>
+  </button>
+</li>
+
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('appointment')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-calendar mr-2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                  </svg>
+                <FaCalendarAlt className="Icon" />
                   <span>Appointment</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('messages')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-message-circle mr-2">
-                    <path d="M21 12.79c0 5.34-7 9.71-7 9.71s-7-4.37-7-9.71c0-2.68 2.47-7.29 7-9.29 4.53 2 7 6.61 7 9.29z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
+                <FaComments className="Icon" />
                   <span>Messages</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('patients')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-users mr-2">
-                    <path d="M17 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h10l4 4v8z"></path>
-                    <circle cx="9" cy="9" r="4"></circle>
-                    <path d="M23 21v-2"></path>
-                    <path d="M23 13H20"></path>
-                  </svg>
+                <FaUsers className="Icon" />
                   <span>Patients</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('documents')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-file-text mr-2">
-                    <path d="M14 2H5C3.89 2 3 2.9 3 4v16c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V8l-5-6z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                  </svg>
+                <FaRegFileAlt className="Icon" />
                   <span>Documents</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('virtualclub')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-settings mr-2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a10 10 0 1 1-2.8 2.8"></path>
-                  </svg>
+                <FaFilm className="Icon" />
                   <span>virtualclub</span>
                 </button>
               </li>
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('settings')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-settings mr-2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a10 10 0 1 1-2.8 2.8"></path>
-                  </svg>
+                <FaCog className="Icon" />
                   <span>Settings</span>
                 </button>
               </li>
 
-             
+
 
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('logout')}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-log-out mr-2">
-                    <path d="M19 21V8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v13"></path>
-                    <path d="M7 2l7.5 7.5L22 2"></path>
-                  </svg>
+                <FaSignOutAlt className="Icon" />
                   <span>Logout</span>
                 </button>
               </li>
@@ -263,7 +162,9 @@ const Dashboard = () => {
                       <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                         Appointments
                       </h3>
-                      {/* <p class="text-base font-medium text-body-color">Today</p> */}
+                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                     </div>
 
                     <div class="h-72 overflow-y-auto">
@@ -360,7 +261,9 @@ const Dashboard = () => {
                       <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                         Messages
                       </h3>
-                      {/* <p class="text-base font-medium text-body-color">See all</p> */}
+                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                        Edit
+                      </button>
                     </div>
 
                     <div class="h-72 overflow-y-auto">
@@ -456,7 +359,9 @@ const Dashboard = () => {
                   <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                     Patients
                   </h3>
-                  {/* <p class="text-base font-medium text-body-color">See all</p> */}
+                  <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                    Edit
+                  </button>
                 </div>
 
                 <div class="flex overflow-x-auto space-x-8 pb-4 px-4">
@@ -559,8 +464,61 @@ const Dashboard = () => {
                   <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                     Documents
                   </h3>
-                  {/* <p className="text-base font-medium text-body-color">See all</p> */}
+                  <button
+                    onClick={toggleForm}
+                    className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                  >
+                    Add file
+                  </button>
                 </div>
+
+                {/* Toggleable Form */}
+                {showForm && (
+                  <form className="mt-4">
+                    <div className="mb-4">
+                      <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                        Patient Name
+                      </label>
+                      <input
+                        type="text"
+                        id="documentName"
+                        name="documentName"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                        Date
+                      </label>
+                      <input
+                        type="text"
+                        id="documentURL"
+                        name="documentURL"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                        Document
+                      </label>
+                      <input
+                        type="text"
+                        id="documentType"
+                        name="documentType"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mb-8">
+                      <button
+                        type="submit"
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                )}
+
 
                 <div class="h-72 overflow-y-auto">
                   <div className="overflow-x-auto">
@@ -770,268 +728,321 @@ const Dashboard = () => {
             </div>
 
             <div className="w-full ">
-                <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
-                  <div className="flex justify-between mb-2">
-                    <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
-                      Virtualclub
-                    </h3>
-                    <a href="#" className="text-indigo-600 hover:text-indigo-900">Add file</a>
-                  </div>
+              <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
+                <div className="flex justify-between mb-2">
+                  <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
+                    Virtualclub
+                  </h3>
+                  <button
+                    onClick={toggleForm}
+                    className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                  >
+                    Add file
+                  </button>
+                </div>
 
-                  <div class="h-72 overflow-y-auto">
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
-                          <tr>
-                            <th
-                              scope="col"
-                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                              Document Name
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                              document
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
-                              document type
-                            </th>
-                            <th scope="col" className="relative px-6 py-3">
-                              <span className="sr-only">Edit</span>
-                            </th>
-                            <th scope="col" className="relative px-6 py-3">
-                              <span className="sr-only">delete</span>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
+                {/* Toggleable Form */}
+                {showForm && (
+                  <form className="mt-4">
+                    <div className="mb-4">
+                      <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                        Document Name
+                      </label>
+                      <input
+                        type="text"
+                        id="documentName"
+                        name="documentName"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
                     </div>
+                    <div className="mb-4">
+                      <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                        Document URL
+                      </label>
+                      <input
+                        type="text"
+                        id="documentURL"
+                        name="documentURL"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                        Document Type
+                      </label>
+                      <input
+                        type="text"
+                        id="documentType"
+                        name="documentType"
+                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mb-8">
+                      <button
+                        type="submit"
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+
+                <div class="h-72 overflow-y-auto">
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Document Name
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            document
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            document type
+                          </th>
+                          <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">Edit</span>
+                          </th>
+                          <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">delete</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
+                            </a>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
+            </div>
 
             <div className="mb-6 rounded-xl py-6 px-5 shadow-lg transition-all hover:shadow-lg sm:p-6 lg:px-5 xl:px-6 overflow-hidden">
 
@@ -1089,7 +1100,7 @@ const Dashboard = () => {
               </form>
             </div>
 
-            
+
             ..
           </div>
 
@@ -1103,10 +1114,12 @@ const Dashboard = () => {
                     <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Appointments
                     </h3>
-                    {/* <p class="text-base font-medium text-body-color">Today</p> */}
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                      Edit
+                    </button>
                   </div>
 
-                  <div class="h-72 overflow-y-auto">
+                  <div className="h-auto">
 
                     <div class="w-full px-2 mb-2 mt-4">
                       <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
@@ -1201,10 +1214,12 @@ const Dashboard = () => {
                     <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Messages
                     </h3>
-                    {/* <p class="text-base font-medium text-body-color">See all</p> */}
+                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                      Edit
+                    </button>
                   </div>
 
-                  <div class="h-72 overflow-y-auto">
+                  <div className="h-auto">
                     <div class="w-full px-2 mb-2 mt-4">
                       <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
                         <img
@@ -1291,106 +1306,111 @@ const Dashboard = () => {
 
 
             <div ref={patientsRef} className={`${activeSection === 'patients' ? 'block' : 'hidden'}`}>
-              <div class="w-full px-2 pt-24">
-                <div class="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
+  <div className="w-full px-2 pt-24">
+    <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
 
-                  <div class="flex justify-between mb-2">
-                    <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
-                      Patients
-                    </h3>
-                    {/* <p class="text-base font-medium text-body-color">See all</p> */}
-                  </div>
+      <div className="flex justify-between mb-2">
+        <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
+          Patients
+        </h3>
+        <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+          Edit
+        </button>
+      </div>
 
-                  <div class="flex overflow-x-auto space-x-8 pb-4 px-4">
-                    <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p class="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
+      <div className="flex flex-wrap -mx-4">
+        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+          <img
+            width="150"
+            src={p1img}
+            alt="patient1"
+            className="rounded-full mb-3"
+          />
+          <p className="text-base font-medium text-body-color mb-1">
+            Sankavi
+          </p>
+          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+            See detail
+          </button>
+        </div>
 
-                    <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p class="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
+        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+          <img
+            width="150"
+            src={p1img}
+            alt="patient1"
+            className="rounded-full mb-3"
+          />
+          <p className="text-base font-medium text-body-color mb-1">
+            Sankavi
+          </p>
+          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+            See detail
+          </button>
+        </div>
 
-                    <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p class="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
 
-                    <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p class="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
+        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+          <img
+            width="150"
+            src={p1img}
+            alt="patient1"
+            className="rounded-full mb-3"
+          />
+          <p className="text-base font-medium text-body-color mb-1">
+            Sankavi
+          </p>
+          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+            See detail
+          </button>
+        </div>
 
-                    <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p class="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
+        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+          <img
+            width="150"
+            src={p1img}
+            alt="patient1"
+            className="rounded-full mb-3"
+          />
+          <p className="text-base font-medium text-body-color mb-1">
+            Sankavi
+          </p>
+          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+            See detail
+          </button>
+        </div>
 
-                    <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p class="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
+        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+          <img
+            width="150"
+            src={p1img}
+            alt="patient1"
+            className="rounded-full mb-3"
+          />
+          <p className="text-base font-medium text-body-color mb-1">
+            Sankavi
+          </p>
+          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+            See detail
+          </button>
+        </div>
+
+
+        <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
+          <img
+            width="150"
+            src={p1img}
+            alt="patient1"
+            className="rounded-full mb-3"
+          />
+          <p className="text-base font-medium text-body-color mb-1">
+            Sankavi
+          </p>
+          <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+            See detail
+          </button>
+        </div>
+
 
 
                   </div>
@@ -1407,10 +1427,63 @@ const Dashboard = () => {
                     <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Documents
                     </h3>
-                    {/* <p className="text-base font-medium text-body-color">See all</p> */}
+                    <button
+                      onClick={toggleForm}
+                      className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                    >
+                      Add file
+                    </button>
                   </div>
 
-                  <div class="h-72 overflow-y-auto">
+                  {/* Toggleable Form */}
+                  {showForm && (
+                    <form className="mt-4">
+                      <div className="mb-4">
+                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                          Patient Name
+                        </label>
+                        <input
+                          type="text"
+                          id="documentName"
+                          name="documentName"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                          Date
+                        </label>
+                        <input
+                          type="text"
+                          id="documentURL"
+                          name="documentURL"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                          Document
+                        </label>
+                        <input
+                          type="text"
+                          id="documentType"
+                          name="documentType"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-8">
+                        <button
+                          type="submit"
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  )}
+
+
+                  <div className="h-auto">
                     <div className="overflow-x-auto">
                       <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
@@ -1687,10 +1760,62 @@ const Dashboard = () => {
                     <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Virtualclub
                     </h3>
-                    <a href="#" className="text-indigo-600 hover:text-indigo-900">Add file</a>
+                    <button
+                      onClick={toggleForm}
+                      className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                    >
+                      Add file
+                    </button>
                   </div>
 
-                  <div class="h-72 overflow-y-auto">
+                  {/* Toggleable Form */}
+                  {showForm && (
+                    <form className="mt-4">
+                      <div className="mb-4">
+                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                          Document Name
+                        </label>
+                        <input
+                          type="text"
+                          id="documentName"
+                          name="documentName"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                          Document URL
+                        </label>
+                        <input
+                          type="text"
+                          id="documentURL"
+                          name="documentURL"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                          Document Type
+                        </label>
+                        <input
+                          type="text"
+                          id="documentType"
+                          name="documentType"
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="mb-8">
+                        <button
+                          type="submit"
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  )}
+
+                  <div className="h-auto">
                     <div className="overflow-x-auto">
                       <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
@@ -1727,7 +1852,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1751,7 +1876,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1775,7 +1900,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1799,7 +1924,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1823,7 +1948,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1847,7 +1972,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1871,7 +1996,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1895,7 +2020,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">
@@ -1919,7 +2044,7 @@ const Dashboard = () => {
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">calmvideo1.mov</div>
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="text-sm text-gray-500">

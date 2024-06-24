@@ -1,177 +1,305 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+ body {
+   margin: 0;
+   font-family: 'Roboto', sans-serif;
+   background-color: #f7f9fc;
+   height: 100vh;
+   overflow: hidden;
+ }
+ 
+ .App {
+   display: flex;
+   height: 100vh;
+   width: 100vw;
+   overflow: hidden;
+ }
+ 
+ .Sidebar {
+   width: 250px;
+   background-color: #2c4f50;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+   color: #ecf0f1;
+   height: calc(100vh - 40px);
+   margin: 20px;
+   overflow-y: auto;
+ }
+ .ml-10 {
+  margin-bottom: 40px; /* Add space below the brand name */
+}
+ 
+ .Profile {
+   text-align: center;
+   margin-bottom: 20px;
+   align-items: center;
+ }
+ 
+ .Profile .UserName {
+   margin: 10px 0 5px;
+ }
+ 
+ .Profile .UserEmail {
+   margin: 0;
+   font-size: 14px;
+ }
+ 
+ .Menu {
+   width: 100%;
+ }
+ 
+ .MenuItem {
+   display: flex;
+   align-items: center;
+   padding: 10px 15px;
+   cursor: pointer;
+   transition: background-color 0.2s;
+   border-radius: 5px;
+ }
+ 
+ .MenuItem:hover {
+   background-color: #23a2a7;
+ }
+ 
+ .MenuItem .Icon {
+   margin-right: 10px;
+ }
+ 
+ .MainContent {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   padding: 20px;
+   margin: 20px;
+   background-color: #f7f9fc;
+   border-radius: 10px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+   overflow-y: auto;
+ }
+ 
+ .Header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 20px;
+   background-color: #ecf0f1;
+   border-radius: 10px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+   margin-bottom: 20px;
+ }
+ 
+ .SearchBar {
+   padding: 10px;
+   width: 300px;
+   border: none;
+   border-radius: 5px;
+ }
+ 
+ .NotificationIcon {
+   font-size: 24px;
+   cursor: pointer;
+ }
+ 
+ .ContentWrapper {
+   padding: 20px;
+   flex: 1;
+   background-color: white;
+   border-radius: 10px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .UserProfileContent {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+ .ProfilePhoto {
+  width: 200px; /* Increase width of the profile photo */
+  height: 200px; /* Increase height of the profile photo */
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-bottom: 20px;
+  background-size: cover;
+  background-position: center;
+  display: block; /* Ensure it's a block element */
+  margin: 0 auto; /* Center align the photo */
 }
 
-.App {
+ .UserDetails {
+   text-align: center;
+   align-items: center;
+   width: 100%;
+ }
+ 
+ .UserDetails table {
+   margin: 0 auto;
+   border-collapse: collapse;
+   width: 90%; /* Increase the width of the table */
+   max-width: 100%; /* Ensure it doesn't exceed the container */
+   font-size: 15px;
+ }
+ 
+ .UserDetails td {
+   padding: 15px;
+   border: 1px solid #ddd;
+ }
+ 
+ .EditProfileButton {
+   padding: 10px 20px;
+   background-color: #3498db;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   margin-top: 10px;
+ }
+ 
+ .EditProfileForm {
+   background: white;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 500px;
+   margin:0 auto;
+ }
+ 
+ .EditProfileForm h2 {
+   margin-bottom: 20px;
+   font-size: 24px;
+   font-weight: bold;
+ }
+ .EditProfileForm h2, .UserProfileContent h2 {
+  font-size: 24px; /* Increase the font size */
+  font-weight: bold; /* Ensure the text is bold */
+  margin-bottom: 20px; /* Add some space below the heading */
+}
+ 
+ .FormRow {
+   display: flex;
+   align-items: center;
+   margin-bottom: 15px;
+   width: 100%;
+ }
+ 
+ .FormRow label {
+   flex: 1;
+ }
+ 
+ .FormRow input {
+   flex: 2;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+ }
+ 
+ .FormButtons {
+   display: flex;
+   justify-content: flex-end;
+   width: 100%;
+ }
+ 
+ .FormButtons button {
+   padding: 10px 20px;
+   margin-left: 10px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+ }
+ 
+ .FormButtons button:first-child {
+   background-color: #34db98;
+   color: white;
+ }
+ 
+ .FormButtons button:last-child {
+   background-color: #e74c3c;
+   color: white;
+ }
+ 
+ table {
+   width: 100%;
+   border-collapse: collapse;
+   margin-top: 20px;
+ }
+ 
+ table, th, td {
+   border: 1px solid #ddd;
+ }
+ 
+ th, td {
+   padding: 10px;
+   text-align: left;
+ }
+ 
+ th {
+   background-color: #f2f2f2;
+ }
+ 
+ .Placeholder {
+   text-align: center;
+   padding: 20px;
+   color: #7f8c8d;
+ }
+ .ChatsContent {
   display: flex;
-  height: 100vh;
+  justify-content: space-between;
+  padding: 20px;
 }
 
-.UserDashboard {
-  width: 250px;
-  background-color: #f5e1e1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-  flex-shrink: 0;
+.ChatColumn {
+  width: 48%;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.Profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.ChatColumn h2 {
+  margin-top: 0;
   margin-bottom: 20px;
 }
 
-.UserName {
-  margin: 10px 0 5px 0;
-  font-size: 16px;
+.ChatList {
+  max-height: 600px;
+  overflow-y: auto;
 }
 
-.UserEmail {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
-}
-
-.Menu {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.MenuItem {
-  width: 100%;
+.ChatItem {
   display: flex;
   align-items: center;
-  padding: 10px 0;
-  cursor: pointer;
-  color: #333;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
-.MenuItem:hover {
-  background-color: #ddd;
+.ChatItem:last-child {
+  border-bottom: none;
 }
 
-.Icon {
+.ChatProfilePhoto {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   margin-right: 10px;
 }
 
-.Header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #70a2da;
-  padding: 10px;
-  color: white;
-  width: calc(100% - 250px);
-  position: fixed;
-  left: 250px; 
-  top: 0;
-  z-index: 1;
-}
-
-.SearchBar {
-  padding: 5px;
-  width: 300px;
-  border: none;
-  border-radius: 5px;
-  color: #000;
-  background-color: white;
-}
-
-.NotificationIcon {
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.MainContent {
-  flex: 1;
+.ChatDetails {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-  margin-top: 60px;
-  width: calc(100% - 250px);
-  margin-left: 250px;
 }
 
-.UserProfile {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.Card {
-  background-color: #bfe2bf;
-  padding: 20px;
-  width: 45%;
-  border: 1px solid #423e3e;
-  border-radius: 8px;
-  text-align: center;
-  font-size: 18px;
-}
-
-.EditProfileForm {
-  background: hsl(165, 32%, 80%);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.EditProfileForm h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.FormRow {
-  margin-bottom: 15px;
-}
-
-.FormRow label {
-  display: block;
-  margin-bottom: 5px;
+.ChatName {
   font-weight: bold;
 }
 
-.FormRow input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+.ChatMessage {
+  color: #555;
 }
 
-.FormButtons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.FormButtons button {
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.FormButtons button:first-child {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.FormButtons button:last-child {
-  background-color: #f44336;
-  color: white;
-}
-
-.Placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  font-size: 24px;
-  color: #888;
-}
+ 

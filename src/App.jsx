@@ -14,8 +14,7 @@ import Quiz from './pages/Quiz/Quiz'
 import UserDashboard from './pages/UserProfile/UserDashboard'
 import UserProfile from './pages/UserProfile/UserProfile'
 import './pages/UserProfile/Profile.css'
-
-
+import AboutUs from './pages/AboutUs/AboutUs'
 
 
 function App() {
@@ -33,6 +32,7 @@ function App() {
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/quiz' element={<Quiz/>}/>
+      <Route path='/aboutus' element={<AboutUs/>}/>
 
     
       <Route path='userdashboard' element={<UserDashboard/>}>

@@ -54,7 +54,7 @@ const Dashboard = () => {
 
 
   return (
-    <div className="h-full pt-0 mt-0">
+    <div className="h-full h-screen overflow-y-auto pt-0 mt-0">
       {/* Navbar */}
       <nav className="fixed">
         {/* Navbar content */}

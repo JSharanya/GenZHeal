@@ -30,7 +30,7 @@ const Virtualclub = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
+    <div  className="h-screen overflow-y-auto">
       <div>
         <Header />
       </div>

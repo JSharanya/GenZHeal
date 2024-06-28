@@ -2,7 +2,9 @@ import React from 'react'
 
 const Froum = () => {
   return (
-    <div>Froum</div>
+    <div>
+      
+    </div>
   )
 }
 

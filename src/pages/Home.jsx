@@ -12,7 +12,7 @@ import Footer from "../components/Footer";
 
 const Home = () => {
   return (
-    <div>
+    <div className="h-screen overflow-y-auto">
       <Header />
 
       <section className="sm:mt-24  lg:mt-36 mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
@@ -1299,6 +1299,8 @@ const Home = () => {
           </div>
         </Swiper>
       </div>
+
+    
 
       <Footer />
     </div>

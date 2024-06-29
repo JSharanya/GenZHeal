@@ -465,59 +465,78 @@ const Dashboard = () => {
                     Documents
                   </h3>
                   <button
-                    onClick={toggleForm}
-                    className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-                  >
-                    Add file
-                  </button>
-                </div>
+                      onClick={toggleForm}
+                      className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                    >
+                      Add file
+                    </button>
+                  </div>
 
-                {/* Toggleable Form */}
-                {showForm && (
-                  <form className="mt-4">
-                    <div className="mb-4">
-                      <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                        Patient Name
-                      </label>
-                      <input
-                        type="text"
-                        id="documentName"
-                        name="documentName"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
+                  {/* Toggleable Form */}
+                  {showForm && (
+                    <div className="fixed z-10 inset-0 overflow-y-auto">
+                      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                        <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                          <form className="mt-4">
+                            <div className="mb-4">
+                              <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                Patient Name
+                              </label>
+                              <input
+                                type="text"
+                                id="documentName"
+                                name="documentName"
+                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="mb-4">
+                              <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                Date
+                              </label>
+                              <input
+                                type="text"
+                                id="documentURL"
+                                name="documentURL"
+                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="mb-4">
+                              <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                Document
+                              </label>
+                              <input
+                                type="text"
+                                id="documentType"
+                                name="documentType"
+                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="mb-8">
+                              <button
+                                type="submit"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              >
+                                Save
+                              </button>
+                              <button
+                              onClick={toggleForm}
+                              type="button"
+                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Cancel
+                            </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
                     </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                        Date
-                      </label>
-                      <input
-                        type="text"
-                        id="documentURL"
-                        name="documentURL"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                        Document
-                      </label>
-                      <input
-                        type="text"
-                        id="documentType"
-                        name="documentType"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-8">
-                      <button
-                        type="submit"
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
-                )}
+                  )}
 
 
                 <div class="h-72 overflow-y-auto">
@@ -743,86 +762,117 @@ const Dashboard = () => {
 
                 {/* Toggleable Form */}
                 {showForm && (
-                  <form className="mt-4">
-                    <div className="mb-4">
-                      <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                        Item Name
-                      </label>
-                      <input
-                        type="text"
-                        id="documentName"
-                        name="documentName"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
+                     <div className="fixed z-10 inset-0 overflow-y-auto">
+                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                       <div className="fixed inset-0 transition-opacity">
+                         <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                       </div>
+         
+                       <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+         
+                       <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                           <div className="sm:flex sm:items-start">
+                             <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                 Add Document
+                               </h3>
+                                <form className="mt-4">
+                                  <div className="mb-4">
+                                    <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                      Document Name
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="documentName"
+                                      name="documentName"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                      Document URL
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="documentURL"
+                                      name="documentURL"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                      Document Type
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="documentType"
+                                      name="documentType"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                                      Category
+                                    </label>
+                                    <select
+                                      id="category"
+                                      name="category"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    >
+                                      <option value="video">Video</option>
+                                      <option value="article">Article</option>
+                                      <option value="music">Music</option>
+                                    </select>
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                      Content
+                                    </label>
+                                    <textarea
+                                      id="content"
+                                      name="content"
+                                      rows="4"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                                      Image Link
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="imageLink"
+                                      name="imageLink"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button
+                              onClick={toggleForm}
+                              type="button"
+                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Save
+                            </button>
+                            <button
+                              onClick={toggleForm}
+                              type="button"
+                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                        Document URL
-                      </label>
-                      <input
-                        type="text"
-                        id="documentURL"
-                        name="documentURL"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                        Document Type
-                      </label>
-                      <input
-                        type="text"
-                        id="documentType"
-                        name="documentType"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                        Category
-                      </label>
-                      <select
-                        id="category"
-                        name="category"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      >
-                        <option value="video">Video</option>
-                        <option value="article">Article</option>
-                        <option value="music">Music</option>
-                      </select>
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                        Content
-                      </label>
-                      <textarea
-                        id="content"
-                        name="content"
-                        rows="4"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-                        Image Link
-                      </label>
-                      <input
-                        type="text"
-                        id="imageLink"
-                        name="imageLink"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-8">
-                      <button
-                        type="submit"
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
-                )}
+                  )}
+
 
 
                 <div class="h-72 overflow-y-auto">
@@ -1473,51 +1523,69 @@ const Dashboard = () => {
 
                   {/* Toggleable Form */}
                   {showForm && (
-                    <form className="mt-4">
-                      <div className="mb-4">
-                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                          Patient Name
-                        </label>
-                        <input
-                          type="text"
-                          id="documentName"
-                          name="documentName"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                          Date
-                        </label>
-                        <input
-                          type="text"
-                          id="documentURL"
-                          name="documentURL"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                          Document
-                        </label>
-                        <input
-                          type="text"
-                          id="documentType"
-                          name="documentType"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-8">
-                        <button
-                          type="submit"
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  )}
+                    <div className="fixed z-10 inset-0 overflow-y-auto">
+                      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
 
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                        <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                          <form className="mt-4">
+                            <div className="mb-4">
+                              <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                Patient Name
+                              </label>
+                              <input
+                                type="text"
+                                id="documentName"
+                                name="documentName"
+                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="mb-4">
+                              <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                Date
+                              </label>
+                              <input
+                                type="text"
+                                id="documentURL"
+                                name="documentURL"
+                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="mb-4">
+                              <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                Document
+                              </label>
+                              <input
+                                type="text"
+                                id="documentType"
+                                name="documentType"
+                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="mb-8">
+                              <button
+                                type="submit"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              >
+                                Save
+                              </button>
+                              <button
+                              onClick={toggleForm}
+                              type="button"
+                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Cancel
+                            </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="h-auto">
                     <div className="overflow-x-auto">
@@ -1806,86 +1874,117 @@ const Dashboard = () => {
 
                   {/* Toggleable Form */}
                   {showForm && (
-                    <form className="mt-4">
-                      <div className="mb-4">
-                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                          Document Name
-                        </label>
-                        <input
-                          type="text"
-                          id="documentName"
-                          name="documentName"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
+                     <div className="fixed z-10 inset-0 overflow-y-auto">
+                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                       <div className="fixed inset-0 transition-opacity">
+                         <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                       </div>
+         
+                       <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+         
+                       <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                           <div className="sm:flex sm:items-start">
+                             <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                 Add Document
+                               </h3>
+                                <form className="mt-4">
+                                  <div className="mb-4">
+                                    <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                      Document Name
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="documentName"
+                                      name="documentName"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                      Document URL
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="documentURL"
+                                      name="documentURL"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                      Document Type
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="documentType"
+                                      name="documentType"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                                      Category
+                                    </label>
+                                    <select
+                                      id="category"
+                                      name="category"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    >
+                                      <option value="video">Video</option>
+                                      <option value="article">Article</option>
+                                      <option value="music">Music</option>
+                                    </select>
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                      Content
+                                    </label>
+                                    <textarea
+                                      id="content"
+                                      name="content"
+                                      rows="4"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                                      Image Link
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="imageLink"
+                                      name="imageLink"
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                  
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button
+                              onClick={toggleForm}
+                              type="button"
+                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Save
+                            </button>
+                            <button
+                              onClick={toggleForm}
+                              type="button"
+                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                          Document URL
-                        </label>
-                        <input
-                          type="text"
-                          id="documentURL"
-                          name="documentURL"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                          Document Type
-                        </label>
-                        <input
-                          type="text"
-                          id="documentType"
-                          name="documentType"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                          Category
-                        </label>
-                        <select
-                          id="category"
-                          name="category"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        >
-                          <option value="video">Video</option>
-                          <option value="article">Article</option>
-                          <option value="music">Music</option>
-                        </select>
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                          Content
-                        </label>
-                        <textarea
-                          id="content"
-                          name="content"
-                          rows="4"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-                          Image Link
-                        </label>
-                        <input
-                          type="text"
-                          id="imageLink"
-                          name="imageLink"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-8">
-                        <button
-                          type="submit"
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
+                    </div>
                   )}
+
 
                   <div className="h-auto">
                     <div className="overflow-x-auto">

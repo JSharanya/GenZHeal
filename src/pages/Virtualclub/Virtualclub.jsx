@@ -257,7 +257,7 @@ const Virtualclub = () => {
                         d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
                       ></path>
                     </svg> */}
-                    <span>Categories</span>
+                    <span>Types</span>
                   </span>
                   {/* <span className="bg-sky-500 text-gray-100 font-bold px-2 py-0.5 text-xs rounded-lg">
                     3
@@ -326,7 +326,7 @@ const Virtualclub = () => {
                         for="vue-checkbox"
                         className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
-                        Artical
+                        Educational
                       </label>
                     </div>
                   </li>
@@ -358,7 +358,7 @@ const Virtualclub = () => {
                         for="vue-checkbox"
                         className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
-                        Video
+                        Self-Help & Support
                       </label>
                     </div>
                   </li>
@@ -391,10 +391,45 @@ const Virtualclub = () => {
                         for="vue-checkbox"
                         className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
-                        Audio
+                       Therapeutic Exercises
                       </label>
                     </div>
                   </li>
+
+                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <div className="flex items-center ps-3">
+                      <input
+                        id="vue-checkbox"
+                        type="checkbox"
+                        value=""
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                      />
+                      <svg
+                        className="w-6 h-6 ml-3 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5 8a1 1 0 0 1 1 1v3a4.006 4.006 0 0 0 4 4h4a4.006 4.006 0 0 0 4-4V9a1 1 0 1 1 2 0v3.001A6.006 6.006 0 0 1 14.001 18H13v2h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2H9.999A6.006 6.006 0 0 1 4 12.001V9a1 1 0 0 1 1-1Z"
+                          clip-rule="evenodd"
+                        />
+                        <path d="M7 6a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v5a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4V6Z" />
+                      </svg>
+
+                      <label
+                        for="vue-checkbox"
+                        className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
+                       Personal Stories
+                      </label>
+                    </div>
+                  </li>
+
                 </ul>
               </li>
             </ul>

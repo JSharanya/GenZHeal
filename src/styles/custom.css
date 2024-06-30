@@ -2,3 +2,8 @@
     background: linear-gradient(rgba(0, 1, 8, 0.5), rgba(7, 7, 7, 0.5),rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.709),rgba(0, 0, 0, 0.676)), url('https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2023/02/Psychotherapy-counseling-therapy-collage-1296x728-header-1024x575.jpg') no-repeat center;
     background-size: cover;
   }
+
+  .bg-gradient-overlay-froum {
+    background: linear-gradient(rgba(0, 1, 8, 0.5), rgba(7, 7, 7, 0.5),rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.709),rgba(0, 0, 0, 0.676)), url('https://www.stthomas.edu/_media-library/_images/center-for-well-being/1920x1080/counseling_session.jpg') no-repeat center;
+    background-size: cover;
+  }

@@ -57,6 +57,10 @@ const userSlice = createSlice({
   },
 });
 
+export const isLoggedIn = (state,action) =>{
+  return state.user?.currentUser
+}
+
 export const {
   signInStart,
   signInSuccess,

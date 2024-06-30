@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt } from 'react-icons/fa';
 import docimg from "../../images/doctor.png";
 import p1img from "../../images/patient1.jpeg";
@@ -9,6 +9,65 @@ import p2img from "../../images/patient2.png";
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showForm, setShowForm] = useState(false);
+
+  const virualCategories =[
+    "Video",
+    "Article",
+    "Audio"
+]
+
+
+const virualTypes =[
+  "Educational",
+  "Self-Help & Support",
+  "Therapeutic Exercises",
+  "Personal Stories"
+
+]
+
+
+const [selectedVirualCategory, setselectedVirualCategory] = useState(virualCategories[0])
+const [selectedVirualType, setselectedVirualType] = useState(virualTypes[0])
+
+const handleChangeSelectedValue = (e)=>{
+  setselectedVirualCategory(e.target.value)
+  console.log(e.target.value);
+}
+
+const handleChangeSelectedType = (e)=>{
+  setselectedVirualType(e.target.value)
+  console.log(e.target.value);
+}
+
+const handleVirualSubmit = (e)=>{
+  e.preventDefault();
+  const form = e.target;
+
+  const title = form.documentName.value;
+  const content = form.content.value;
+  const type = form.documentType.value;
+  const image = form.imageLink.value;
+  const link = form.documentURL.value;
+  const category = form.categoryName.value;
+
+  const virtualObj = {
+    title,content,type,image,link,category
+  }
+
+  console.log(virtualObj);
+
+
+  fetch("http://localhost:3000/api/virualclub/upload-virual",{
+    method:"POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(virtualObj)
+  }).then(res=>res.json()).then(data=>{
+    alert("VirualClub Items are Uploaded")
+  })
+}
+ 
 
   const appointmentRef = useRef(null);
   const dashboardRef = useRef(null);
@@ -859,7 +918,7 @@ const Dashboard = () => {
                       <tbody className="bg-white divide-y divide-gray-200">
                         <tr>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                            <div className="text-sm font-medium text-gray-900">calm video </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
@@ -1789,6 +1848,9 @@ const Dashboard = () => {
               </div>
             </div>
 
+
+            {/* Note */}
+
             <div ref={virtualclubRef} className={`${activeSection === 'virtualclub' ? 'block' : 'hidden'}`}>
               <div className="w-full pt-24">
                 <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
@@ -1806,7 +1868,7 @@ const Dashboard = () => {
 
                   {/* Toggleable Form */}
                   {showForm && (
-                    <form className="mt-4">
+                    <form className="mt-4" onSubmit={handleVirualSubmit}>
                       <div className="mb-4">
                         <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
                           Document Name
@@ -1833,25 +1895,32 @@ const Dashboard = () => {
                         <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
                           Document Type
                         </label>
-                        <input
-                          type="text"
+                        <select
                           id="documentType"
                           name="documentType"
+                          value={selectedVirualType}
+                          onChange={handleChangeSelectedType}
                           className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
+                        >
+                          {
+                            virualTypes.map((option)=><option key={option} value={option}>{option}</option>)
+                          }
+                        </select>
                       </div>
                       <div className="mb-4">
                         <label htmlFor="category" className="block text-sm font-medium text-gray-700">
                           Category
                         </label>
                         <select
-                          id="category"
-                          name="category"
+                          id="categoryName"
+                          name="categoryName"
+                          value={selectedVirualCategory}
+                          onChange={handleChangeSelectedValue}
                           className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
-                          <option value="video">Video</option>
-                          <option value="article">Article</option>
-                          <option value="music">Music</option>
+                          {
+                            virualCategories.map((option)=><option key={option} value={option}>{option}</option>)
+                          }
                         </select>
                       </div>
                       <div className="mb-4">

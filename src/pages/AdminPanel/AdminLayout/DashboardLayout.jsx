@@ -5,7 +5,7 @@ import { PiBrainBold } from "react-icons/pi";
 const DashboardLayout = () => {
   return (
     <div>
-      <nav className="bg-gray-100 fixed top-0 w-full ml-64 z-50 pt-5 pb-5 mb-3">
+      <nav className="bg-gray-100 fixed top-0 w-full ml-64 z-50 pt-5">
         <div className="container mx-auto flex justify-between items-center">
           <div className="ml-10">
             <Link

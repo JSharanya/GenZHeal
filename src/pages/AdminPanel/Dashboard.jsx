@@ -10,6 +10,65 @@ const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showForm, setShowForm] = useState(false);
 
+
+  const virualCategories =[
+    "Video",
+    "Article",
+    "Audio"
+]
+
+
+const virualTypes =[
+  "Educational",
+  "Self-Help Support",
+  "Therapeutic Exercises",
+  "Personal Stories"
+
+]
+
+
+const [selectedVirualCategory, setselectedVirualCategory] = useState(virualCategories[0])
+const [selectedVirualType, setselectedVirualType] = useState(virualTypes[0])
+
+const handleChangeSelectedValue = (e)=>{
+  setselectedVirualCategory(e.target.value)
+  console.log(e.target.value);
+}
+
+const handleChangeSelectedType = (e)=>{
+  setselectedVirualType(e.target.value)
+  console.log(e.target.value);
+}
+
+const handleVirualSubmit = (e)=>{
+  e.preventDefault();
+  const form = e.target;
+
+  const title = form.documentName.value;
+  const content = form.content.value;
+  const type = form.documentType.value;
+  const image = form.imageLink.value;
+  const link = form.documentURL.value;
+  const category = form.categoryName.value;
+
+  const virtualObj = {
+    title,content,type,image,link,category
+  }
+
+  console.log(virtualObj);
+
+
+  fetch("http://localhost:3000/api/virualclub/upload-virual",{
+    method:"POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(virtualObj)
+  }).then(res=>res.json()).then(data=>{
+    alert("VirualClub Items are Uploaded")
+  })
+}
+
   
   const appointmentRef = useRef(null);
   const dashboardRef = useRef(null);
@@ -1880,7 +1939,7 @@ const Dashboard = () => {
                   {/* Toggleable Form */}
                   
                   {showForm && (
-                     <div className="fixed z-10 inset-0 overflow-y-auto">
+                     <div className="fixed z-50 inset-2 overflow-y-auto">
                      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                        <div className="fixed inset-0 transition-opacity">
                          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -1895,7 +1954,7 @@ const Dashboard = () => {
                                <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
                                  Add Document
                                </h3>
-                                <form className="mt-4">
+                                <form className="mt-4" onSubmit={handleVirualSubmit} >
                                   <div className="mb-4">
                                     <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
                                       Document Name
@@ -1922,26 +1981,33 @@ const Dashboard = () => {
                                     <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
                                       Document Type
                                     </label>
-                                    <input
-                                      type="text"
-                                      id="documentType"
-                                      name="documentType"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
+                                    <select
+                          id="documentType"
+                          name="documentType"
+                          value={selectedVirualType}
+                          onChange={handleChangeSelectedType}
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                          {
+                            virualTypes.map((option)=><option key={option} value={option}>{option}</option>)
+                          }
+                        </select>
                                   </div>
                                   <div className="mb-4">
                                     <label htmlFor="category" className="block text-sm font-medium text-gray-700">
                                       Category
                                     </label>
                                     <select
-                                      id="category"
-                                      name="category"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    >
-                                      <option value="video">Video</option>
-                                      <option value="article">Article</option>
-                                      <option value="music">Music</option>
-                                    </select>
+                          id="categoryName"
+                          name="categoryName"
+                          value={selectedVirualCategory}
+                          onChange={handleChangeSelectedValue}
+                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                          {
+                            virualCategories.map((option)=><option key={option} value={option}>{option}</option>)
+                          }
+                        </select>
                                   </div>
                                   <div className="mb-4">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700">
@@ -1965,12 +2031,29 @@ const Dashboard = () => {
                                       className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     />
                                   </div>
+
+
+                                 
+                            <button
+                              type="submit"
+                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Save
+                            </button>
+                            <button
+                            onClick={toggleForm}
+                              type="button"
+                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Cancel
+                            </button>
+                        
                                   
                                 </form>
                               </div>
                             </div>
                           </div>
-                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                          {/* <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                             <button
                               onClick={toggleForm}
                               type="button"
@@ -1985,7 +2068,7 @@ const Dashboard = () => {
                             >
                               Cancel
                             </button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

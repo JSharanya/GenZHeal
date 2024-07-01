@@ -3,8 +3,42 @@ import Header from "../../components/Header";
 
 const Virtualclub = () => {
   const [virtualclubs, setVirtualclubs] = useState([]);
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  
+  const [typeFilter, setTypeFilter] = useState('All');
+  const [categoryFilter, setCategoryFilter] = useState('All');
+  const [searchTitle, setSearchTitle] = useState('');
+
+  const fetchFilterClubs = async () => {
+    const response = await fetch(`http://localhost:3000/api/virualclub/all-virual?type=${typeFilter}&category=${categoryFilter}&title=${searchTitle}`);
+    const data = await response.json();
+    setVirtualclubs(data);
+  };
+
+  useEffect(() => {
+    fetchFilterClubs();
+  }, [typeFilter, categoryFilter,searchTitle ]);
+
+
+  const handleCategoryChange = (event) => {
+    setCategoryFilter(event.target.value);
+  };
+
+  const handleTypeChange = (event) => {
+    setTypeFilter(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTitle(event.target.value.toLowerCase()); // Ensure case-insensitive search
+  };
+
+  const categories = ['All', 'Artical', 'Video', 'Audio']
+  const types = ['All', 'Educational', 'Self-Help Support', 'Therapeutic Exercises','Personal Stories']
+
+
 
 
   useEffect(() => {
@@ -109,13 +143,15 @@ const Virtualclub = () => {
                 {/* <h3 className="mb-3 py-1 px-4 rounded space-x-1 font-semibold items-center text-gray-900 dark:text-white">
                   Technology
                 </h3> */}
-                <ul className="w-44 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                <ul className="w-44 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" >
+                {categories.map((category)=>(
+                    <li key={category} className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
-                        id="vue-checkbox"
-                        type="checkbox"
-                        value=""
+                       type="checkbox"
+                       value={category}
+                       checked={categoryFilter === category}
+                       onChange={handleCategoryChange}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
@@ -131,14 +167,15 @@ const Virtualclub = () => {
                       </svg>
 
                       <label
-                        for="vue-checkbox"
+                        for={category}
                         className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
-                        All
+                        {category}
                       </label>
                     </div>
                   </li>
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                ))}
+                  {/* <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
@@ -169,8 +206,8 @@ const Virtualclub = () => {
                         Artical
                       </label>
                     </div>
-                  </li>
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  </li> */}
+                  {/* <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
@@ -201,8 +238,8 @@ const Virtualclub = () => {
                         Video
                       </label>
                     </div>
-                  </li>
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  </li> */}
+                  {/* <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
@@ -234,7 +271,7 @@ const Virtualclub = () => {
                         Audio
                       </label>
                     </div>
-                  </li>
+                  </li> */}
                 </ul>
               </li>
             </ul>
@@ -270,12 +307,15 @@ const Virtualclub = () => {
                   Technology
                 </h3> */}
                 <ul className="w-44 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+             
+                {types.map((type)=>(
+                    <li key={type} className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
-                        id="vue-checkbox"
-                        type="checkbox"
-                        value=""
+                       type="checkbox"
+                       value={type}
+                       checked={typeFilter === type}
+                       onChange={handleTypeChange}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                       />
                       <svg
@@ -291,14 +331,15 @@ const Virtualclub = () => {
                       </svg>
 
                       <label
-                        for="vue-checkbox"
+                        for={type}
                         className="w-full py-3 ms-1 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
-                        All
+                        {type}
                       </label>
                     </div>
                   </li>
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                ))}
+                  {/* <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
@@ -329,8 +370,8 @@ const Virtualclub = () => {
                         Educational
                       </label>
                     </div>
-                  </li>
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  </li> */}
+                  {/* <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
@@ -361,8 +402,8 @@ const Virtualclub = () => {
                         Self-Help & Support
                       </label>
                     </div>
-                  </li>
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  </li> */}
+                  {/* <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
@@ -394,9 +435,9 @@ const Virtualclub = () => {
                        Therapeutic Exercises
                       </label>
                     </div>
-                  </li>
+                  </li> */}
 
-                  <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  {/* <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <div className="flex items-center ps-3">
                       <input
                         id="vue-checkbox"
@@ -428,7 +469,7 @@ const Virtualclub = () => {
                        Personal Stories
                       </label>
                     </div>
-                  </li>
+                  </li> */}
 
                 </ul>
               </li>
@@ -478,7 +519,23 @@ const Virtualclub = () => {
                   virtual club
                 </a>
               </div>
-              <a href="#">See All</a>
+             <div>
+
+    <div class="container  flex justify-center items-center px-2 sm:px-6 lg:px-8">
+        <div class="relative">
+
+            <input type="text" 
+            value={searchTitle}
+            onChange={handleSearchChange}
+            class="h-10 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none" placeholder="Search anything..."/>
+
+            <div class="absolute top-4 right-3">
+                <i class="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
+            </div>
+
+        </div>
+    </div>
+</div>
             </div>
 
 

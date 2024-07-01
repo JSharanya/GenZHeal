@@ -474,51 +474,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Toggleable Form */}
-                {showForm && (
-                  <form className="mt-4">
-                    <div className="mb-4">
-                      <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                        Patient Name
-                      </label>
-                      <input
-                        type="text"
-                        id="documentName"
-                        name="documentName"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                        Date
-                      </label>
-                      <input
-                        type="text"
-                        id="documentURL"
-                        name="documentURL"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                        Document
-                      </label>
-                      <input
-                        type="text"
-                        id="documentType"
-                        name="documentType"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-8">
-                      <button
-                        type="submit"
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
-                )}
+               
 
 
                 <div class="h-72 overflow-y-auto">
@@ -743,89 +699,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Toggleable Form */}
-                {showForm && (
-                  <form className="mt-4">
-                    <div className="mb-4">
-                      <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                        Item Name
-                      </label>
-                      <input
-                        type="text"
-                        id="documentName"
-                        name="documentName"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                        Document URL
-                      </label>
-                      <input
-                        type="text"
-                        id="documentURL"
-                        name="documentURL"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                        Document Type
-                      </label>
-                      <input
-                        type="text"
-                        id="documentType"
-                        name="documentType"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                        Category
-                      </label>
-                      <select
-                        id="category"
-                        name="category"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      >
-                        <option value="video">Video</option>
-                        <option value="article">Article</option>
-                        <option value="music">Music</option>
-                      </select>
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                        Content
-                      </label>
-                      <textarea
-                        id="content"
-                        name="content"
-                        rows="4"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-                        Image Link
-                      </label>
-                      <input
-                        type="text"
-                        id="imageLink"
-                        name="imageLink"
-                        className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div className="mb-8">
-                      <button
-                        type="submit"
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
-                )}
-
-
+           
                 <div class="h-72 overflow-y-auto">
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
@@ -1473,51 +1347,7 @@ const Dashboard = () => {
                   </div>
 
                   {/* Toggleable Form */}
-                  {showForm && (
-                    <form className="mt-4">
-                      <div className="mb-4">
-                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                          Patient Name
-                        </label>
-                        <input
-                          type="text"
-                          id="documentName"
-                          name="documentName"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                          Date
-                        </label>
-                        <input
-                          type="text"
-                          id="documentURL"
-                          name="documentURL"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                          Document
-                        </label>
-                        <input
-                          type="text"
-                          id="documentType"
-                          name="documentType"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-8">
-                        <button
-                          type="submit"
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  )}
+                 
 
 
                   <div className="h-auto">
@@ -1810,87 +1640,7 @@ const Dashboard = () => {
 
                   {/* Toggleable Form */}
                   
-                    <form className="mt-4" >
-                      <div className="mb-4">
-                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                          Document Name
-                        </label>
-                        <input
-                          type="text"
-                          id="documentName"
-                          name="documentName"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                          Document URL
-                        </label>
-                        <input
-                          type="text"
-                          id="documentURL"
-                          name="documentURL"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                          Document Type
-                        </label>
-                        <select
-                          id="documentType"
-                          name="documentType"
-                          value={selectedVirualType}
-                          onChange={handleChangeSelectedType}
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        >
-                         
-                        </select>
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                          Category
-                        </label>
-                        <select
-                          id="categoryName"
-                          name="categoryName"
-                        
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        >
-                       
-                        </select>
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                          Content
-                        </label>
-                        <textarea
-                          id="content"
-                          name="content"
-                          rows="4"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-                          Image Link
-                        </label>
-                        <input
-                          type="text"
-                          id="imageLink"
-                          name="imageLink"
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="mb-8">
-                        <button
-                          type="submit"
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
+                
                   
                   <div className="h-auto">
                     <div className="overflow-x-auto">

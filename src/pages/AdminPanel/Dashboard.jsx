@@ -10,65 +10,7 @@ const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showForm, setShowForm] = useState(false);
 
-  const virualCategories =[
-    "Video",
-    "Article",
-    "Audio"
-]
-
-
-const virualTypes =[
-  "Educational",
-  "Self-Help & Support",
-  "Therapeutic Exercises",
-  "Personal Stories"
-
-]
-
-
-const [selectedVirualCategory, setselectedVirualCategory] = useState(virualCategories[0])
-const [selectedVirualType, setselectedVirualType] = useState(virualTypes[0])
-
-const handleChangeSelectedValue = (e)=>{
-  setselectedVirualCategory(e.target.value)
-  console.log(e.target.value);
-}
-
-const handleChangeSelectedType = (e)=>{
-  setselectedVirualType(e.target.value)
-  console.log(e.target.value);
-}
-
-const handleVirualSubmit = (e)=>{
-  e.preventDefault();
-  const form = e.target;
-
-  const title = form.documentName.value;
-  const content = form.content.value;
-  const type = form.documentType.value;
-  const image = form.imageLink.value;
-  const link = form.documentURL.value;
-  const category = form.categoryName.value;
-
-  const virtualObj = {
-    title,content,type,image,link,category
-  }
-
-  console.log(virtualObj);
-
-
-  fetch("http://localhost:3000/api/virualclub/upload-virual",{
-    method:"POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(virtualObj)
-  }).then(res=>res.json()).then(data=>{
-    alert("VirualClub Items are Uploaded")
-  })
-}
- 
-
+  
   const appointmentRef = useRef(null);
   const dashboardRef = useRef(null);
   const messagesRef = useRef(null);
@@ -1867,8 +1809,8 @@ const handleVirualSubmit = (e)=>{
                   </div>
 
                   {/* Toggleable Form */}
-                  {showForm && (
-                    <form className="mt-4" onSubmit={handleVirualSubmit}>
+                  
+                    <form className="mt-4" >
                       <div className="mb-4">
                         <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
                           Document Name
@@ -1902,9 +1844,7 @@ const handleVirualSubmit = (e)=>{
                           onChange={handleChangeSelectedType}
                           className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
-                          {
-                            virualTypes.map((option)=><option key={option} value={option}>{option}</option>)
-                          }
+                         
                         </select>
                       </div>
                       <div className="mb-4">
@@ -1914,13 +1854,10 @@ const handleVirualSubmit = (e)=>{
                         <select
                           id="categoryName"
                           name="categoryName"
-                          value={selectedVirualCategory}
-                          onChange={handleChangeSelectedValue}
+                        
                           className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
-                          {
-                            virualCategories.map((option)=><option key={option} value={option}>{option}</option>)
-                          }
+                       
                         </select>
                       </div>
                       <div className="mb-4">
@@ -1954,8 +1891,7 @@ const handleVirualSubmit = (e)=>{
                         </button>
                       </div>
                     </form>
-                  )}
-
+                  
                   <div className="h-auto">
                     <div className="overflow-x-auto">
                       <table className="min-w-full divide-y divide-gray-200">

@@ -1,9 +1,12 @@
 // import React from 'react';
 import React, { useState, useRef, useEffect } from 'react';
-import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt } from 'react-icons/fa';
+import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt ,FaHeart} from 'react-icons/fa';
 import docimg from "../../images/doctor.png";
 import p1img from "../../images/patient1.jpeg";
 import p2img from "../../images/patient2.png";
+import { Line } from 'react-chartjs-2';
+import 'chart.js/auto';
+
 
 
 const Dashboard = () => {
@@ -11,65 +14,65 @@ const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
 
 
-  const virualCategories =[
+  const virualCategories = [
     "Video",
     "Article",
     "Audio"
-]
+  ]
 
 
-const virualTypes =[
-  "Educational",
-  "Self-Help Support",
-  "Therapeutic Exercises",
-  "Personal Stories"
+  const virualTypes = [
+    "Educational",
+    "Self-Help Support",
+    "Therapeutic Exercises",
+    "Personal Stories"
 
-]
+  ]
 
 
-const [selectedVirualCategory, setselectedVirualCategory] = useState(virualCategories[0])
-const [selectedVirualType, setselectedVirualType] = useState(virualTypes[0])
+  const [selectedVirualCategory, setselectedVirualCategory] = useState(virualCategories[0])
+  const [selectedVirualType, setselectedVirualType] = useState(virualTypes[0])
 
-const handleChangeSelectedValue = (e)=>{
-  setselectedVirualCategory(e.target.value)
-  console.log(e.target.value);
-}
-
-const handleChangeSelectedType = (e)=>{
-  setselectedVirualType(e.target.value)
-  console.log(e.target.value);
-}
-
-const handleVirualSubmit = (e)=>{
-  e.preventDefault();
-  const form = e.target;
-
-  const title = form.documentName.value;
-  const content = form.content.value;
-  const type = form.documentType.value;
-  const image = form.imageLink.value;
-  const link = form.documentURL.value;
-  const category = form.categoryName.value;
-
-  const virtualObj = {
-    title,content,type,image,link,category
+  const handleChangeSelectedValue = (e) => {
+    setselectedVirualCategory(e.target.value)
+    console.log(e.target.value);
   }
 
-  console.log(virtualObj);
+  const handleChangeSelectedType = (e) => {
+    setselectedVirualType(e.target.value)
+    console.log(e.target.value);
+  }
+
+  const handleVirualSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const title = form.documentName.value;
+    const content = form.content.value;
+    const type = form.documentType.value;
+    const image = form.imageLink.value;
+    const link = form.documentURL.value;
+    const category = form.categoryName.value;
+
+    const virtualObj = {
+      title, content, type, image, link, category
+    }
+
+    console.log(virtualObj);
 
 
-  fetch("http://localhost:3000/api/virualclub/upload-virual",{
-    method:"POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(virtualObj)
-  }).then(res=>res.json()).then(data=>{
-    alert("VirualClub Items are Uploaded")
-  })
-}
+    fetch("http://localhost:3000/api/virualclub/upload-virual", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(virtualObj)
+    }).then(res => res.json()).then(data => {
+      alert("VirualClub Items are Uploaded")
+    })
+  }
 
-  
+
   const appointmentRef = useRef(null);
   const dashboardRef = useRef(null);
   const messagesRef = useRef(null);
@@ -111,6 +114,28 @@ const handleVirualSubmit = (e)=>{
     }
 
   };
+  const data = {
+    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    datasets: [
+      {
+        label: 'Number of Patients',
+        data: [12, 19, 3, 5, 2, 3, 10],
+        fill: false,
+        backgroundColor: 'rgba(75,192,192,0.2)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+  
 
 
   return (
@@ -211,6 +236,60 @@ const handleVirualSubmit = (e)=>{
             <div class="pt-24">
               <h1>Hello! Mr.S.Suthakaran</h1>
               <p>Welcome to the  GenZheal dashboard.</p>
+
+              <div class="flex justify-between space-x-4">
+                <div class="mb-9 w-64 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
+                  <div class="flex flex-col items-start">
+                    <div class="flex items-center">
+                      <FaUsers className="text-2xl mr-2" />
+                      <p class="text-xl font-bold text-black">
+                        Patients
+                      </p>
+                    </div>
+                    <p class="text-xl font-bold text-black mt-2">100</p>
+                  </div>
+                </div>
+                <div class="mb-9 w-64 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
+                  <div class="flex flex-col items-start">
+                    <div class="flex items-center">
+                      <FaCalendarAlt className="text-2xl mr-2" />
+                      <p class="text-xl font-bold text-black">
+                        Appointments
+                      </p>
+                    </div>
+                    <p class="text-xl font-bold text-black mt-2">100</p>
+                  </div>
+                </div>
+                <div class="mb-9 w-64 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
+                  <div class="flex flex-col items-start">
+                    <div class="flex items-center">
+                      <FaHeart className="text-2xl mr-2" />
+                      <p class="text-xl font-bold text-black">
+                        Treatments
+                      </p>
+                    </div>
+                    <p class="text-xl font-bold text-black mt-2">100</p>
+                  </div>
+                </div>
+                <div class="mb-9 w-64 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
+                  <div class="flex flex-col items-start">
+                    <div class="flex items-center">
+                      <FaUsers className="text-2xl mr-2" />
+                      <p class="text-xl font-bold text-black">
+                        Patients
+                      </p>
+                    </div>
+                    <p class="text-xl font-bold text-black mt-2">100</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4">Weekly Activity</h2>
+      <Line data={data} options={options} />
+    </div>
+  
+
             </div>
 
             <div class="flex ">
@@ -533,71 +612,71 @@ const handleVirualSubmit = (e)=>{
                 </div>
 
                 {/* Toggleable Form */}
-               
+
                 {showForm && (
-                    <div className="fixed z-10 inset-0 overflow-y-auto">
-                      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                        </div>
+                  <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                      <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                      </div>
 
-                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                      <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-                        <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                          <form className="mt-4">
-                            <div className="mb-4">
-                              <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                                Patient Name
-                              </label>
-                              <input
-                                type="text"
-                                id="documentName"
-                                name="documentName"
-                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                            </div>
-                            <div className="mb-4">
-                              <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                                Date
-                              </label>
-                              <input
-                                type="text"
-                                id="documentURL"
-                                name="documentURL"
-                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                            </div>
-                            <div className="mb-4">
-                              <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                                Document
-                              </label>
-                              <input
-                                type="text"
-                                id="documentType"
-                                name="documentType"
-                                className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                              />
-                            </div>
-                            <div className="mb-8">
-                              <button
-                                type="submit"
-                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                              >
-                                Save
-                              </button>
-                              <button
+                      <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <form className="mt-4">
+                          <div className="mb-4">
+                            <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                              Patient Name
+                            </label>
+                            <input
+                              type="text"
+                              id="documentName"
+                              name="documentName"
+                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                              Date
+                            </label>
+                            <input
+                              type="text"
+                              id="documentURL"
+                              name="documentURL"
+                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                              Document
+                            </label>
+                            <input
+                              type="text"
+                              id="documentType"
+                              name="documentType"
+                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
+                          </div>
+                          <div className="mb-8">
+                            <button
+                              type="submit"
+                              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                              Save
+                            </button>
+                            <button
                               onClick={toggleForm}
                               type="button"
                               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                             >
                               Cancel
                             </button>
-                            </div>
-                          </form>
-                        </div>
+                          </div>
+                        </form>
                       </div>
                     </div>
-                  )}
+                  </div>
+                )}
 
                 <div class="h-72 overflow-y-auto">
                   <div className="overflow-x-auto">
@@ -823,118 +902,118 @@ const handleVirualSubmit = (e)=>{
                 {/* Toggleable Form */}
 
                 {showForm && (
-                     <div className="fixed z-10 inset-0 overflow-y-auto">
-                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                       <div className="fixed inset-0 transition-opacity">
-                         <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                       </div>
-         
-                       <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-         
-                       <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                           <div className="sm:flex sm:items-start">
-                             <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
-                                 Add Document
-                               </h3>
-                                <form className="mt-4">
-                                  <div className="mb-4">
-                                    <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                                      Document Name
-                                    </label>
-                                    <input
-                                      type="text"
-                                      id="documentName"
-                                      name="documentName"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                  </div>
-                                  <div className="mb-4">
-                                    <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                                      Document URL
-                                    </label>
-                                    <input
-                                      type="text"
-                                      id="documentURL"
-                                      name="documentURL"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                  </div>
-                                  <div className="mb-4">
-                                    <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                                      Document Type
-                                    </label>
-                                    <input
-                                      type="text"
-                                      id="documentType"
-                                      name="documentType"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                  </div>
-                                  <div className="mb-4">
-                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                                      Category
-                                    </label>
-                                    <select
-                                      id="category"
-                                      name="category"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    >
-                                      <option value="video">Video</option>
-                                      <option value="article">Article</option>
-                                      <option value="music">Music</option>
-                                    </select>
-                                  </div>
-                                  <div className="mb-4">
-                                    <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                                      Content
-                                    </label>
-                                    <textarea
-                                      id="content"
-                                      name="content"
-                                      rows="4"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                  </div>
-                                  <div className="mb-4">
-                                    <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-                                      Image Link
-                                    </label>
-                                    <input
-                                      type="text"
-                                      id="imageLink"
-                                      name="imageLink"
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                  </div>
-                                  
-                                </form>
-                              </div>
+                  <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                      <div className="fixed inset-0 transition-opacity">
+                        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                      </div>
+
+                      <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+
+                      <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div className="sm:flex sm:items-start">
+                            <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                              <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                Add Document
+                              </h3>
+                              <form className="mt-4">
+                                <div className="mb-4">
+                                  <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                    Document Name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="documentName"
+                                    name="documentName"
+                                    className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                  />
+                                </div>
+                                <div className="mb-4">
+                                  <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                    Document URL
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="documentURL"
+                                    name="documentURL"
+                                    className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                  />
+                                </div>
+                                <div className="mb-4">
+                                  <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                    Document Type
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="documentType"
+                                    name="documentType"
+                                    className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                  />
+                                </div>
+                                <div className="mb-4">
+                                  <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                                    Category
+                                  </label>
+                                  <select
+                                    id="category"
+                                    name="category"
+                                    className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                  >
+                                    <option value="video">Video</option>
+                                    <option value="article">Article</option>
+                                    <option value="music">Music</option>
+                                  </select>
+                                </div>
+                                <div className="mb-4">
+                                  <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                    Content
+                                  </label>
+                                  <textarea
+                                    id="content"
+                                    name="content"
+                                    rows="4"
+                                    className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                  />
+                                </div>
+                                <div className="mb-4">
+                                  <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                                    Image Link
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="imageLink"
+                                    name="imageLink"
+                                    className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                  />
+                                </div>
+
+                              </form>
                             </div>
                           </div>
-                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button
-                              onClick={toggleForm}
-                              type="button"
-                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={toggleForm}
-                              type="button"
-                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Cancel
-                            </button>
-                          </div>
+                        </div>
+                        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                          <button
+                            onClick={toggleForm}
+                            type="button"
+                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={toggleForm}
+                            type="button"
+                            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                          >
+                            Cancel
+                          </button>
                         </div>
                       </div>
                     </div>
-                  )}
+                  </div>
+                )}
 
-           
+
                 <div class="h-72 overflow-y-auto">
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
@@ -1582,7 +1661,7 @@ const handleVirualSubmit = (e)=>{
                   </div>
 
                   {/* Toggleable Form */}
-                 
+
                   {showForm && (
                     <div className="fixed z-10 inset-0 overflow-y-auto">
                       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -1635,12 +1714,12 @@ const handleVirualSubmit = (e)=>{
                                 Save
                               </button>
                               <button
-                              onClick={toggleForm}
-                              type="button"
-                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Cancel
-                            </button>
+                                onClick={toggleForm}
+                                type="button"
+                                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                              >
+                                Cancel
+                              </button>
                             </div>
                           </form>
                         </div>
@@ -1937,23 +2016,23 @@ const handleVirualSubmit = (e)=>{
                   </div>
 
                   {/* Toggleable Form */}
-                  
+
                   {showForm && (
-                     <div className="fixed z-50 inset-2 overflow-y-auto">
-                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                       <div className="fixed inset-0 transition-opacity">
-                         <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                       </div>
-         
-                       <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-         
-                       <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                           <div className="sm:flex sm:items-start">
-                             <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
-                                 Add Document
-                               </h3>
+                    <div className="fixed z-50 inset-2 overflow-y-auto">
+                      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity">
+                          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div className="sm:flex sm:items-start">
+                              <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                  Add Document
+                                </h3>
                                 <form className="mt-4" onSubmit={handleVirualSubmit} >
                                   <div className="mb-4">
                                     <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
@@ -1982,32 +2061,32 @@ const handleVirualSubmit = (e)=>{
                                       Document Type
                                     </label>
                                     <select
-                          id="documentType"
-                          name="documentType"
-                          value={selectedVirualType}
-                          onChange={handleChangeSelectedType}
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        >
-                          {
-                            virualTypes.map((option)=><option key={option} value={option}>{option}</option>)
-                          }
-                        </select>
+                                      id="documentType"
+                                      name="documentType"
+                                      value={selectedVirualType}
+                                      onChange={handleChangeSelectedType}
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    >
+                                      {
+                                        virualTypes.map((option) => <option key={option} value={option}>{option}</option>)
+                                      }
+                                    </select>
                                   </div>
                                   <div className="mb-4">
                                     <label htmlFor="category" className="block text-sm font-medium text-gray-700">
                                       Category
                                     </label>
                                     <select
-                          id="categoryName"
-                          name="categoryName"
-                          value={selectedVirualCategory}
-                          onChange={handleChangeSelectedValue}
-                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        >
-                          {
-                            virualCategories.map((option)=><option key={option} value={option}>{option}</option>)
-                          }
-                        </select>
+                                      id="categoryName"
+                                      name="categoryName"
+                                      value={selectedVirualCategory}
+                                      onChange={handleChangeSelectedValue}
+                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    >
+                                      {
+                                        virualCategories.map((option) => <option key={option} value={option}>{option}</option>)
+                                      }
+                                    </select>
                                   </div>
                                   <div className="mb-4">
                                     <label htmlFor="content" className="block text-sm font-medium text-gray-700">
@@ -2033,22 +2112,22 @@ const handleVirualSubmit = (e)=>{
                                   </div>
 
 
-                                 
-                            <button
-                              type="submit"
-                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Save
-                            </button>
-                            <button
-                            onClick={toggleForm}
-                              type="button"
-                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Cancel
-                            </button>
-                        
-                                  
+
+                                  <button
+                                    type="submit"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    onClick={toggleForm}
+                                    type="button"
+                                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Cancel
+                                  </button>
+
+
                                 </form>
                               </div>
                             </div>
@@ -2073,7 +2152,7 @@ const handleVirualSubmit = (e)=>{
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="h-auto">
                     <div className="overflow-x-auto">
                       <table className="min-w-full divide-y divide-gray-200">

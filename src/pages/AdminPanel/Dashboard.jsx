@@ -1,6 +1,6 @@
 // import React from 'react';
 import React, { useState, useRef, useEffect } from 'react';
-import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt ,FaHeart} from 'react-icons/fa';
+import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt, FaHeart } from 'react-icons/fa';
 import docimg from "../../images/doctor.png";
 import p1img from "../../images/patient1.jpeg";
 import p2img from "../../images/patient2.png";
@@ -12,7 +12,25 @@ import 'chart.js/auto';
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showForm, setShowForm] = useState(false);
+  const [isEditVFormVisible, setEditVFormVisible] = useState(false);
+  const [editVData, setEditVData] = useState({ name: '', url: '', type: '' });
 
+  const toggleEditVForm = (data = {}) => {
+    setEditVData(data);
+    setEditVFormVisible(!isEditVFormVisible);
+    console.log('Edit form visibility:', !isEditVFormVisible);
+    console.log('Edit data:', data);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditVData({ ...editVData, [name]: value });
+  };
+
+  const handleSave = () => {
+    // Handle save logic here
+    toggleEditVForm(); // Close the form after saving
+  };
 
   const virualCategories = [
     "Video",
@@ -135,7 +153,7 @@ const Dashboard = () => {
       },
     },
   };
-  
+
 
 
   return (
@@ -285,10 +303,10 @@ const Dashboard = () => {
               </div>
 
               <div className="w-full max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Weekly Activity</h2>
-      <Line data={data} options={options} />
-    </div>
-  
+                <h2 className="text-2xl font-bold mb-4">Weekly Activity</h2>
+                <Line data={data} options={options} />
+              </div>
+
 
             </div>
 
@@ -1059,9 +1077,150 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
+                            </button>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              delete
                             </a>
+                          </td>
+                        </tr>
+
+                        {isEditVFormVisible && (
+                          <div className="fixed z-10 inset-0 overflow-y-auto">
+                            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                              <div className="fixed inset-0 transition-opacity">
+                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                              </div>
+
+                              <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+
+                              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                  <div className="sm:flex sm:items-start">
+                                    <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                        Edit Document
+                                      </h3>
+                                      <form className="mt-4">
+                                        <div className="mb-4">
+                                          <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                            Document Name
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="documentName"
+                                            name="name"
+                                            value={editVData.name}
+                                            onChange={handleInputChange}
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                            Document URL
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="documentURL"
+                                            name="url"
+                                            value={editVData.url}
+                                            onChange={handleInputChange}
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                            Document Type
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="documentType"
+                                            name="type"
+                                            value={editVData.type}
+                                            onChange={handleInputChange}
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                                            Category
+                                          </label>
+                                          <select
+                                            id="category"
+                                            name="category"
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          >
+                                            <option value="video">Video</option>
+                                            <option value="article">Article</option>
+                                            <option value="music">Music</option>
+                                          </select>
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                            Content
+                                          </label>
+                                          <textarea
+                                            id="content"
+                                            name="content"
+                                            rows="4"
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                                            Image Link
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="imageLink"
+                                            name="imageLink"
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                  <button
+                                    onClick={handleSave}
+                                    type="button"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    onClick={toggleEditVForm}
+                                    type="button"
+                                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <tr>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-500">
+                              video
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
+                              Edit
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -1083,9 +1242,9 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
-                            </a>
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -1107,9 +1266,9 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
-                            </a>
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -1131,9 +1290,9 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
-                            </a>
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -1155,9 +1314,9 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
-                            </a>
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -1179,9 +1338,9 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
-                            </a>
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -1203,9 +1362,9 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
-                            </a>
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -1227,33 +1386,9 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                               Edit
-                            </a>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
+                            </button>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2198,9 +2333,153 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
+                              </button>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                delete
                               </a>
+                            </td>
+                          </tr>
+                          {isEditVFormVisible && (
+                            <div className="fixed z-10 inset-0 overflow-y-auto">
+                              <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                <div className="fixed inset-0 transition-opacity">
+                                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                </div>
+
+                                <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+                                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <div className="sm:flex sm:items-start">
+                                      <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                        <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                          Edit Document
+                                        </h3>
+                                        <form className="mt-4">
+                                          <div className="mb-4">
+                                            <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                              Document Name
+                                            </label>
+                                            <input
+                                              type="text"
+                                              id="documentName"
+                                              name="name"
+                                              value={editVData.name}
+                                              onChange={handleInputChange}
+                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            />
+                                          </div>
+                                          <div className="mb-4">
+                                            <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                              Document URL
+                                            </label>
+                                            <input
+                                              type="text"
+                                              id="documentURL"
+                                              name="url"
+                                              value={editVData.url}
+                                              onChange={handleInputChange}
+                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            />
+                                          </div>
+                                          <div className="mb-4">
+                                            <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                              Document Type
+                                            </label>
+                                            <input
+                                              type="text"
+                                              id="documentType"
+                                              name="type"
+                                              value={editVData.type}
+                                              onChange={handleInputChange}
+                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            />
+                                          </div>
+                                          <div className="mb-4">
+                                            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                                              Category
+                                            </label>
+                                            <select
+                                              id="categoryName"
+                                              name="categoryName"
+                                              value={selectedVirualCategory}
+                                              onChange={handleChangeSelectedValue}
+                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            >
+                                              {
+                                                virualCategories.map((option) => <option key={option} value={option}>{option}</option>)
+                                              }
+                                            </select>
+                                          </div>
+                                          <div className="mb-4">
+                                            <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                              Content
+                                            </label>
+                                            <textarea
+                                              id="content"
+                                              name="content"
+                                              rows="4"
+                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            />
+                                          </div>
+                                          <div className="mb-4">
+                                            <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                                              Image Link
+                                            </label>
+                                            <input
+                                              type="text"
+                                              id="imageLink"
+                                              name="imageLink"
+                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            />
+                                          </div>
+
+
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                    <button
+                                      onClick={handleSave}
+                                      type="button"
+                                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                    >
+                                      Save
+                                    </button>
+                                    <button
+                                      onClick={toggleEditVForm}
+                                      type="button"
+                                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          <tr>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="text-sm text-gray-500">
+                                video
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
+                                Edit
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2222,9 +2501,9 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
-                              </a>
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2246,9 +2525,9 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
-                              </a>
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2270,9 +2549,9 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
-                              </a>
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2294,9 +2573,9 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
-                              </a>
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2318,9 +2597,9 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
-                              </a>
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2342,9 +2621,9 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
-                              </a>
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -2366,33 +2645,9 @@ const Dashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
                                 Edit
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a href="#" className="text-indigo-600 hover:text-indigo-900">

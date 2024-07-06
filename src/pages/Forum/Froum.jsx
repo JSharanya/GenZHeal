@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const Froum = () => {
   const [isReply, setIsReply] = useState(false);
@@ -63,7 +64,7 @@ const Froum = () => {
 
         <div>
           <section class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
-            <div class="max-w-6xl mx-auto bg-slate-400 p-6 ">
+            <div class="max-w-6xl mx-auto bg-[#e5f7f8] p-6 ">
               <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
                   Discussion Forum
@@ -86,7 +87,7 @@ const Froum = () => {
                 </div>
                 <button
                   type="submit"
-                  class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-purple rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                  class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#26aba3] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
                 >
                   Post comment
                 </button>
@@ -108,16 +109,15 @@ const Froum = () => {
                         datetime="2022-02-08"
                         title="February 8th, 2022"
                       >
-                        Feb. 8, 2022
+                        July. 6, 2024
                       </time>
                     </p>
                   </div>
                 </footer>
                 <p class="text-gray-500 dark:text-gray-400">
-                  Very straight-to-point article. Really worth time reading.
-                  Thank you! But tools are just the instruments for the UX
-                  designers. The knowledge of the design tools are as important
-                  as the creation of the design strategy.
+                Invest in your well-being! Our curated collection of self-care essentials empowers you to manage stress, boost mood, and find inner peace. Explore journals, aromatherapy tools, and mindfulness resources – 
+                all designed to nurture your mental health journey.
+
                 </p>
                 <div class="flex items-center mt-4 space-x-4">
                   <button
@@ -233,14 +233,14 @@ const Froum = () => {
                         datetime="2022-02-12"
                         title="February 12th, 2022"
                       >
-                        Feb. 12, 2022
+                        July. 05, 2024
                       </time>
                     </p>
                   </div>
                
                 </footer>
                 <p class="text-gray-500 dark:text-gray-400">
-                  Much appreciated! Glad you liked it ☺️
+                "Wow, that session was really helpful. I never thought about reframing my negative thoughts that way!"
                 </p>
                 <div class="flex items-center mt-4 space-x-4">
                   <button
@@ -334,7 +334,7 @@ const Froum = () => {
                         datetime="2022-02-12"
                         title="February 12th, 2022"
                       >
-                        Feb. 12, 2022
+                        July. 01, 2024
                       </time>
                     </p>
                   </div>
@@ -392,7 +392,7 @@ const Froum = () => {
                   </div>
                 </footer>
                 <p class="text-gray-500 dark:text-gray-400">
-                  Much appreciated! Glad you liked it ☺️
+                "I feel so much lighter after talking about this. It's a relief to not have to bottle everything up."
                 </p>
                 <div class="flex items-center mt-4 space-x-4">
                   <button
@@ -435,7 +435,7 @@ const Froum = () => {
                         datetime="2022-03-12"
                         title="March 12th, 2022"
                       >
-                        Mar. 12, 2022
+                        June. 12, 2024
                       </time>
                     </p>
                   </div>
@@ -493,9 +493,9 @@ const Froum = () => {
                   </div>
                 </footer>
                 <p class="text-gray-500 dark:text-gray-400">
-                  The article covers the essentials, challenges, myths and
-                  stages the UX designer should consider while creating the
-                  design strategy.
+                Unleash your inner calm. Our curated selection of self-care essentials empowers you to manage stress, elevate mood, 
+                and cultivate inner peace. From calming candles to guided meditations, 
+                explore tools designed to nurture your mental well-being.
                 </p>
                 <div class="flex items-center mt-4 space-x-4">
                   <button
@@ -538,7 +538,7 @@ const Froum = () => {
                         datetime="2022-06-23"
                         title="June 23rd, 2022"
                       >
-                        Jun. 23, 2022
+                        June. 23, 2024
                       </time>
                     </p>
                   </div>
@@ -595,9 +595,8 @@ const Froum = () => {
                   </div>
                 </footer>
                 <p class="text-gray-500 dark:text-gray-400">
-                  Thanks for sharing this. I do came from the Backend
-                  development and explored some of the tools to design my Side
-                  Projects.
+                Self-care made simple. Discover our hand-picked collection of stress-busting tools and mood-boosting resources. Explore aromatherapy diffusers, 
+                mindfulness journals, and more - all designed to empower your mental health journey.
                 </p>
                 <div class="flex items-center mt-4 space-x-4">
                   <button
@@ -626,7 +625,9 @@ const Froum = () => {
             </div>
           </section>
         </div>
+        <div><Footer/></div>
       </div>
+     
     </div>
   );
 };

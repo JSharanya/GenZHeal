@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Questiondata from "../../data/question.json";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -44,7 +45,7 @@ const Quiz = () => {
   }
 
   return (
-    <div class="h-screen overflow-y-auto bg-blue-100  ">
+    <div class="h-screen overflow-y-auto bg-[#e5f7f8] ">
       <div>
         <Header />
       </div>
@@ -118,13 +119,21 @@ const Quiz = () => {
                       {performance}
                     </span>
                   </h2>
-                  <span className="text-gray-700">({percentage}%)</span>
+                  {/* <span className="text-gray-700">({percentage}%)</span> */}
                   <div class="py-10 text-center" onClick={handleRestartQuiz}>
                     <a
                       href="#"
-                      class="px-12 bg-bermuda hover:bg-indigo-500 text-white font-semibold py-3"
+                      class="px-12 bg-bermuda hover:bg-black text-white font-semibold py-3"
                     >
                       GO BACK
+                    </a>
+                  </div>
+                  <div class=" text-center">
+                    <a
+                      href="/appointment"
+                      class="px-8 bg-bermuda hover:bg-black text-white font-semibold py-3"
+                    >
+                      GET APPOINTMENT
                     </a>
                   </div>
                 </div>
@@ -172,6 +181,7 @@ const Quiz = () => {
           </div>
         )}
       </div>
+      <div><Footer/></div>
     </div>
   );
 };

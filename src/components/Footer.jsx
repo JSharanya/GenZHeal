@@ -1,19 +1,23 @@
 import React from 'react'
+import { PiBrainBold } from "react-icons/pi";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col space-y-10 justify-center pb-10 mt-32 bg-slate-400 w-full">
+    <footer className="flex flex-col space-y-10 justify-center pb-10 mt-32 bg-[#e6eef1] w-full">
 
-<h1 className='text-center mt-10'>LOGO</h1>
+
+<a href='/' className='text-center mt-10 text-3xl font-extrabold text-bermuda flex items-center gap-2 self-center whitespace-nowrap dark:text-white px-2 py-1'>
+<PiBrainBold className="inline-block" /> GenZHeal</a>
+
 
     <nav className="flex justify-center flex-wrap gap-8 lg:gap-24 text-gray-500 font-medium">
       
-        <a className="hover:text-gray-900" href="#">Home</a>
-        <a className="hover:text-gray-900" href="#">About</a>
-        <a className="hover:text-gray-900" href="#">Services</a>
-        <a className="hover:text-gray-900" href="#">Media</a>
-        <a className="hover:text-gray-900" href="#">Gallery</a>
-        <a className="hover:text-gray-900" href="#">Contact</a>
+        <a className="hover:text-gray-900 text-black" href="/">Home</a>
+        <a className="hover:text-gray-900  text-black" href="/appointment">Appointment</a>
+        <a className="hover:text-gray-900  text-black" href="/virtualclub">Virual Club</a>
+        <a className="hover:text-gray-900  text-black" href="/quiz">Quiz</a>
+        <a className="hover:text-gray-900  text-black" href="/aboutus">About Us</a>
     </nav>
 
     <div className="flex justify-center space-x-5">
@@ -33,7 +37,7 @@ const Footer = () => {
             <img src="https://img.icons8.com/fluent/30/000000/twitter.png" />
         </a>
     </div>
-    <p className="text-center text-gray-700 font-medium ">&copy; 2022 Company Ltd. All rights reservered.</p>
+    <p className="text-center text-gray-700 font-medium ">&copy; 2024 GenZHeal. All rights reservered.</p>
 </footer>
   )
 }

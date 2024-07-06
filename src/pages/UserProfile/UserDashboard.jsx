@@ -4,9 +4,14 @@ import UserProfile from './UserProfile';
 import './Profile.css';
 import { Outlet, Link } from 'react-router-dom';
 import { PiBrainBold } from "react-icons/pi";
+import p1img from "../../images/patient1.jpeg";
 
 const UserDashboard = () => {
   const [activeMenu, setActiveMenu] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
 
   const handleMenuClick = (menuItem) => {
     setActiveMenu(menuItem);
@@ -37,7 +42,38 @@ const UserDashboard = () => {
       </div>
       <div className="MainContent">
         <div className="ContentWrapper">
-          {activeMenu === '' && <div className="Placeholder">Select menu</div>}
+          {activeMenu === '' &&    <div className="UserDetails">
+      <div className="ProfilePhoto">
+      <img
+                width="200"
+                src={p1img}
+                alt="patient1"
+                className="rounded-full mb-3"
+      />
+      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td>UserName</td>
+            <td>Thadsha</td>
+          </tr>
+          <tr>
+            <td>FullName</td>
+            <td>Thadsha Selvaratnam</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>thadsha@gmail.com</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>Jaffna</td>
+          </tr> 
+          </tbody>
+          </table>
+      <button className="EditProfileButton" onClick={handleEditClick}>Change</button>
+
+    </div>}
           <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />
         </div>
       </div>

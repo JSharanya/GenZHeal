@@ -9,6 +9,8 @@ import 'chart.js/auto';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Chatting from './Chatting';
+
 
 
 
@@ -1621,6 +1623,8 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+
+         <Chatting activeSection={activeSection} messagesRef={messagesRef} />
 
 
 

@@ -6,7 +6,7 @@ const DashboardLayout = () => {
   return (
     <div>
       <nav className="bg-gray-100 fixed top-0 w-full ml-64 z-50 pt-5">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mx-auto flex justify-between">
           <div className="ml-10">
             <Link
               to="/"

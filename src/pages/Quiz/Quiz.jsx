@@ -44,7 +44,7 @@ const Quiz = () => {
   }
 
   return (
-    <div class="overflow-y min-h-screen bg-blue-100  ">
+    <div class="h-screen overflow-y-auto bg-blue-100  ">
       <div>
         <Header />
       </div>

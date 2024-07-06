@@ -20,7 +20,7 @@ const SignIn = () => {
  
   const handleSubmit=async(e)=>{
     e.preventDefault();
-    if( !formData.username|| !formData.password){
+    if( !formData.email|| !formData.password){
       // return dispatch(signInFailure('Please fill out all fields'))
       return toast.error("Please fill out all fields")
     }
@@ -112,12 +112,12 @@ const SignIn = () => {
                <form onSubmit={handleSubmit}>
           <div class="mt-4">
               <label class="block text-gray-700 text-sm font-bold mb-2">
-                User Name
+                User Email Address
               </label>
               <input
                 class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                type="text"
-                id="username"
+                type="email"
+                id="email"
                 onChange={handleChange}
               />
             </div>

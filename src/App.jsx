@@ -16,6 +16,7 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import "./pages/UserProfile/Profile.css";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import { ToastContainer } from "react-toastify";
+import Chatting from "./pages/AdminPanel/Chatting";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
 
           <Route path="/admin/dashboard" element={<DashboardLayout />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/dashboard" element={<Chatting />} />
           </Route> 
         </Routes>
       </BrowserRouter>

@@ -17,7 +17,7 @@ import "./pages/UserProfile/Profile.css";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import { ToastContainer } from "react-toastify";
 import Chatting from "./pages/AdminPanel/Chatting";
-
+import Success from "./pages/Appointment/Success";
 function App() {
   return (
     <>
@@ -25,6 +25,7 @@ function App() {
         <Routes>
          <Route path="/" element={<Home />} />
           <Route path="/appointment" element={<Appointment />} />
+          <Route path="/checkout-success" element={<Success />} />
           <Route path="/forum" element={<Froum />} />
           <Route path="/virtualclub" element={<Virtualclub />} />
           <Route path="/payment" element={<Payment />} />

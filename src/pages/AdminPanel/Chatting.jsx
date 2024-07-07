@@ -19,6 +19,15 @@ const Chatting = ({ activeSection, messagesRef }) => {
     const [users, setUsers] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+
+
+    const sampleMessages = [
+      { user: 'jane', text: 'Hi John, how are you?' },
+      { user: 'suthakaran', text: 'I am good, thank you! How about you?' },
+      { user: 'jane', text: 'I am doing well, thanks for asking!' },
+      { user: 'suthakaran', text: 'What are you up to today?' },
+      { user: 'jane', text: 'Just working on a project, you?' },
+    ];
   
     useEffect(() => {
       const { name, room } = queryString.parse(location.search);
@@ -53,6 +62,8 @@ const Chatting = ({ activeSection, messagesRef }) => {
       }
     }
 
+
+
     return (
       <div>
        <div ref={messagesRef} className={`${activeSection === 'messages' ? 'block' : 'hidden'}`}>
@@ -60,6 +71,7 @@ const Chatting = ({ activeSection, messagesRef }) => {
       <div className="container">
           <InfoBar room={room} />
           <Messages messages={messages} name={name} />
+          <Messages messages={sampleMessages} name="suthakaran" />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
       <TextContainer users={users}/>

@@ -9,6 +9,10 @@ const Message = ({ message: { text, user }, name }) => {
 
   const trimmedName = name.trim().toLowerCase();
 
+  // const messageClass = isSentByCurrentUser ? 'justifyEnd' : 'justifyStart';
+  // const boxClass = isSentByCurrentUser ? 'backgroundBlue colorWhite' : 'backgroundLight colorDark';
+  // const textClass = isSentByCurrentUser ? 'pl-10' : 'pr-10';
+
   if(user === trimmedName) {
     isSentByCurrentUser = true;
   }

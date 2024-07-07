@@ -121,12 +121,12 @@
   width: 200px; 
   height: 200px; 
   border-radius: 50%;
-  background-color: #ccc;
+  
   margin-bottom: 20px;
   background-size: cover;
   background-position: center;
-  display: block; /* Ensure it's a block element */
-  margin: 0 auto; /* Center align the photo */
+  display: block; 
+  margin: 0 auto; 
 }
 
  .UserDetails {
@@ -163,13 +163,25 @@
    background: white;
    padding: 20px;
    border-radius: 8px;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 2px 4px rgba(135, 171, 237, 0.1);
    display: flex;
    flex-direction: column;
    align-items: center;
    width: 500px;
    margin:0 auto;
  }
+ .PopupMessage {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
  
  .EditProfileForm h2 {
    margin-bottom: 20px;
@@ -215,12 +227,12 @@
  }
  
  .FormButtons button:first-child {
-   background-color: #34db98;
+   background-color: #5991db;
    color: white;
  }
  
  .FormButtons button:last-child {
-   background-color: #e74c3c;
+   background-color: #e07f74;
    color: white;
  }
  
@@ -301,6 +313,36 @@
 
 .ChatMessage {
   color: #555;
+}
+.form {
+  display: flex;
+  border: 2px solid #D3D3D3;
+
+}
+
+.input {
+  border: none;
+  border-top-left-radius:10px;
+  border-bottom-left-radius:10px;
+  padding: 5%;
+  width: 100%;
+  font-size: 1.2em;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+.sendButton {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #2979FF;
+  padding: 20px;
+  display: inline-block;
+  border: black;
+
+  width: 40%;
 }
 
  

@@ -125,7 +125,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <section id="features" className="container mx-auto px-4 space-y-6 bg-slate-50 py-8 md:py-12 lg:py-20">
+      <section id="features" className="container mx-auto px-4 space-y-6 bg-slate-50 py-8 md:py-12 lg:py-20 mb-72">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
           Stages of consultation with patients on mental health
@@ -220,9 +220,9 @@ const AboutUs = () => {
 
       <section
         id="features"
-        className="container mx-auto px-4 space-y-6 bg-slate-50 py-8 md:py-12 lg:py-20"
+        className="mx-auto px-4 space-y-6 bg-slate-50 py-8 md:py-12 lg:py-20 "
       >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center ">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             What I'm Offer
           </h2>
@@ -372,7 +372,7 @@ const AboutUs = () => {
       </section>
 
 
-      <div className="relative bg-[#e5f7f8] ">
+      <div className="relative bg-[#e5f7f8]  ">
         <div className="absolute inset-x-0 bottom-0">
           <svg
             viewBox="0 0 224 12"

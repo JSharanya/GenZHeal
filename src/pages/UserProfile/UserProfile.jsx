@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './Profile.css';
 import p1img from "../../images/patient1.jpeg";
 
@@ -9,6 +9,15 @@ const UserProfile = ({ activeMenu }) => {
     newPassword: '',
     confirmPassword: ''
   });
+  const [message, setMessage] = useState('');
+
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    // Your logic to send the message
+    console.log('Message sent:', message);
+    setMessage('');
+  };
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -34,6 +43,21 @@ const handlePasswordSave = () => {
 const handleCancel = () => {
   setIsEditing(false);
 };
+const [newMessage, setNewMessage] = useState(false); 
+
+useEffect(() => {
+  
+  const interval = setInterval(() => {
+    setNewMessage(true);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
+const handleNewMessageClick = () => {
+  setNewMessage(false); 
+  
+};
+
   const appointments = [
     { date: '2023-12-14', time: '09:00 AM', finished: 'Yes' },
     { date: '2023-12-21', time: '11:00 AM', finished: 'Yes' },
@@ -45,6 +69,13 @@ const handleCancel = () => {
     { date: '2024-07-01', time: '11:00 AM', finished: 'No' },
     
   ];
+  const sessions = [
+    { SessionNo: 1, Date: '2023-12-14', Time: '09:00 AM', Level: 'High' },
+    { SessionNo: 2, Date: '2023-12-21', Time: '11:00 AM', Level: 'Low' },
+    { SessionNo: 3, Date: '2024-01-01', Time: '12:00 AM', Level: 'Average' },
+    { SessionNo: 4, Date: '2024-01-16', Time: '11:00 AM', Level: 'Low' },
+    { SessionNo: 5, Date: '2024-01-01', Time: '12:00 AM', Level: 'Average' },    
+  ];
   const treatments = [
     { date: '2023-12-14', time: '09:00 AM', document: 'report1.pdf' },
     { date: '2023-12-21', time: '11:00 AM', document: 'report2.pdf' },
@@ -55,13 +86,9 @@ const handleCancel = () => {
     { date: '2024-06-22', time: '12:00 AM', document: 'report7.pdf' },     
   ];
   const chats = [
-    {  message: 'Hi, How about tomorrow Service' },
-    {  message: 'Hi, How about tomorrow Service' },
-    {  message: 'Hi, How about tomorrow Service' },
-    {  message: 'Hi, How about tomorrow Service' },
-    {  message: 'Hi, How about tomorrow Service' },
-    {  message: 'Hi, How about tomorrow Service' },
-  ];
+    { name: 'Doctor', message: 'Hello, how can I help you today?' },
+    { name: 'Me', message: 'I have a question about my upcoming appointment.' },
+  ];  
 
 
   return (
@@ -82,18 +109,12 @@ const handleCancel = () => {
             <td>UserName</td>
             <td>Thadsha</td>
           </tr>
-          <tr>
-            <td>FullName</td>
-            <td>Thadsha Selvaratnam</td>
-          </tr>
+
           <tr>
             <td>Email</td>
             <td>thadsha@gmail.com</td>
           </tr>
-          <tr>
-            <td>Address</td>
-            <td>Jaffna</td>
-          </tr> 
+
           </tbody>
           </table>
       <button className="EditProfileButton" onClick={handleEditClick}>Change</button>
@@ -109,19 +130,12 @@ const handleCancel = () => {
         <input type="text" defaultValue="Your Name" />
       </div>
       <div className="FormRow">
-        <label>FullName:</label>
-        <input type="text" defaultValue="your fullName"/>
-      </div>  
-      <div className="FormRow">
         <label>Email:</label>
         <input type="email" defaultValue="yourname@gmail.com" />
       </div>
+      
       <div className="FormRow">
-        <label>Address:</label>
-        <input type="text" defaultValue="Your Address" />
-      </div>
-          <div className="FormRow">
-             <label>Profile Image:</label>
+            <label>Profile Image:</label>
             <input
               type="file"
               name="profileImage"
@@ -195,8 +209,31 @@ const handleCancel = () => {
       </table>
       </>
     ) }
-
-
+     {activeMenu === 'Sessions' && (
+      <>
+          <h2>Sessions</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Session No</th>
+                <th>Date</th>
+                <th>FinishedTime</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sessions.map((session, index) => (
+                <tr key={index}>
+                  <td>{session.SessionNo}</td>
+                  <td>{session.Date}</td>
+                  <td>{session.Time}</td>
+                  <td>{session.Level}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+    ) }
 
     {activeMenu === 'TreatmentHistory' && (
     <>
@@ -224,20 +261,36 @@ const handleCancel = () => {
 
 {activeMenu === 'Chat' && (
       <>
-      <div className="chat column">
-        <h2>Admin Chats</h2>
-        <div className="ChatList">
-          {chats.map((chat, index) => (
-            <div key={index} className="ChatItem">
-              <img src="path/to/profile.jpg" alt="profile" className="ChatProfilePhoto" />
-              <div className="ChatDetails">
-                <div className="ChatName">{chat.name}</div>
-                <div className="ChatMessage">{chat.message}</div>
-              </div>
+          <div className="Chat">
+            <h2>Chats</h2>
+            <div className="ChatList">
+              {chats.map((chat, index) => (
+                <div key={index} className="ChatItem">
+                  <div className="ChatDetails">
+                    <div className="ChatName">{chat.name}</div>
+                    <div className="ChatMessage">{chat.message}</div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        </div>
+          </div>
+          {newMessage && (
+            <div className="Notification">
+              
+              <button onClick={handleNewMessageClick}></button>
+              <form className="form">
+    <input
+      className="input"
+      type="text"
+      placeholder="Type a message..."
+      value={message}
+      onChange={({ target: { value } }) => setMessage(value)}
+      
+    />
+    <button className="sendButton" onClick={e => sendMessage(e)}>Send</button>
+  </form>
+            </div>
+          )}
       </>
     ) }
 

@@ -32,11 +32,11 @@ const UserDashboard = () => {
         <Outlet />
         <div className="Menu">
           <div className="MenuItem" onClick={() => handleMenuClick('My Profile')}><FaUserCircle className="Icon" /> My Profile</div>
-          <div className="MenuItem" onClick={() => handleMenuClick('Settings')}><FaCog className="Icon" /> Settings</div>
           <div className="MenuItem" onClick={() => handleMenuClick('Appointments')}><FaCalendarAlt className="Icon" /> Appointments</div>
           <div className="MenuItem" onClick={() => handleMenuClick('Sessions')}><FaClock className="Icon" /> Sessions</div>
           <div className="MenuItem" onClick={() => handleMenuClick('TreatmentHistory')}><FaHistory className="Icon" /> Treatment History</div>
           <div className="MenuItem" onClick={() => handleMenuClick('Chat')}><FaComments className="Icon" /> Chat</div>
+          <div className="MenuItem" onClick={() => handleMenuClick('Settings')}><FaCog className="Icon" /> Settings</div>
           <a href='/signin'><div className="MenuItem" onClick={() => handleMenuClick('Log Out')}><FaSignOutAlt className="Icon" /> Log Out</div></a>
         </div>
       </div>
@@ -56,11 +56,11 @@ const UserDashboard = () => {
                 <tbody>
                   <tr>
                     <td>Username</td>
-                    <td>Thadsha</td>
+                    <td>User345</td>
                   </tr>
                   <tr>
                     <td>Email</td>
-                    <td>thadsha@gmail.com</td>
+                    <td>User345@gmail.com</td>
                   </tr>
                 </tbody>
               </table>

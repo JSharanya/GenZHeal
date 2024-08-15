@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { FaUserCircle, FaCog, FaCalendarAlt, FaHistory, FaComments, FaSignOutAlt, FaClock } from 'react-icons/fa';
 import UserProfile from './UserProfile';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PiBrainBold } from "react-icons/pi";
 
 const UserDashboard = () => {
-  const [activeMenu, setActiveMenu] = useState('');
+  const [activeMenu, setActiveMenu] = useState('My Profile');
+  const navigate = useNavigate();
 
   const handleMenuClick = (menuItem) => {
     setActiveMenu(menuItem);
@@ -38,20 +39,20 @@ const UserDashboard = () => {
           <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={() => handleMenuClick('Chat')}>
             <FaComments className="mr-2" /> Chat
           </div>
-          <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={() => handleMenuClick('Log Out')}>
-            <FaSignOutAlt className="mr-2" /> Log Out
+          <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={()=>navigate('/signin')}>
+            <FaSignOutAlt className="mr-2"/> Log Out
           </div>
         </div>
       </div>
       <div className="ContentWrapper flex-1 p-8">
-        {activeMenu === '' && <div className="Placeholder text-center text-gray-500">Select menu</div>}
+
         {activeMenu === 'My Profile' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'Settings' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'Appointments' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}  
         {activeMenu === 'Sessions' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'TreatmentHistory' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />} 
         {activeMenu === 'Chat' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
-        <a href='/signin'><div>{activeMenu === 'Log Out' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />} </div></a>      
+
       </div>
     </div>
   );

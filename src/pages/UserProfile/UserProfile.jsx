@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 const UserProfile = ({ activeMenu }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState({
@@ -74,16 +75,21 @@ const UserProfile = ({ activeMenu }) => {
     alert('Password updated successfully');
   };
 
-  const appointments = [
-    { appointNo: 1, date: "2023-12-14", time: "09:00 AM",Status: "Confirmed" },
-    { appointNo: 2, date: "2023-12-21", time: "11:00 AM",Status: "Confirmed" },
-    { appointNo: 3, date: "2024-01-01", time: "12:00 AM",Status: "Confirmed" },
-    { appointNo: 4, date: "2024-02-15", time: "11:00 AM",Status: "Confirmed" },
-    { appointNo: 5, date: "2024-06-08", time: "10:00 AM",Status: "Confirmed" },
-    { appointNo: 6, date: "2024-06-15", time: "11:00 AM",Status: "Cancelled" },
-    { appointNo: 7, date: "2024-06-22", time: "12:00 AM",Status: "Cancelled" },
-    { appointNo: 8, date: "2024-07-01", time: "11:00 AM",Status: "Cancelled" },
-  ];
+  const[appointments,setappointements]=useState([]);
+
+
+  
+
+  // const appointments = [
+  //   { appointNo: 1, date: "2023-12-14", time: "09:00 AM",Status: "Confirmed" },
+  //   { appointNo: 2, date: "2023-12-21", time: "11:00 AM",Status: "Confirmed" },
+  //   { appointNo: 3, date: "2024-01-01", time: "12:00 AM",Status: "Confirmed" },
+  //   { appointNo: 4, date: "2024-02-15", time: "11:00 AM",Status: "Confirmed" },
+  //   { appointNo: 5, date: "2024-06-08", time: "10:00 AM",Status: "Confirmed" },
+  //   { appointNo: 6, date: "2024-06-15", time: "11:00 AM",Status: "Cancelled" },
+  //   { appointNo: 7, date: "2024-06-22", time: "12:00 AM",Status: "Cancelled" },
+  //   { appointNo: 8, date: "2024-07-01", time: "11:00 AM",Status: "Cancelled" },
+  // ];
   const getFinished = (Status) => {
     switch (Status) {
       case "Confirmed":

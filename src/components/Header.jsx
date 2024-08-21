@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Link,redirect, useNavigate } from "react-router-dom";
+import { Link,redirect, useNavigate,useLocation  } from "react-router-dom";
 import { PiBrainBold } from "react-icons/pi";
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { isLoggedIn, signoutSuccess } from "../redux/user/userSlice";
 const Header = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation();
   const isLoggedInUser = useSelector(isLoggedIn);
 
   const handleLogOut = ()=>{
@@ -22,6 +23,8 @@ const Header = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const isActiveLink = (path) => location.pathname === path;
 
   return (
     <div>
@@ -96,7 +99,9 @@ const Header = () => {
               <li>
                 <Link
                   to="/"
-                  className="block py-2 px-3 text-gray-900 bg-[#26aba3] rounded md:bg-transparent md:text-[#26aba3] md:p-0 md:dark:text-blue-500"
+                  className={`block py-2 px-3 rounded ${
+                    isActiveLink("/") ? "text-[#26aba3]" : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  }`}
                   aria-current="page"
                 >
                   Home
@@ -104,8 +109,10 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  to="/appointment"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  to={isLoggedInUser ? "/appointment":"/signup"}
+                  className={`block py-2 px-3 rounded ${
+                    isActiveLink("/appointment") ? "text-[#26aba3]" : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  }`}
                 >
                   Appointment
                 </Link>
@@ -113,7 +120,9 @@ const Header = () => {
               <li>
                 <Link
                   to="/virtualclub"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className={`block py-2 px-3 rounded ${
+                    isActiveLink("/virtualclub") ? "text-[#26aba3]" : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  }`}
                 >
                   Virtual Club
                 </Link>
@@ -121,7 +130,9 @@ const Header = () => {
               <li>
                 <Link
                   to="/quiz"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className={`block py-2 px-3 rounded ${
+                    isActiveLink("/quiz") ? "text-[#26aba3]" : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  }`}
                 >
                   Quiz
                 </Link>
@@ -132,7 +143,9 @@ const Header = () => {
               <li>
                 <Link
                   to="/forum"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className={`block py-2 px-3 rounded ${
+                    isActiveLink("/forum") ? "text-[#26aba3]" : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  }`}
                 >
                   Forum
                 </Link>
@@ -141,7 +154,9 @@ const Header = () => {
               <li>
                 <Link
                   to="/aboutus"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className={`block py-2 px-3 rounded ${
+                    isActiveLink("/aboutus") ? "text-[#26aba3]" : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26aba3] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  }`}
                 >
                   About Us
                 </Link>

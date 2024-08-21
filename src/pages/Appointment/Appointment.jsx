@@ -298,6 +298,7 @@ const Appointment = () => {
                 className="p-2 border border-slate-400 mt-1 outline-0 text-slate-700 focus:border-blue-500 rounded-md"
                 placeholderText="Select Date"
                 id="date"
+                minDate={new Date()}
               />
             </div>
             <div className="flex flex-col mb-4">

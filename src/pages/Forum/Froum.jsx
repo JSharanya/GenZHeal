@@ -1,22 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { useSelector } from "react-redux";
+import { isLoggedIn } from "../../redux/user/userSlice";
 
 const Froum = () => {
+  const user = useSelector(isLoggedIn);
   const [isReply, setIsReply] = useState(false);
   const [message, setMessage] = useState("");
+  const [postMessage, setPostMessage] = useState("");
+  const [comments, setComments] = useState([]);
+  const [editCommentId, setEditCommentId] = useState(null); // Track the comment being edited
+  const [editMessage, setEditMessage] = useState("");
+  const [replyToCommentId, setReplyToCommentId] = useState(null);
 
-  const[postMessage,setPostMessage] = useState('')
+  const [replyMessage, setReplyMessage] = useState(""); 
+  const [replyCommentId, setReplyCommentId] = useState(null);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/comment"); // Assuming this endpoint fetches all comments
+        const data = await response.json();
+        setComments(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchComments();
+  }, []);
 
   const handlePostMessageChange = (e) => {
     setPostMessage(e.target.value);
   };
 
-  const handlePostSubmitComment = (e) => {
+  const handlePostSubmitComment = async (e) => {
     e.preventDefault();
-    console.log(postMessage);
-    setPostMessage("");
-    
+    try {
+      const response = await fetch("http://localhost:3000/api/comment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user._id, // Replace with actual userId
+          comment: postMessage,
+          parent: null, // Set to null or parent ID for replies
+        }),
+      });
+
+      // Check if the response is OK (status 200-299)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Attempt to parse the response to JSON
+      const newComment = await response.json();
+      console.log("Response data:", newComment); // Debug log to see the response
+      setPostMessage("");
+      setComments([...comments, newComment]);
+    } catch (error) {
+      console.error("Error posting comment:", error.message);
+    }
   };
 
   const handleIconClick = () => {
@@ -27,13 +73,162 @@ const Froum = () => {
     setMessage(e.target.value);
   };
 
-  const handleSubmitComment = (e) => {
+  // const handleSubmitComment = (e) => {
+  //   e.preventDefault();
+  //   console.log(message);
+  //   setMessage("");
+  //   setIsReply(false);
+  // };
+
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
-    console.log(message);
-    setMessage("");
-    setIsReply(false);
+    try {
+      const response = await fetch("http://localhost:3000/api/comment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: "USER_ID", // Replace with actual userId
+          comment: message,
+          parent: "PARENT_COMMENT_ID", // Replace with actual parent comment ID
+        }),
+      });
+      const newComment = await response.json();
+      setMessage("");
+      setIsReply(false);
+      setComments([...comments, newComment]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  // const handleEditComment = async (commentId) => {
+  //   const newComment = prompt("Edit your comment:");
+  //   if (newComment) {
+  //     try {
+  //       const response = await fetch(`http://localhost:3000/api/comment${commentId}`, {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           userId: user._id, // Replace with actual userId
+  //           comment: newComment,
+  //         }),
+  //       });
+  //       const updatedComment = await response.json();
+  //       setComments(
+  //         comments.map((comment) =>
+  //           comment._id === commentId ? updatedComment : comment
+  //         )
+  //       );
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
+
+  const handleReplyClick = (commentId) => {
+    setReplyCommentId(commentId); // Set the comment ID being replied to
+  setReplyMessage("");
+    if (replyToCommentId === commentId) {
+      // If already replying to the same comment, toggle the reply box
+      setReplyToCommentId(null);
+    } else {
+      setReplyToCommentId(commentId); // Set the comment ID being replied to
+    }
+  };
+
+  // Handle submitting a reply
+  const handleSubmitReply = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/comment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user._id, // Replace with actual userId
+          comment: message,
+          parent: replyToCommentId, // Associate reply with the parent comment
+        }),
+      });
+      const newReply = await response.json();
+      setComments([...comments, newReply]);
+      setMessage(""); // Clear the reply textarea after posting
+      setIsReply(false); // Hide the reply form
+      setReplyToCommentId(null); // Reset the replyToCommentId
+    } catch (error) {
+      console.error("Error posting reply:", error);
+    }
+  };
+
+  const handleEditComment = (commentId) => {
+    const commentToEdit = comments.find((comment) => comment._id === commentId);
+    setEditCommentId(commentId); // Set the ID of the comment being edited
+    setEditMessage(commentToEdit.comment); // Pre-fill the textarea with the current comment text
+  };
+
+  // Handle edit message change
+  const handleEditMessageChange = (e) => {
+    setEditMessage(e.target.value);
+  };
+
+  // Handle submitting the edited comment
+  const handleSubmitEdit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/comment/${editCommentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user._id, // Replace with actual userId
+            comment: editMessage,
+          }),
+        }
+      );
+      const updatedComment = await response.json();
+
+      // Update the comment in the state
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment._id === editCommentId ? updatedComment : comment
+        )
+      );
+      setEditCommentId(null); // Reset after editing
+      setEditMessage(""); // Clear the textarea after editing
+      if (response.ok) {
+        const updatedComment = await response.json();
+        setComments(comments.map((comment) => comment._id === editCommentId ? updatedComment : comment));
+        setEditCommentId(null); // Clear edit state after successful update
+      }
+    } catch (error) {
+      console.error("Error editing comment:", error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await fetch(`http://localhost:3000/api/comment/${commentId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user._id, // Replace with actual userId
+        }),
+      });
+      setComments(comments.filter((comment) => comment._id !== commentId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -63,6 +258,288 @@ const Froum = () => {
         </div>
 
         <div>
+          <section className="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
+            <div className="max-w-6xl mx-auto bg-[#e5f7f8] p-6 ">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
+                  Discussion Forum
+                </h2>
+              </div>
+              <form className="mb-6" onSubmit={handlePostSubmitComment}>
+                <div className="py-2 px-4 mb-4 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                  <textarea
+                    id="comment"
+                    rows="6"
+                    className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:bg-gray-800"
+                    placeholder="Write a comment..."
+                    required
+                    value={postMessage}
+                    onChange={handlePostMessageChange}
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#26aba3] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                >
+                  Post comment
+                </button>
+              </form>
+
+              {/* Comments List */}
+              {comments
+                .filter((comment) => !comment.parent)
+                .map((comment) => (
+                  <article
+                    key={comment._id}
+                    className="p-6 text-base bg-white rounded-lg dark:bg-gray-900"
+                  >
+                    <footer className="flex justify-between items-center mb-2">
+                      <div className="flex items-center">
+                        <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                          <img
+                            className="mr-2 w-6 h-6 rounded-full"
+                            src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                            alt="User"
+                          />
+                          {comment.userId}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          <time>
+                            {new Date(comment.createdAt).toLocaleString()}
+                          </time>
+                        </p>
+                      </div>
+                    </footer>
+                    {editCommentId === comment._id ? (
+                      <form onSubmit={handleSubmitEdit}>
+                        <textarea
+                          value={editMessage}
+                          onChange={handleEditMessageChange}
+                          className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                        ></textarea>
+                        <button
+                          type="submit"
+                          className="mt-2 px-3 py-1.5 rounded-md text-white bg-indigo-500"
+                        >
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setEditCommentId(null)} // Cancel edit
+                          className="ml-2 mt-2 px-3 py-1.5 rounded-md text-white bg-red-500"
+                        >
+                          Cancel
+                        </button>
+                      </form>
+                    ) : (
+                      <p className="text-gray-500 dark:text-gray-400">
+                        {comment.comment}
+                      </p>
+                    )}
+
+                    <div className="flex items-center mt-4 space-x-4">
+                      <button
+                        type="button"
+                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                        // onClick={handleIconClick}
+                        onClick={() => handleReplyClick(comment._id)}
+                      >
+                        Reply
+                      </button>
+                      <button
+                        type="button"
+                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                        onClick={() => handleEditComment(comment._id)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                        onClick={() => handleDeleteComment(comment._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+
+                    {/* {isReply && (
+                <form
+                  className="max-w-3xl bg-white rounded-lg border p-3 mx-auto mt-5"
+                  onSubmit={handleSubmitComment}
+                >
+                  <div className="px-3 mb-2">
+                    <textarea
+                      placeholder="comment"
+                      value={message}
+                      onChange={handleMessageChange}
+                      className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                    ></textarea>
+                  </div>
+                  <div className="flex justify-end px-4">
+                    <input
+                      type="submit"
+                      className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+                      value="Comment"
+                    />
+                  </div>
+                </form>
+              )} */}
+
+                    {replyToCommentId === comment._id && (
+                      <form
+                        className="max-w-3xl bg-white rounded-lg border p-3 mx-auto mt-5"
+                        onSubmit={handleSubmitReply}
+                      >
+                        <div className="px-3 mb-2">
+                          <textarea
+                            placeholder="Reply to comment"
+                            value={message}
+                            onChange={handleMessageChange}
+                            className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                          ></textarea>
+                        </div>
+                        <div className="flex justify-end px-4">
+                          <input
+                            type="submit"
+                            className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+                            value="Reply"
+                          />
+                        </div>
+                        
+                      </form>
+                    )}
+
+                    {/* Show replies (nested comments)
+                    {comments
+                      .filter((reply) => reply.parent === comment._id)
+                      .map((reply) => (
+                        <div
+                          key={reply._id}
+                          className="ml-10 mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                        >
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {reply.userId} •{" "}
+                            {new Date(reply.createdAt).toLocaleString()}
+                          </p>
+                          <p className="mt-2 text-gray-500 dark:text-gray-400">
+                            {reply.comment}
+                          </p>
+                          <div className="flex items-center mt-4 space-x-4">
+                      <button
+                        type="button"
+                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                        // onClick={handleIconClick}
+                        onClick={() => handleReplyClick(reply._id)}
+                      >
+                        Reply
+                      </button>
+                      <button
+                        type="button"
+                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                        onClick={() => handleEditComment(reply._id)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                        onClick={() => handleDeleteComment(reply._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                        </div>
+                        
+                      ))} */}
+
+{comments
+  .filter((reply) => reply.parent === comment._id)
+  .map((reply) => (
+    <div
+      key={reply._id}
+      className="ml-10 mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg"
+    >
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        {reply.userId} •{" "}
+        {new Date(reply.createdAt).toLocaleString()}
+      </p>
+
+      {editCommentId === reply._id ? (
+        <form onSubmit={handleSubmitEdit}>
+          <textarea
+            value={editMessage}
+            onChange={(e) => setEditMessage(e.target.value)}
+            className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+          />
+          <button
+            type="submit"
+            className="mt-2 px-3 py-1.5 rounded-md text-white bg-indigo-500"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={() => setEditCommentId(null)} // Cancel editing
+            className="ml-2 mt-2 px-3 py-1.5 rounded-md text-white bg-red-500"
+          >
+            Cancel
+          </button>
+        </form>
+      ) : (
+        <p className="mt-2 text-gray-500 dark:text-gray-400">{reply.comment}</p>
+      )}
+
+      <div className="flex items-center mt-4 space-x-4">
+        <button
+          type="button"
+          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+          onClick={() => handleReplyClick(reply._id)}
+        >
+          Reply
+        </button>
+        <button
+          type="button"
+          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+          onClick={() => handleEditComment(reply._id)}
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+          onClick={() => handleDeleteComment(reply._id)}
+        >
+          Delete
+        </button>
+      </div>
+
+      {replyCommentId === reply._id && (
+        <form onSubmit={handleSubmitReply} className="ml-10 mt-4">
+          <textarea
+            value={replyMessage}
+            onChange={(e) => setReplyMessage(e.target.value)}
+            placeholder="Write your reply..."
+            className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+          />
+          <button
+            type="submit"
+            className="mt-2 px-3 py-1.5 rounded-md text-white bg-indigo-500"
+          >
+            Submit Reply
+          </button>
+        </form>
+      )}
+    </div>
+  ))}
+
+
+                  </article>
+                ))}
+            </div>
+          </section>
+        </div>
+
+        {/* <div>
           <section class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
             <div class="max-w-6xl mx-auto bg-[#e5f7f8] p-6 ">
               <div class="flex justify-between items-center mb-6">
@@ -82,7 +559,7 @@ const Froum = () => {
                     placeholder="Write a comment..."
                     required
                     value={postMessage}
-                        onChange={handlePostMessageChange}
+                    onChange={handlePostMessageChange}
                   ></textarea>
                 </div>
                 <button
@@ -214,9 +691,28 @@ const Froum = () => {
                   </form>
                 )}
               </article>
-              <div></div>
 
-              <article class="p-7 mb-3 mt-3 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900">
+
+
+              
+             
+
+            
+            </div>
+          </section>
+        </div> */}
+        <div>
+          <Footer />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Froum;
+
+{
+  /* <article class="p-7 mb-3 mt-3 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900">
                 <footer class="flex justify-between items-center mb-2">
                   <div class="flex items-center">
                     <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -316,8 +812,10 @@ const Froum = () => {
                 </div>
                 
 
-              </article>
-              <article class="p-6 mb-3 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900">
+              </article> */
+}
+{
+  /* <article class="p-6 mb-3 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900">
                 <footer class="flex justify-between items-center mb-2">
                   <div class="flex items-center">
                     <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -417,8 +915,10 @@ const Froum = () => {
                     Reply
                   </button>
                 </div>
-              </article>
-              <article class="p-6 mb-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+              </article> */
+}
+{
+  /* <article class="p-6 mb-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                 <footer class="flex justify-between items-center mb-2">
                   <div class="flex items-center">
                     <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -520,8 +1020,10 @@ const Froum = () => {
                     Reply
                   </button>
                 </div>
-              </article>
-              <article class="p-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+              </article> */
+}
+{
+  /* <article class="p-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                 <footer class="flex justify-between items-center mb-2">
                   <div class="flex items-center">
                     <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -621,15 +1123,5 @@ const Froum = () => {
                     Reply
                   </button>
                 </div>
-              </article>
-            </div>
-          </section>
-        </div>
-        <div><Footer/></div>
-      </div>
-     
-    </div>
-  );
-};
-
-export default Froum;
+              </article> */
+}

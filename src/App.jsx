@@ -35,8 +35,8 @@ function App() {
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/aboutus" element={<AboutUs />} />
 
-          <Route path="userdashboard" element={<UserDashboard />}>
-            <Route path="userdashboard" element={<UserProfile />} />
+          <Route path="/userdashboard" element={<UserDashboard />}>
+            <Route path="/userdashboard" element={<UserProfile />} />
           </Route>
 
           <Route path="/admin/dashboard" element={<DashboardLayout />}>

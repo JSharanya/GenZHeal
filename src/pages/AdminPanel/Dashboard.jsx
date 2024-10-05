@@ -19,47 +19,105 @@ const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [isEditVFormVisible, setEditVFormVisible] = useState(false);
   const [editVData, setEditVData] = useState();
-  const [selectedVirualId, setSelectedVirualId] = useState(null);
-
-  const [allVirual,setAllVirual] =useState([]);
-
-  useEffect(()=>{
-    fetch("http://localhost:3000/api/virualclub/all-virual").then(
-      res=>res.json()
-    ).then(data=>setAllVirual(data))
-  },[])
-
-
-  const handleDelete =(id)=>{
-    console.log(id);
-    fetch(`http://localhost:3000/api/virualclub/delete-virual/${id}`,{
-      method:"DELETE",
-    }).then(res=>res.json()).then(data=>{
-        const updatedNewTableVirual = allVirual.filter(table => table._id !== id);
-        setAllVirual(updatedNewTableVirual);
-        toast.success('Virtual is Deleted Successfully');
-      
-  }).catch(err => {
-    console.error(err);
-    toast.error('An error occurred');
+  const [isEditDFormVisible, setEditDFormVisible] = useState(false);
+  const [editDData, setEditDData]=useState({
+    docName: '',
+    date: '',
+    docum: null, 
   });
+  const [file, setFile] = useState(null);
+  const [docName, setDocName] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [date, setDate] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const [selectedVirualId, setSelectedVirualId] = useState(null);
+  const [selectedDocId, setSelectedDocId] = useState(null);
+
+  const [allVirual, setAllVirual] = useState([]);
+  const [allDoc, setAllDoc] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/virualclub/all-virual").then(
+      res => res.json()
+    ).then(data => setAllVirual(data))
+  }, [])
 
 
-}
+  const handleDelete = (id) => {
+    console.log(id);
+    fetch(`http://localhost:3000/api/virualclub/delete-virual/${id}`, {
+      method: "DELETE",
+    }).then(res => res.json()).then(data => {
+      const updatedNewTableVirual = allVirual.filter(table => table._id !== id);
+      setAllVirual(updatedNewTableVirual);
+      toast.success('Virtual is Deleted Successfully');
+
+    }).catch(err => {
+      console.error(err);
+      toast.error('An error occurred');
+    });
+
+
+  }
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/documents/all-doc").then(
+      res => res.json()
+    ).then(data => setAllDoc(data))
+  }, [])
+
+  const handleDeleteDoc = (id) => {
+    console.log(id);
+    fetch(`http://localhost:3000/api/documents/delete-doc/${id}`, {
+      method: "DELETE",
+    }).then(res => res.json()).then(data => {
+      const updatedNewTableDoc = allDoc.filter(table => table._id !== id);
+      setAllDoc(updatedNewTableDoc);
+      toast.success('Document is Deleted Successfully');
+
+    }).catch(err => {
+      console.error(err);
+      toast.error('An error occurred');
+    });
+
+
+  }
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
 
   const toggleEditVForm = () => {
     // setEditVData(data);
-    
+
     setEditVFormVisible(!isEditVFormVisible);
-    // console.log('Edit form visibility:', !isEditVFormVisible);
-    // console.log('Edit data:', data);
+
   };
 
-  const handleOpenEditForm =(data)=>{
+  const toggleEditDForm = () => {
+    // setEditVData(data);
+
+    setEditDFormVisible(!isEditDFormVisible);
+
+  };
+
+  const handleOpenEditForm = (data) => {
     setEditVData(data)
     setEditVFormVisible(true)
     console.log(data);
   }
+
+  const handleOpenEditDForm = (data) => {
+    if (data && data._id) {
+      setEditDData(data);
+      setEditDFormVisible(true);
+    } else {
+      console.error('Selected document does not contain _id:', data);
+    }
+  };
+  
+
 
 
 
@@ -67,12 +125,36 @@ const Dashboard = () => {
     const { name, value } = e.target;
     setEditVData({ ...editVData, [name]: value });
   };
- 
+
+
+const handleDInputChange = (e) => {
+  const { name, type, value, files } = e.target;
+  if (type === 'file') {
+    setEditDData((prevData) => ({
+      ...prevData,
+      [name]: files[0], // Store the file object
+    }));
+  } else {
+    setEditDData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+};
+
+
+  
 
   const handleSave = () => {
     // Handle save logic here
     toggleEditVForm(); // Close the form after saving
   };
+  const handleDSave = () => {
+    // Handle save logic here
+    toggleEditDForm(); // Close the form after saving
+  };
+
+
 
   const virualCategories = [
     "Video",
@@ -106,7 +188,7 @@ const Dashboard = () => {
   const handleVirualSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    
+
     const title = form.documentName.value;
     const content = form.content.value;
     const type = form.documentType.value;
@@ -130,24 +212,73 @@ const Dashboard = () => {
     }).then(res => res.json()).then(data => {
       toast.success("VirualClub Items are Uploaded")
       setAllVirual([...allVirual, data]);
-    }).finally(()=>setShowForm(false))
+    }).finally(() => setShowForm(false))
   }
 
 
-  const handleSubmitUpdate =()=>{
-   
-    
-    fetch(`http://localhost:3000/api/virualclub/update-virual/${editVData._id}`,{
-      method:"PUT",
-      headers:{
+  const handleSubmitUpdate = () => {
+
+
+    fetch(`http://localhost:3000/api/virualclub/update-virual/${editVData._id}`, {
+      method: "PUT",
+      headers: {
         "Content-Type": "application/json",
       },
-      body:JSON.stringify(editVData)
-    }).then(res=> res.json()).then((data)=>{
-      const updatedAllVirual = allVirual.map(vir=>vir._id===data._id ? data : vir)
+      body: JSON.stringify(editVData)
+    }).then(res => res.json()).then((data) => {
+      const updatedAllVirual = allVirual.map(vir => vir._id === data._id ? data : vir)
       setAllVirual(updatedAllVirual)
-    }).catch(()=>alert('Something wrong')).finally(()=>setEditVFormVisible(false))
+    }).catch(() => alert('Something wrong')).finally(() => setEditVFormVisible(false))
   }
+
+
+const handleDocSubmit = (e) => {
+  e.preventDefault();
+  const form = e.target;
+
+  const docName = form.docName.value;
+  const date = form.date.value;
+  const docum = form.docum.files[0]; // Use the file object
+
+  const formData = new FormData();
+  formData.append('docName', docName);
+  formData.append('date', date);
+  formData.append('docum', docum);
+
+  fetch("http://localhost:3000/api/documents/upload-doc", {
+    method: "POST",
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      toast.success("Documents are uploaded");
+      setAllDoc([...allDoc, data]);
+    })
+    .finally(() => setShowForm(false));
+};
+
+
+const handleSubmitdocUpdate = () => {
+  const formData = new FormData();
+  formData.append('docName', editDData.docName);
+  formData.append('date', editDData.date);
+  formData.append('docum', editDData.docum);
+
+  fetch(`http://localhost:3000/api/documents/update-doc/${editDData._id}`, {
+    method: 'PUT',
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const updatedAllDoc = allDoc.map((docu) => (docu._id === data._id ? data : docu));
+      setAllDoc(updatedAllDoc);
+    })
+    .catch(() => alert('Something went wrong'))
+    .finally(() => setEditDFormVisible(false));
+};
+
+
+
 
 
   const appointmentRef = useRef(null);
@@ -1245,7 +1376,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                   <button
-                                    onClick={handleSave}
+                                    onClick={handleDSave}
                                     type="button"
                                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                                   >
@@ -1624,7 +1755,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-         <Chatting activeSection={activeSection} messagesRef={messagesRef} />
+            <Chatting activeSection={activeSection} messagesRef={messagesRef} />
 
 
 
@@ -1770,44 +1901,56 @@ const Dashboard = () => {
                         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
                         <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                          <form className="mt-4">
+                          <form className="mt-4" onSubmit={handleDocSubmit}>
                             <div className="mb-4">
-                              <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                              <label htmlFor="docName" className="block text-sm font-medium text-gray-700">
                                 Patient Name
                               </label>
                               <input
                                 type="text"
-                                id="documentName"
-                                name="documentName"
+                                id="docName"
+                                name="docName"
+                                value={editDData?.docName}
+                                // onChange={(e) => setDocName(e.target.value)}
+                                onChange={handleDInputChange} 
                                 className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                             </div>
                             <div className="mb-4">
-                              <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                              <label htmlFor="date" className="block text-sm font-medium text-gray-700">
                                 Date
                               </label>
                               <input
-                                type="text"
-                                id="documentURL"
-                                name="documentURL"
+                                type="date"
+                                id="date"
+                                name="date"
+                                value={editDData?.date}
+                                // onChange={(e) => setDate(e.target.value)}
+                                onChange={handleDInputChange} 
                                 className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                             </div>
                             <div className="mb-4">
-                              <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                              <label htmlFor="docum" className="block text-sm font-medium text-gray-700">
                                 Document
                               </label>
                               <input
-                                type="text"
-                                id="documentType"
-                                name="documentType"
+                                type="file"
+                                id="docum"
+                                name="docum"
+                                accept=".pdf,.doc,.docx"
+                                // value={editDData?.docum}
+                                // onChange={handleFileChange}
+                                onChange={handleDInputChange} 
+
                                 className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                             </div>
                             <div className="mb-8">
-                              <button
-                                type="submit"
-                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              <button type="submit"
+                                onClick={handleSubmitdocUpdate}
+                                
+                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                               >
                                 Save
                               </button>
@@ -1851,10 +1994,38 @@ const Dashboard = () => {
                             <th scope="col" className="relative px-6 py-3">
                               <span className="sr-only">Edit</span>
                             </th>
+                            <th scope="col" className="relative px-6 py-3">
+                              <span className="sr-only">Delete</span>
+                            </th>
                           </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                          <tr>
+                        {allDoc.map((doc, index) => (
+                          <tbody className="bg-white divide-y divide-gray-200" key={doc._id}>
+                            <tr>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="text-sm font-medium text-gray-900"> {doc.docName}</div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="text-sm text-gray-500">{doc.date}</div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="text-sm text-gray-500">
+                                  {doc.docum}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button onClick={() => handleOpenEditDForm(doc)} className="text-indigo-600 hover:text-indigo-900">
+                                  Edit
+                                </button>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button onClick={() => handleDeleteDoc(doc._id)} className="text-indigo-600 hover:text-indigo-900">
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -1871,9 +2042,9 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -1890,9 +2061,9 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -1909,9 +2080,9 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -1928,9 +2099,9 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -1947,9 +2118,9 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -1966,9 +2137,9 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -1985,9 +2156,9 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
+                            {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">Patient 1</div>
                             </td>
@@ -2004,28 +2175,96 @@ const Dashboard = () => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
+                          </tr> */}
 
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr>
+                          </tbody>
+                        ))}
+                        {isEditDFormVisible && (
+                          <div className="fixed z-50 inset-0 overflow-y-auto">
+                            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                              <div className="fixed inset-0 transition-opacity">
+                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                              </div>
 
-                        </tbody>
+                              <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+                              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                  <div className="sm:flex sm:items-start">
+                                    <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                        Edit Details
+                                      </h3>
+                                      <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
+                                        <div className="mb-4">
+                                          <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                            Patient Name
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="docName"
+                                            name="docName"
+                                            onChange={handleDInputChange}
+                                            value={editDData.docName}
+
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                            Date
+                                          </label>
+                                          <input
+                                            type="date"
+                                            id="date"
+                                            onChange={handleDInputChange}
+                                            name="date"
+                                            value={editDData.date}
+
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                       
+                                        <div className="mb-4">
+                                          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                          Document
+                                          </label>
+                                          <input
+                                           type="file"
+                                           id="docum"
+                                           name="docum"
+                                           accept=".pdf,.doc,.docx"
+                                         
+                                           onChange={handleDInputChange}
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>                     
+
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                  <button
+                                    onClick={handleSubmitdocUpdate}
+                                    type="button"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    onClick={toggleEditDForm}
+                                    type="button"
+                                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                       </table>
                     </div>
                   </div>
@@ -2289,177 +2528,177 @@ const Dashboard = () => {
                           </tr>
                         </thead>
                         {
-                          allVirual.map((virual, index)=>
+                          allVirual.map((virual, index) =>
 
-                          <tbody className="bg-white divide-y divide-gray-200" key={virual._id}>
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">{virual.title}</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">{virual.link}</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                             {virual.type}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                              {virual.category}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              {/* <Link to={`/admin/dashboard/${virual._id}`}> */}
-                              <button onClick={() => handleOpenEditForm(virual)}  className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                              {/* </Link> */}
-                             
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={()=> handleDelete(virual._id)} className="text-indigo-600 hover:text-indigo-900">
-                                Delete
-                              </button>
-                            </td>
-                          </tr>  </tbody>
+                            <tbody className="bg-white divide-y divide-gray-200" key={virual._id}>
+                              <tr>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <div className="text-sm font-medium text-gray-900">{virual.title}</div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <div className="text-sm text-gray-500">{virual.link}</div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <span className="text-sm text-gray-500">
+                                    {virual.type}
+                                  </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <span className="text-sm text-gray-500">
+                                    {virual.category}
+                                  </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                  {/* <Link to={`/admin/dashboard/${virual._id}`}> */}
+                                  <button onClick={() => handleOpenEditForm(virual)} className="text-indigo-600 hover:text-indigo-900">
+                                    Edit
+                                  </button>
+                                  {/* </Link> */}
+
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                  <button onClick={() => handleDelete(virual._id)} className="text-indigo-600 hover:text-indigo-900">
+                                    Delete
+                                  </button>
+                                </td>
+                              </tr>  </tbody>
                           )
                         }
-                    
-
-                          {isEditVFormVisible && (
-                            <div className="fixed z-50 inset-0 overflow-y-auto">
-                              <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                <div className="fixed inset-0 transition-opacity">
-                                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                </div>
-
-                                <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-
-                                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <div className="sm:flex sm:items-start">
-                                      <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                                        <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
-                                          Edit Document
-                                        </h3>
-                                        <form className="mt-4" onSubmit={(e)=>e.preventDefault()}>
-                                          <div className="mb-4">
-                                            <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                                              Document Name
-                                            </label>
-                                            <input
-                                              type="text"
-                                              id="documentName"
-                                              name="title"
-                                              onChange={handleInputChange}
-                                              value={editVData.title}
-                                         
-                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            />
-                                          </div>
-                                          <div className="mb-4">
-                                            <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                                              Document URL
-                                            </label>
-                                            <input
-                                              type="text"
-                                              id="documentURL"
-                                              onChange={handleInputChange}
-                                              name="link"
-                                              value={editVData.link}
-                                           
-                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            />
-                                          </div>
-                                          <div className="mb-4">
-                                    <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                                      Document Type
-                                    </label>
-                                    <select
-                                      id="documentType"
-                                      name="type"
-                                      value={editVData.type}
-                                      onChange={handleInputChange}
-                                    
-                                      className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    >
-                                      {
-                                        virualTypes.map((option) => <option key={option} value={option}>{option}</option>)
-                                      }
-                                    </select>
-                                  </div>
-                                          <div className="mb-4">
-                                            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                                              Category
-                                            </label>
-                                            <select
-                                              id="categoryName"
-                                              name="category"
-                                              onChange={handleInputChange}
-                                              value={editVData.category}
-                                          
-                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            >
-                                              {
-                                                virualCategories.map((option) => <option key={option} value={option}>{option}</option>)
-                                              }
-                                            </select>
-                                          </div>
-                                          <div className="mb-4">
-                                            <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                                              Content
-                                            </label>
-                                            <textarea
-                                              id="content"
-                                              name="content"
-                                              onChange={handleInputChange}
-                                              value={editVData.content}
-                                              rows="4"
-                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            />
-                                          </div>
-                                          <div className="mb-4">
-                                            <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-                                              Image Link
-                                            </label>
-                                            <input
-                                              type="text"
-                                              id="imageLink"
-                                              name="image"
-                                              onChange={handleInputChange}
-                                              value={editVData.image}
-                                              className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            />
-                                          </div>
 
 
-                                        </form>
-                                      </div>
+                        {isEditVFormVisible && (
+                          <div className="fixed z-50 inset-0 overflow-y-auto">
+                            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                              <div className="fixed inset-0 transition-opacity">
+                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                              </div>
+
+                              <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+                              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                  <div className="sm:flex sm:items-start">
+                                    <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                        Edit Document
+                                      </h3>
+                                      <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
+                                        <div className="mb-4">
+                                          <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                            Document Name
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="documentName"
+                                            name="title"
+                                            onChange={handleInputChange}
+                                            value={editVData.title}
+
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                            Document URL
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="documentURL"
+                                            onChange={handleInputChange}
+                                            name="link"
+                                            value={editVData.link}
+
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                            Document Type
+                                          </label>
+                                          <select
+                                            id="documentType"
+                                            name="type"
+                                            value={editVData.type}
+                                            onChange={handleInputChange}
+
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          >
+                                            {
+                                              virualTypes.map((option) => <option key={option} value={option}>{option}</option>)
+                                            }
+                                          </select>
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                                            Category
+                                          </label>
+                                          <select
+                                            id="categoryName"
+                                            name="category"
+                                            onChange={handleInputChange}
+                                            value={editVData.category}
+
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          >
+                                            {
+                                              virualCategories.map((option) => <option key={option} value={option}>{option}</option>)
+                                            }
+                                          </select>
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                            Content
+                                          </label>
+                                          <textarea
+                                            id="content"
+                                            name="content"
+                                            onChange={handleInputChange}
+                                            value={editVData.content}
+                                            rows="4"
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                        <div className="mb-4">
+                                          <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                                            Image Link
+                                          </label>
+                                          <input
+                                            type="text"
+                                            id="imageLink"
+                                            name="image"
+                                            onChange={handleInputChange}
+                                            value={editVData.image}
+                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+
+
+                                      </form>
                                     </div>
                                   </div>
-                                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                    <button
-                                      onClick={handleSubmitUpdate}
-                                      type="button"
-                                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                    >
-                                      Save
-                                    </button>
-                                    <button
-                                      onClick={toggleEditVForm}
-                                      type="button"
-                                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                    >
-                                      Cancel
-                                    </button>
-                                  </div>
+                                </div>
+                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                  <button
+                                    onClick={handleSubmitUpdate}
+                                    type="button"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    onClick={toggleEditVForm}
+                                    type="button"
+                                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                  >
+                                    Cancel
+                                  </button>
                                 </div>
                               </div>
                             </div>
-                          )}
+                          </div>
+                        )}
 
-                          {/* <tr>
+                        {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
@@ -2483,7 +2722,7 @@ const Dashboard = () => {
                             </td>
                           </tr> */}
 
-                          {/* <tr>
+                        {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
@@ -2507,7 +2746,7 @@ const Dashboard = () => {
                             </td>
                           </tr> */}
 
-                          {/* <tr>
+                        {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
@@ -2531,7 +2770,7 @@ const Dashboard = () => {
                             </td>
                           </tr> */}
 
-                          {/* <tr>
+                        {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
@@ -2555,7 +2794,7 @@ const Dashboard = () => {
                             </td>
                           </tr> */}
 
-                          {/* <tr>
+                        {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
@@ -2579,7 +2818,7 @@ const Dashboard = () => {
                             </td>
                           </tr> */}
 
-                          {/* <tr>
+                        {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
@@ -2603,7 +2842,7 @@ const Dashboard = () => {
                             </td>
                           </tr> */}
 
-                          {/* <tr>
+                        {/* <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
                             </td>
@@ -2626,7 +2865,7 @@ const Dashboard = () => {
                               </a>
                             </td>
                           </tr> */}
-{/* 
+                        {/* 
                           <tr>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">calm video 1</div>
@@ -2651,7 +2890,7 @@ const Dashboard = () => {
                             </td>
                           </tr> */}
 
-                      
+
                       </table>
                     </div>
                   </div>

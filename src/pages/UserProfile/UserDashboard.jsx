@@ -3,6 +3,8 @@ import { FaUserCircle, FaCog, FaCalendarAlt, FaHistory, FaComments, FaSignOutAlt
 import UserProfile from './UserProfile';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiBrainBold } from "react-icons/pi";
+import UserChat from "./userChat"
+
 
 const UserDashboard = () => {
   const [activeMenu, setActiveMenu] = useState('My Profile');
@@ -51,7 +53,8 @@ const UserDashboard = () => {
         {activeMenu === 'Appointments' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}  
         {activeMenu === 'Sessions' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'TreatmentHistory' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />} 
-        {activeMenu === 'Chat' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
+        {activeMenu === 'Chat' && <UserChat/>}
+        {/* <Chatting activeSection={activeSection} messagesRef={messagesRef} /> */}
 
       </div>
     </div>

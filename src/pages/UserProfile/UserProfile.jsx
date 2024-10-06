@@ -443,7 +443,9 @@ const UserProfile = ({ activeMenu }) => {
             </div>
           </div>
         </>
-      )}     
+      )}  
+       {/* <userChat activeSection={activeSection} messagesRef={messagesRef} /> */}
+   
     </div>
   );
 };

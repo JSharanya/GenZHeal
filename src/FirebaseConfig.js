@@ -10,9 +10,11 @@ const firebaseConfig = {
   projectId: "genzheal-fa257",
   storageBucket: "genzheal-fa257.appspot.com",
   messagingSenderId: "748122434262",
-  appId: "1:748122434262:web:e1c6fd842c316be42e3777"
+  appId: "1:748122434262:web:e1c6fd842c316be42e3777",
+  databaseURL:
+    "https://genzheal-fa257-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export{app}
+export default app;

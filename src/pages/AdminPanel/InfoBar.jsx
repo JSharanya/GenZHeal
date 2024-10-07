@@ -19,21 +19,25 @@
 // );
 
 // export default InfoBar;
-import React from 'react';
+import React from "react";
 
-import onlineIcon from '../../images/onlineIcon.png';
-import closeIcon from '../../images/closeIcon.png';
+import onlineIcon from "../../images/onlineIcon.png";
+import closeIcon from "../../images/closeIcon.png";
 
-import './InfoBar.css';
+import "./InfoBar.css";
 
-const InfoBar = ({ room }) => (
+const InfoBar = ({ room, name, setSelectedChat }) => (
   <div className="infoBar">
     <div className="leftInnerContainer">
       <img className="onlineIcon" src={onlineIcon} alt="online icon" />
-      <h3>jane {room}</h3>
+      <h3>
+        {name} {room}
+      </h3>
     </div>
     <div className="rightInnerContainer">
-      <a href="/"><img src={closeIcon} alt="close icon" /></a>
+      <div onClick={() => setSelectedChat("")}>
+        <img src={closeIcon} alt="close icon" />
+      </div>
     </div>
   </div>
 );

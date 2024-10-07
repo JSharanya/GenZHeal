@@ -1,0 +1,38 @@
+.sidePanel {
+    width: 250px; /* Adjust width as needed */
+    height: 100vh;
+    background-color: #f4f4f4; /* Light background for better visibility */
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    display: flex;
+    flex-direction: column; /* Ensures items stack vertically */
+}
+
+.contact {
+    display: flex;
+    align-items: center; /* Centers items vertically */
+    padding: 10px; /* Add space around each contact */
+    border-bottom: 1px solid #ddd; /* Optional border between contacts */
+    cursor: pointer;
+}
+
+.contact:hover {
+    background-color: #e0e0e0; /* Highlight on hover */
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Makes the avatar circular */
+    margin-right: 10px; /* Space between avatar and text */
+}
+
+.contact-name {
+    font-weight: bold; /* Emphasizes the contact's name */
+    margin-right: 10px; /* Space between name and status */
+}
+
+.status {
+    font-size: 0.9em; /* Smaller font for status */
+    color: #666; /* Gray color for offline status */
+}

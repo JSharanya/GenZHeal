@@ -31,3 +31,21 @@
       display: none;
     }
   }
+
+  
+  .activeItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .activeItem:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .activeItem.selected {
+    background-color: #e0e0e0;
+    font-weight: bold;
+  }
+  

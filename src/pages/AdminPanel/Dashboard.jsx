@@ -1651,7 +1651,7 @@ const handleSubmitdocUpdate = () => {
             </div>
 
 
-            ..
+            ...
           </div>
 
 
@@ -1755,9 +1755,10 @@ const handleSubmitdocUpdate = () => {
               </div>
             </div>
 
-            <Chatting activeSection={activeSection} messagesRef={messagesRef} />
-
-
+           
+         { activeSection=="messages" && <Chatting activeSection={activeSection} messagesRef={messagesRef} />
+      }
+          
 
             <div ref={patientsRef} className={`${activeSection === 'patients' ? 'block' : 'hidden'}`}>
               <div className="w-full px-2 pt-24">

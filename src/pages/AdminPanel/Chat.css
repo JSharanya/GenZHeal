@@ -54,12 +54,12 @@
 }
 
 .sidePanel {
-  width: 250px;                /* Fixed width for side panel */
-  background-color: #f4f4f4;   /* Light background for contrast */
-  padding-right: 0px;               /* Space inside the panel */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-  display: flex;               /* Enables flexbox for vertical alignment */
-  flex-direction: column;      /* Stacks children vertically */
+  width: 250px;               
+  background-color: #f4f4f4;   
+  padding-right: 0px;             
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+  display: flex;              
+  flex-direction: column;      
   height: 100%;
   Margin-top: 74px;
 }

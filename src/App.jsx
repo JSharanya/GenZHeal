@@ -18,22 +18,24 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import { ToastContainer } from "react-toastify";
 import Chatting from "./pages/AdminPanel/Chatting";
 import Success from "./pages/Appointment/Success";
+import UserChat from "./pages/UserProfile/userChat";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-         <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/appointment" element={<Appointment />} />
           <Route path="/checkout-success" element={<Success />} />
           <Route path="/forum" element={<Froum />} />
           <Route path="/virtualclub" element={<Virtualclub />} />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/signin" element={<SignIn />} /> 
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/chat" element={<UserChat />} />
 
           <Route path="/userdashboard" element={<UserDashboard />}>
             <Route path="/userdashboard" element={<UserProfile />} />
@@ -42,7 +44,7 @@ function App() {
           <Route path="/admin/dashboard" element={<DashboardLayout />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/dashboard" element={<Chatting />} />
-          </Route> 
+          </Route>
         </Routes>
       </BrowserRouter>
       <ToastContainer />

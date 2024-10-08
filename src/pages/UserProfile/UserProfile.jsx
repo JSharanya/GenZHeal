@@ -1,31 +1,88 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const UserProfile = ({ activeMenu }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState({
-    fullName: 'User123',
-    email: 'user123@gmail.com',
-    address: '123 Main S Trinco, Sri Lanka',
-    profileImage: 'https://via.placeholder.com/150',
+    fullName: "User123",
+    email: "user123@gmail.com",
+    address: "123 Main S Trinco, Sri Lanka",
+    profileImage: "https://via.placeholder.com/150",
   });
+
+  // const isLoggedInUser = useSelector(isLoggedIn);
 
   const [formData, setFormData] = useState({ ...user });
   const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
-  const [error, setError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [userDetails, setUserDetails] = useState({});
+
+  // const isLoggedInUser = useSelector(isLoggedIn);
+
+  // const id = isLoggedInUser._id;
+
+  const handlePasswordChange = (e) => {
+    setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+  };
+
+
+
+ 
+ 
+
+  
+  const handlePasswordSave = () => {
+    const { currentPassword, newPassword, confirmPassword } = passwordData;
+
+    if (currentPassword !== "currentPassword123") {
+      setPasswordError("You entered an invalid password");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+
+    setPasswordError("");
+    alert("Password updated successfully");
+  };
+
+  const [appointments, setappointements] = useState([]);
+
+  useEffect(() => {
+    const userdataaa = localStorage.getItem('currentUser');
+    const user = userdataaa ? JSON.parse(userdataaa) : null;
+    const id = user?._id;
+    
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/user/profile/${id}`);
+        const data = await response.json();
+        setUserDetails(data); 
+        setFormData({ 
+          fullName: data?.username || '',
+          email: data?.email || '',
+          address: data?.address || '',
+          profileImage: data?.profilePicture || 'https://via.placeholder.com/150',
+        });
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    if (id) fetchUserDetails();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePasswordChange = (e) => {
-    setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
-  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -34,20 +91,51 @@ const UserProfile = ({ activeMenu }) => {
     }
   };
 
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleSave = () => {
+
+  const handleSave = async () => {
     if (!validateEmail(formData.email)) {
       setError('Enter a valid email address');
       return;
     }
 
-    setUser(formData);
-    setIsEditing(false);
-    setError('');
+    try {
+      const userdataaa = localStorage.getItem('currentUser');
+      const user = userdataaa ? JSON.parse(userdataaa) : null;
+      const id = user?._id;
+
+      const response = await fetch(`http://localhost:3000/api/user/profile/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          address: formData.address,
+          profilePicture: formData.profileImage,
+        }),
+      });
+
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUserDetails(updatedUser);
+        setUser(formData);
+        setIsEditing(false);
+        setError('');
+        alert('Profile updated successfully');
+      } else {
+        setError('Failed to update profile');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      setError('An error occurred while updating the profile');
+    }
   };
 
   const handleCancel = () => {
@@ -56,39 +144,12 @@ const UserProfile = ({ activeMenu }) => {
     setError('');
   };
 
-  const handlePasswordSave = () => {
-    const { currentPassword, newPassword, confirmPassword } = passwordData;
-
-    if (currentPassword !== 'currentPassword123') {
-      setPasswordError('You entered an invalid password');
-      return;
-    }
-
-    if (newPassword !== confirmPassword) {
-      setPasswordError('Passwords do not match');
-      return;
-    }
-
-    
-
-    setPasswordError('');
-    alert('Password updated successfully');
-  };
-
-  const[appointments,setappointements]=useState([]);
-
-
-  
-
   // const appointments = [
   //   { appointNo: 1, date: "2023-12-14", time: "09:00 AM",Status: "Confirmed" },
   //   { appointNo: 2, date: "2023-12-21", time: "11:00 AM",Status: "Confirmed" },
   //   { appointNo: 3, date: "2024-01-01", time: "12:00 AM",Status: "Confirmed" },
   //   { appointNo: 4, date: "2024-02-15", time: "11:00 AM",Status: "Confirmed" },
-  //   { appointNo: 5, date: "2024-06-08", time: "10:00 AM",Status: "Confirmed" },
-  //   { appointNo: 6, date: "2024-06-15", time: "11:00 AM",Status: "Cancelled" },
-  //   { appointNo: 7, date: "2024-06-22", time: "12:00 AM",Status: "Cancelled" },
-  //   { appointNo: 8, date: "2024-07-01", time: "11:00 AM",Status: "Cancelled" },
+
   // ];
   const getFinished = (Status) => {
     switch (Status) {
@@ -101,11 +162,41 @@ const UserProfile = ({ activeMenu }) => {
     }
   };
   const sessions = [
-    { SessionNo: 1, Date: "2023-12-14", STime: "09:00 AM", FTime: "09:30 AM", Level: "High" },
-    { SessionNo: 2, Date: "2023-12-21", STime: "11:00 AM", FTime: "11:30 AM", Level: "Low" },
-    { SessionNo: 3, Date: "2024-01-01", STime: "12:00 AM", FTime: "12:30 AM", Level: "Average" },
-    { SessionNo: 4, Date: "2024-01-16", STime: "11:00 AM", FTime: "12:30 AM", Level: "Low" },
-    { SessionNo: 5, Date: "2024-01-01", STime: "12:00 PM", FTime: "01:00 PM",Level: "Average" },
+    {
+      SessionNo: 1,
+      Date: "2023-12-14",
+      STime: "09:00 AM",
+      FTime: "09:30 AM",
+      Level: "High",
+    },
+    {
+      SessionNo: 2,
+      Date: "2023-12-21",
+      STime: "11:00 AM",
+      FTime: "11:30 AM",
+      Level: "Low",
+    },
+    {
+      SessionNo: 3,
+      Date: "2024-01-01",
+      STime: "12:00 AM",
+      FTime: "12:30 AM",
+      Level: "Average",
+    },
+    {
+      SessionNo: 4,
+      Date: "2024-01-16",
+      STime: "11:00 AM",
+      FTime: "12:30 AM",
+      Level: "Low",
+    },
+    {
+      SessionNo: 5,
+      Date: "2024-01-01",
+      STime: "12:00 PM",
+      FTime: "01:00 PM",
+      Level: "Average",
+    },
   ];
 
   const getLevelClass = (level) => {
@@ -121,18 +212,47 @@ const UserProfile = ({ activeMenu }) => {
     }
   };
   const treatments = [
-    {treatmentNo: 1, date: "2023-12-14",time: "09:00 AM",document: "report1.pdf"},
-    {treatmentNo: 2, date: "2023-12-21",time: "11:00 AM",document: "report2.pdf"},
-    {treatmentNo: 3, date: "2024-01-01",time: "12:00 AM",document: "report3.pdf"},
-    {treatmentNo: 4, date: "2024-02-15",time: "11:00 AM",document: "report4.pdf"},
-    {treatmentNo: 5, date: "2024-06-08",time: "10:00 AM",document: "report5.pdf"},
-    {treatmentNo: 6, date: "2024-06-15",time: "11:00 AM",document: "report6.pdf"},
-    
+    {
+      treatmentNo: 1,
+      date: "2023-12-14",
+      time: "09:00 AM",
+      document: "report1.pdf",
+    },
+    {
+      treatmentNo: 2,
+      date: "2023-12-21",
+      time: "11:00 AM",
+      document: "report2.pdf",
+    },
+    {
+      treatmentNo: 3,
+      date: "2024-01-01",
+      time: "12:00 AM",
+      document: "report3.pdf",
+    },
+    {
+      treatmentNo: 4,
+      date: "2024-02-15",
+      time: "11:00 AM",
+      document: "report4.pdf",
+    },
+    {
+      treatmentNo: 5,
+      date: "2024-06-08",
+      time: "10:00 AM",
+      document: "report5.pdf",
+    },
+    {
+      treatmentNo: 6,
+      date: "2024-06-15",
+      time: "11:00 AM",
+      document: "report6.pdf",
+    },
   ];
 
   return (
     <div className="bg-white shadow-md rounded-lg p-8 max-w-5xl mx-auto">
-      {activeMenu === 'My Profile' && (
+      {activeMenu === "My Profile" && (
         <>
           {isEditing ? (
             <div>
@@ -141,7 +261,7 @@ const UserProfile = ({ activeMenu }) => {
               </div>
               <div className="flex justify-center mb-6">
                 <img
-                  src={formData.profileImage}
+                  src={userDetails?.profilePicture}
                   alt="User"
                   className="rounded-full h-32 w-32 border-4 border-teal-500"
                 />
@@ -152,50 +272,67 @@ const UserProfile = ({ activeMenu }) => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="fullName"
+                >
                   Full Name
                 </label>
                 <input
-                  id="fullName"
-                  name="fullName"
+                  id="username"
+                  name="username"
                   type="text"
-                  value={formData.fullName}
+                  value={formData?.username}
                   onChange={handleChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="email"
+                >
                   Email
                 </label>
                 <input
                   id="email"
                   name="email"
                   type="email"
-                  value={formData.email}
+                  value={formData?.email}
                   onChange={handleChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                {error && <p className="text-red-500 text-xs italic">{error}</p>}
+                {error && (
+                  <p className="text-red-500 text-xs italic">{error}</p>
+                )}
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="address"
+                >
                   Address
                 </label>
                 <input
                   id="address"
                   name="address"
                   type="text"
-                  value={formData.address}
+                  value={formData?.address}
                   onChange={handleChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="flex justify-center mt-4">
-                <button onClick={handleSave} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">
+                <button
+                  onClick={handleSave}
+                  className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+                >
                   Save
                 </button>
-                <button onClick={handleCancel} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button
+                  onClick={handleCancel}
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
                   Cancel
                 </button>
               </div>
@@ -207,7 +344,7 @@ const UserProfile = ({ activeMenu }) => {
               </div>
               <div className="flex justify-center mb-6">
                 <img
-                  src={user.profileImage}
+                  src={userDetails?.profilePicture}
                   alt="User"
                   className="rounded-full h-32 w-32 border-4 border-teal-500"
                 />
@@ -215,21 +352,36 @@ const UserProfile = ({ activeMenu }) => {
               <table className="w-full text-left">
                 <tbody>
                   <tr>
-                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700 font-bold">Full name</td>
-                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700">{user.fullName}</td>
+                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700 font-bold">
+                      Full name
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700">
+                      {userDetails?.username}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700 font-bold">Email address</td>
-                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700">{user.email}</td>
+                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700 font-bold">
+                      Email address
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700">
+                      {userDetails?.email}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700 font-bold">Address</td>
-                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700">{user.address}</td>
+                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700 font-bold">
+                      Address
+                    </td>
+                    <td className="px-4 py-2 border-b border-gray-300 text-gray-700">
+                      {userDetails?.f}
+                    </td>
                   </tr>
                 </tbody>
               </table>
               <div className="flex justify-center mt-4">
-                <button onClick={() => setIsEditing(true)} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
                   Edit
                 </button>
               </div>
@@ -238,13 +390,16 @@ const UserProfile = ({ activeMenu }) => {
         </>
       )}
 
-      {activeMenu === 'Settings' && (
+      {activeMenu === "Settings" && (
         <div>
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold">Change Password</h1>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="currentPassword">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="currentPassword"
+            >
               Current Password
             </label>
             <input
@@ -257,7 +412,10 @@ const UserProfile = ({ activeMenu }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="newPassword">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="newPassword"
+            >
               New Password
             </label>
             <input
@@ -270,7 +428,10 @@ const UserProfile = ({ activeMenu }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="confirmPassword"
+            >
               Confirm New Password
             </label>
             <input
@@ -282,11 +443,17 @@ const UserProfile = ({ activeMenu }) => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          {passwordData.newPassword !== passwordData.confirmPassword && passwordData.confirmPassword !== '' && (
-            <p className="text-red-500 text-xs italic">Passwords do not match</p>
-          )}
+          {passwordData.newPassword !== passwordData.confirmPassword &&
+            passwordData.confirmPassword !== "" && (
+              <p className="text-red-500 text-xs italic">
+                Passwords do not match
+              </p>
+            )}
           <div className="flex justify-center mt-4">
-            <button onClick={handlePasswordSave} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">
+            <button
+              onClick={handlePasswordSave}
+              className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+            >
               Update Password
             </button>
           </div>
@@ -361,7 +528,7 @@ const UserProfile = ({ activeMenu }) => {
                     </th>
                     <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
                       StartTime
-                    </th>                    
+                    </th>
                     <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
                       FinishedTime
                     </th>
@@ -380,7 +547,7 @@ const UserProfile = ({ activeMenu }) => {
                         {session.Date}
                       </td>
                       <td className="py-4 px-6 border-0">{session.STime}</td>
-                      <td className="py-4 px-6 border-0">{session.FTime}</td>                    
+                      <td className="py-4 px-6 border-0">{session.FTime}</td>
                       <td className="py-4 px-6 border-0">
                         <span
                           className={`${getLevelClass(
@@ -443,9 +610,7 @@ const UserProfile = ({ activeMenu }) => {
             </div>
           </div>
         </>
-      )}  
-       {/* <userChat activeSection={activeSection} messagesRef={messagesRef} /> */}
-   
+      )}
     </div>
   );
 };

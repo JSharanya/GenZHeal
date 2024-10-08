@@ -42,7 +42,9 @@ const SignIn = () => {
       if(res.ok){
         dispatch(signInSuccess(data))
         toast.success('SignIn successful!');
-        navigate('/')
+        navigate('/');
+        localStorage.setItem('currentUser',JSON.stringify(data))
+
       }
     } catch (error) {
       dispatch(signInFailure(error.message))

@@ -14,7 +14,7 @@ const Froum = () => {
   const [editMessage, setEditMessage] = useState("");
   const [replyToCommentId, setReplyToCommentId] = useState(null);
 
-  const [replyMessage, setReplyMessage] = useState(""); 
+  const [replyMessage, setReplyMessage] = useState("");
   const [replyCommentId, setReplyCommentId] = useState(null);
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const Froum = () => {
 
   const handleReplyClick = (commentId) => {
     setReplyCommentId(commentId); // Set the comment ID being replied to
-  setReplyMessage("");
+    setReplyMessage("");
     if (replyToCommentId === commentId) {
       // If already replying to the same comment, toggle the reply box
       setReplyToCommentId(null);
@@ -205,7 +205,11 @@ const Froum = () => {
       setEditMessage(""); // Clear the textarea after editing
       if (response.ok) {
         const updatedComment = await response.json();
-        setComments(comments.map((comment) => comment._id === editCommentId ? updatedComment : comment));
+        setComments(
+          comments.map((comment) =>
+            comment._id === editCommentId ? updatedComment : comment
+          )
+        );
         setEditCommentId(null); // Clear edit state after successful update
       }
     } catch (error) {
@@ -287,7 +291,7 @@ const Froum = () => {
 
               {/* Comments List */}
               {comments
-                .filter((comment) => !comment.parent)
+                .filter((comment) => !comment.parent) // Filter for top-level comments only
                 .map((comment) => (
                   <article
                     key={comment._id}
@@ -304,12 +308,12 @@ const Froum = () => {
                           {comment.userId}
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          <time>
-                            {new Date(comment.createdAt).toLocaleString()}
-                          </time>
+                          <time>{new Date(comment.createdAt).toLocaleString()}</time>
                         </p>
                       </div>
                     </footer>
+
+                    {/* Edit comment functionality */}
                     {editCommentId === comment._id ? (
                       <form onSubmit={handleSubmitEdit}>
                         <textarea
@@ -338,29 +342,38 @@ const Froum = () => {
                     )}
 
                     <div className="flex items-center mt-4 space-x-4">
+                      {/* Reply button */}
                       <button
                         type="button"
                         className="text-sm text-gray-500 hover:underline dark:text-gray-400"
-                        // onClick={handleIconClick}
                         onClick={() => handleReplyClick(comment._id)}
                       >
                         Reply
                       </button>
-                      <button
-                        type="button"
-                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
-                        onClick={() => handleEditComment(comment._id)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="text-sm text-gray-500 hover:underline dark:text-gray-400"
-                        onClick={() => handleDeleteComment(comment._id)}
-                      >
-                        Delete
-                      </button>
+
+                      {/* Show Edit button only for the author of the comment */}
+                      {user._id === comment.userId && editCommentId !== comment._id && ( // Check if user is the author and not in edit mode
+                        <button
+                          type="button"
+                          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                          onClick={() => handleEditComment(comment._id)}
+                        >
+                          Edit
+                        </button>
+                      )}
+
+                      {/* Delete button, visible to the author only */}
+                      {user._id === comment.userId && (
+                        <button
+                          type="button"
+                          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                          onClick={() => handleDeleteComment(comment._id)}
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
+
 
                     {/* {isReply && (
                 <form
@@ -405,7 +418,6 @@ const Froum = () => {
                             value="Reply"
                           />
                         </div>
-                        
                       </form>
                     )}
 
@@ -452,89 +464,104 @@ const Froum = () => {
                         
                       ))} */}
 
-{comments
-  .filter((reply) => reply.parent === comment._id)
-  .map((reply) => (
-    <div
-      key={reply._id}
-      className="ml-10 mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg"
-    >
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        {reply.userId} •{" "}
-        {new Date(reply.createdAt).toLocaleString()}
-      </p>
+                    {comments
+                      .filter((reply) => reply.parent === comment._id)
+                      .map((reply) => (
+                        <div
+                          key={reply._id}
+                          className="ml-10 mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                        >
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {reply.userId} •{" "}
+                            {new Date(reply.createdAt).toLocaleString()}
+                          </p>
 
-      {editCommentId === reply._id ? (
-        <form onSubmit={handleSubmitEdit}>
-          <textarea
-            value={editMessage}
-            onChange={(e) => setEditMessage(e.target.value)}
-            className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-          />
-          <button
-            type="submit"
-            className="mt-2 px-3 py-1.5 rounded-md text-white bg-indigo-500"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={() => setEditCommentId(null)} // Cancel editing
-            className="ml-2 mt-2 px-3 py-1.5 rounded-md text-white bg-red-500"
-          >
-            Cancel
-          </button>
-        </form>
-      ) : (
-        <p className="mt-2 text-gray-500 dark:text-gray-400">{reply.comment}</p>
-      )}
+                          {editCommentId === reply._id ? (
+                            <form onSubmit={handleSubmitEdit}>
+                              <textarea
+                                value={editMessage}
+                                onChange={(e) => setEditMessage(e.target.value)}
+                                className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                              />
+                              <button
+                                type="submit"
+                                className="mt-2 px-3 py-1.5 rounded-md text-white bg-indigo-500"
+                              >
+                                Save
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setEditCommentId(null)} // Cancel editing
+                                className="ml-2 mt-2 px-3 py-1.5 rounded-md text-white bg-red-500"
+                              >
+                                Cancel
+                              </button>
+                            </form>
+                          ) : (
+                            <p className="mt-2 text-gray-500 dark:text-gray-400">
+                              {reply.comment}
+                            </p>
+                          )}
 
-      <div className="flex items-center mt-4 space-x-4">
-        <button
-          type="button"
-          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
-          onClick={() => handleReplyClick(reply._id)}
-        >
-          Reply
-        </button>
-        <button
-          type="button"
-          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
-          onClick={() => handleEditComment(reply._id)}
-        >
-          Edit
-        </button>
-        <button
-          type="button"
-          className="text-sm text-gray-500 hover:underline dark:text-gray-400"
-          onClick={() => handleDeleteComment(reply._id)}
-        >
-          Delete
-        </button>
-      </div>
+                          <div className="flex items-center mt-4 space-x-4">
+                            <button
+                              type="button"
+                              className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                              onClick={() => handleReplyClick(reply._id)}
+                            >
+                              Reply
+                            </button>
+                            {user._id === reply.userId && ( // Check if user is the author of the reply
+                <button
+                  type="button"
+                  className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                  onClick={() => handleEditComment(reply._id)}
+                >
+                  Edit
+                </button>
+              )}
+                            {user._id === reply.userId && ( // Check if user is the author of the reply
+                <button
+                  type="button"
+                  className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+                  onClick={() => handleDeleteComment(reply._id)} // Delete the reply
+                >
+                  Delete
+                </button>
+              )}
+                          </div>
 
-      {replyCommentId === reply._id && (
-        <form onSubmit={handleSubmitReply} className="ml-10 mt-4">
-          <textarea
-            value={replyMessage}
-            onChange={(e) => setReplyMessage(e.target.value)}
-            placeholder="Write your reply..."
-            className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-          />
-          <button
-            type="submit"
-            className="mt-2 px-3 py-1.5 rounded-md text-white bg-indigo-500"
-          >
-            Submit Reply
-          </button>
-        </form>
-      )}
-    </div>
-  ))}
+                          {replyCommentId === reply._id && (
+                            <form
+                              onSubmit={handleSubmitReply}
+                              className="ml-10 mt-4"
+                            >
+                              <textarea
+                                value={replyMessage}
+                                onChange={(e) =>
+                                  setReplyMessage(e.target.value)
+                                }
+                                placeholder="Write your reply..."
+                                className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                              />
+                              <button
+                                type="submit"
+                                className="mt-2 px-3 py-1.5 rounded-md text-white bg-indigo-500"
+                              >
+                                Submit Reply
+                              </button>
+                            </form>
+                          )}
 
 
+
+                        </div>
+                      ))}
                   </article>
                 ))}
+
+
+                
             </div>
           </section>
         </div>

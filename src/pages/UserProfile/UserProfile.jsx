@@ -27,49 +27,83 @@ const UserProfile = ({ activeMenu }) => {
   // const id = isLoggedInUser._id;
 
   const handlePasswordChange = (e) => {
-    setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+    setPasswordData({
+      ...passwordData,
+      [e.target.name]: e.target.value,
+    });
   };
-
-
-
- 
- 
-
   
-  const handlePasswordSave = () => {
+
+  const handlePasswordSave = async () => {
     const { currentPassword, newPassword, confirmPassword } = passwordData;
-
-    if (currentPassword !== "currentPassword123") {
-      setPasswordError("You entered an invalid password");
+  
+    // Validate current password and confirm password match
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setPasswordError("All fields are required.");
       return;
     }
-
+  
     if (newPassword !== confirmPassword) {
-      setPasswordError("Passwords do not match");
+      setPasswordError("Passwords do not match.");
       return;
     }
-
-    setPasswordError("");
-    alert("Password updated successfully");
+  
+    try {
+      const userdataaa = localStorage.getItem('currentUser');
+      const user = userdataaa ? JSON.parse(userdataaa) : null;
+      const id = user?._id;
+  
+      const response = await fetch(`http://localhost:3000/api/user/profile/changepassword/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user?.token}`,  // Assuming token is stored in the user object
+        },
+        body: JSON.stringify({
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+        }),
+      });
+  
+      if (response.ok) {
+        setPasswordError("");
+        alert("Password updated successfully");
+        setPasswordData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+      } else {
+        const errorResponse = await response.json();
+        setPasswordError(errorResponse.message || "Failed to update password");
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      setPasswordError("An error occurred while updating the password");
+    }
   };
+  
 
   const [appointments, setappointements] = useState([]);
 
   useEffect(() => {
-    const userdataaa = localStorage.getItem('currentUser');
+    const userdataaa = localStorage.getItem("currentUser");
     const user = userdataaa ? JSON.parse(userdataaa) : null;
     const id = user?._id;
-    
+
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/user/profile/${id}`);
+        const response = await fetch(
+          `http://localhost:3000/api/user/profile/${id}`
+        );
         const data = await response.json();
-        setUserDetails(data); 
-        setFormData({ 
-          fullName: data?.username || '',
-          email: data?.email || '',
-          address: data?.address || '',
-          profileImage: data?.profilePicture || 'https://via.placeholder.com/150',
+        setUserDetails(data);
+        setFormData({
+          username: data?.username || "",
+          email: data?.email || "",
+          address: data?.address || "",
+          profileImage:
+            data?.profilePicture || "https://via.placeholder.com/150",
         });
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -83,7 +117,7 @@ const UserProfile = ({ activeMenu }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
+  // Handle image changes
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -91,57 +125,60 @@ const UserProfile = ({ activeMenu }) => {
     }
   };
 
-
+  // Validate email format
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-
+  // Handle saving the updated user details
   const handleSave = async () => {
     if (!validateEmail(formData.email)) {
-      setError('Enter a valid email address');
+      setError("Enter a valid email address");
       return;
     }
 
     try {
-      const userdataaa = localStorage.getItem('currentUser');
+      const userdataaa = localStorage.getItem("currentUser");
       const user = userdataaa ? JSON.parse(userdataaa) : null;
       const id = user?._id;
 
-      const response = await fetch(`http://localhost:3000/api/user/profile/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          address: formData.address,
-          profilePicture: formData.profileImage,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/user/profile/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            address: formData.address,
+            profilePicture: formData.profileImage,
+          }),
+        }
+      );
 
       if (response.ok) {
         const updatedUser = await response.json();
         setUserDetails(updatedUser);
         setUser(formData);
         setIsEditing(false);
-        setError('');
-        alert('Profile updated successfully');
+        setError("");
+        alert("Profile updated successfully");
       } else {
-        setError('Failed to update profile');
+        setError("Failed to update profile");
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
-      setError('An error occurred while updating the profile');
+      console.error("Error updating profile:", error);
+      setError("An error occurred while updating the profile");
     }
   };
 
   const handleCancel = () => {
     setFormData({ ...user });
     setIsEditing(false);
-    setError('');
+    setError("");
   };
 
   // const appointments = [
@@ -149,7 +186,10 @@ const UserProfile = ({ activeMenu }) => {
   //   { appointNo: 2, date: "2023-12-21", time: "11:00 AM",Status: "Confirmed" },
   //   { appointNo: 3, date: "2024-01-01", time: "12:00 AM",Status: "Confirmed" },
   //   { appointNo: 4, date: "2024-02-15", time: "11:00 AM",Status: "Confirmed" },
-
+  //   { appointNo: 5, date: "2024-06-08", time: "10:00 AM",Status: "Confirmed" },
+  //   { appointNo: 6, date: "2024-06-15", time: "11:00 AM",Status: "Cancelled" },
+  //   { appointNo: 7, date: "2024-06-22", time: "12:00 AM",Status: "Cancelled" },
+  //   { appointNo: 8, date: "2024-07-01", time: "11:00 AM",Status: "Cancelled" },
   // ];
   const getFinished = (Status) => {
     switch (Status) {
@@ -403,9 +443,8 @@ const UserProfile = ({ activeMenu }) => {
               Current Password
             </label>
             <input
-              id="currentPassword"
-              name="currentPassword"
               type="password"
+              name="currentPassword"
               value={passwordData.currentPassword}
               onChange={handlePasswordChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -419,9 +458,8 @@ const UserProfile = ({ activeMenu }) => {
               New Password
             </label>
             <input
-              id="newPassword"
-              name="newPassword"
               type="password"
+              name="newPassword"
               value={passwordData.newPassword}
               onChange={handlePasswordChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -432,17 +470,20 @@ const UserProfile = ({ activeMenu }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="confirmPassword"
             >
-              Confirm New Password
+              Confirm Password
             </label>
             <input
-              id="confirmPassword"
-              name="confirmPassword"
               type="password"
+              name="confirmPassword"
               value={passwordData.confirmPassword}
               onChange={handlePasswordChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+          {passwordError && (
+            <p className="text-red-500 text-xs italic">{passwordError}</p>
+          )}
+
           {passwordData.newPassword !== passwordData.confirmPassword &&
             passwordData.confirmPassword !== "" && (
               <p className="text-red-500 text-xs italic">

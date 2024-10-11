@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Chatting from './Chatting';
+import "./FileUpload.css";
 
 
 
@@ -488,6 +489,20 @@ const handleSubmitdocUpdate = () => {
                       </p>
                     </div>
                     <p class="text-xl font-bold text-black mt-2">100</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="file-upload-container">
+                  <div className="file-upload-box" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                    <button className="choose-files-button" style={{ margin: '20px 0' }}>
+                      <i className="icon">📄</i> Choose Files
+                    </button>
+                    <p>Drop files here! </p>
+                    <p className="terms">
+                    to convert the audio files to a Word file.
+                    </p>
                   </div>
                 </div>
               </div>

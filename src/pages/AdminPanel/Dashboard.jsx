@@ -311,9 +311,9 @@ const handleSubmitdocUpdate = () => {
       case 'documents':
         documentsRef.current.scrollIntoView({ behavior: 'smooth' });
         break;
-      case 'settings':
-        settingsRef.current.scrollIntoView({ behavior: 'smooth' });
-        break;
+      // case 'settings':
+      //   settingsRef.current.scrollIntoView({ behavior: 'smooth' });
+      //   break;
       case 'virtualclub':
         virtualclubRef.current.scrollIntoView({ behavior: 'smooth' });
         break;
@@ -415,12 +415,12 @@ const handleSubmitdocUpdate = () => {
                 </button>
               </li>
 
-              <li className="mb-4">
+              {/* <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('settings')}>
                   <FaCog className="Icon" />
                   <span>Settings</span>
                 </button>
-              </li>
+              </li> */}
 
 
 
@@ -491,12 +491,6 @@ const handleSubmitdocUpdate = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="w-full max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold mb-4">Weekly Activity</h2>
-                <Line data={data} options={options} />
-              </div>
-
 
             </div>
 
@@ -1593,64 +1587,6 @@ const handleSubmitdocUpdate = () => {
                 </div>
               </div>
             </div>
-
-            <div className="mb-6 rounded-xl py-6 px-5 shadow-lg transition-all hover:shadow-lg sm:p-6 lg:px-5 xl:px-6 overflow-hidden">
-
-              <div className="flex justify-between mb-2">
-                <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
-                  Settings
-                </h3>
-                {/* <p className="text-base font-medium text-body-color">See all</p> */}
-              </div>
-              <form className="space-y-6">
-                <div className="flex flex-col items-center">
-                  <img
-                    width="100"
-                    height="100"
-                    src={docimg}
-                    alt="Doctor"
-                    className="rounded-full mb-4"
-                  />
-                  <div className="flex space-x-2">
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-bermuda dark:bg-blue-600 hover:bg-blue-100 hover:text-black dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    // className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-                    >
-                      Change picture
-                    </button>
-                    <button
-                      type="button"
-                      className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md hover:bg-gray-100 transition"
-                    >
-                      Delete picture
-                    </button>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3"> {/* Changed to flex container */}
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
-                </div>
-                <div className="flex justify-center">
-                  <button
-                    type="submit"
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-bermuda dark:bg-blue-600 hover:bg-blue-100 hover:text-black dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
-
-
             ...
           </div>
 
@@ -2272,69 +2208,6 @@ const handleSubmitdocUpdate = () => {
                 </div>
               </div>
             </div>
-
-
-            <div ref={settingsRef} className={`${activeSection === 'settings' ? 'block' : 'hidden'}`}>
-              <div className="flex justify-center items-center w-full pt-24">
-                <div className="w-full max-w-lg px-5"> {/* Adjusted container width */}
-                  <div className="mb-6 rounded-xl py-6 px-5 shadow-lg transition-all hover:shadow-lg sm:p-6 lg:px-5 xl:px-6 overflow-hidden">
-
-                    <div className="flex justify-between mb-2">
-                      <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
-                        Settings
-                      </h3>
-                      {/* <p className="text-base font-medium text-body-color">See all</p> */}
-                    </div>
-                    <form className="space-y-6">
-                      <div className="flex flex-col items-center">
-                        <img
-                          width="100"
-                          height="100"
-                          src={docimg}
-                          alt="Doctor"
-                          className="rounded-full mb-4"
-                        />
-                        <div className="flex space-x-2">
-                          <button
-                            type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-bermuda dark:bg-blue-600 hover:bg-blue-100 hover:text-black dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                          // className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-                          >
-                            Change picture
-                          </button>
-                          <button
-                            type="button"
-                            className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md hover:bg-gray-100 transition"
-                          >
-                            Delete picture
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-3"> {/* Changed to flex container */}
-                        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          id="username"
-                          name="username"
-                          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div className="flex justify-center">
-                        <button
-                          type="submit"
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-bermuda dark:bg-blue-600 hover:bg-blue-100 hover:text-black dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-
 
             {/* Note */}
 

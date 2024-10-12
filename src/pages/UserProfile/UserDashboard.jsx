@@ -22,7 +22,7 @@ const UserDashboard = () => {
             <PiBrainBold className="inline-block" /> GenZHeal
           </Link>
         </div>
-        <div className="Menu w-full space-y-4"> {/* Added space-y-4 for gap */}
+        <div className="Menu w-full space-y-4"> 
           <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={() => handleMenuClick('My Profile')}>
             <FaUserCircle className="mr-2" /> My Profile
           </div>
@@ -54,7 +54,7 @@ const UserDashboard = () => {
         {activeMenu === 'Sessions' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'TreatmentHistory' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />} 
         {activeMenu === 'Chat' && <UserChat/>}
-        {/* <Chatting activeSection={activeSection} messagesRef={messagesRef} /> */}
+       
 
       </div>
     </div>

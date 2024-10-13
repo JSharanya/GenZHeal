@@ -255,37 +255,31 @@ const UserProfile = ({ activeMenu }) => {
     {
       treatmentNo: 1,
       date: "2023-12-14",
-      time: "09:00 AM",
       document: "report1.pdf",
     },
     {
       treatmentNo: 2,
       date: "2023-12-21",
-      time: "11:00 AM",
       document: "report2.pdf",
     },
     {
       treatmentNo: 3,
       date: "2024-01-01",
-      time: "12:00 AM",
       document: "report3.pdf",
     },
     {
       treatmentNo: 4,
       date: "2024-02-15",
-      time: "11:00 AM",
       document: "report4.pdf",
     },
     {
       treatmentNo: 5,
       date: "2024-06-08",
-      time: "10:00 AM",
       document: "report5.pdf",
     },
     {
       treatmentNo: 6,
       date: "2024-06-15",
-      time: "11:00 AM",
       document: "report6.pdf",
     },
   ];
@@ -503,53 +497,53 @@ const UserProfile = ({ activeMenu }) => {
       {activeMenu === "Appointments" && (
         <>
           {/* <h2>Appointments</h2> */}
+  <div className="mx-2 sm:mx-4 md:mx-8 lg:mx-10">
+  <div className="shadow-lg rounded-lg overflow-hidden">
+    <table className="w-full table-auto border-collapse">
+      <thead>
+        <tr className="bg-gray-100">
+          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+            Appointment No
+          </th>
+          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+            Date
+          </th>
+          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+            Time
+          </th>
+          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody className="bg-white">
+        {appointments.map((appointment, index) => (
+          <tr key={index}>
+            <td className="py-4 px-2 sm:px-4 border-b">
+              {appointment.appointNo}
+            </td>
+            <td className="py-4 px-2 sm:px-4 border-b truncate">
+              {appointment.date}
+            </td>
+            <td className="py-4 px-2 sm:px-4 border-b">
+              {appointment.time}
+            </td>
+            <td className="py-4 px-2 sm:px-4 border-b">
+              <span
+                className={`${getFinished(
+                  appointment.Status
+                )} text-white py-1 px-3 rounded-full text-xs`}
+              >
+                {appointment.Status}
+              </span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
 
-          <div>
-            <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
-              <table class="w-full table-fixed border-collapse">
-                <thead>
-                  <tr class="bg-gray-100">
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Appointment No
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Date
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Time
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Status
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white">
-                  {appointments.map((appointment, index) => (
-                    <tr key={appointment}>
-                      <td class="py-4 px-6 border-b border-0">
-                        {appointment.appointNo}
-                      </td>
-                      <td class="py-4 px-6 border-b border-0 truncate">
-                        {appointment.date}
-                      </td>
-                      <td class="py-4 px-6 border-b border-0">
-                        {appointment.time}
-                      </td>
-                      <td className="py-4 px-6 border-0">
-                        <span
-                          className={`${getFinished(
-                            appointment.Status
-                          )} text-white py-1 px-2 rounded-full text-xs`}
-                        >
-                          {appointment.Status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </>
       )}
       {activeMenu === "Sessions" && (
@@ -609,50 +603,48 @@ const UserProfile = ({ activeMenu }) => {
       {activeMenu === "TreatmentHistory" && (
         <>
           {/* <h2>Treatment History</h2> */}
-
-          <div>
-            <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
-              <table class="w-full table-fixed border-collapse">
-                <thead>
-                  <tr class="bg-gray-100">
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Treatment No
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Date
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Time
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Treatment Document
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white">
-                  {treatments.map((treatment) => (
-                    <tr key={treatment}>
-                      <td className="py-4 px-6 border-0">
-                        {treatment.treatmentNo}
-                      </td>
-                      <td className="py-4 px-6 border-0 truncate">
-                        {treatment.date}
-                      </td>
-                      <td className="py-4 px-6 border-0">{treatment.time}</td>
-                      <td className="py-4 px-6 border-0">
-                      <div id="treatmentDocument" style={{ display: 'none' }}>
-                        {treatment.document}
-                      </div>
-                      <button onClick={downloadPDF}>
-                         Download as PDF
-                      </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+    <div className="mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
+      <div className="shadow-lg rounded-lg overflow-hidden">
+        <table className="w-full border-collapse table-auto">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="w-1/3 sm:w-1/4 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                Treatment No
+              </th>
+              <th className="w-1/3 sm:w-1/4 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                Date
+              </th>
+              <th className="w-1/3 sm:w-1/4 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                Treatment Document
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {treatments.map((treatment) => (
+              <tr key={treatment.treatmentNo}>
+                <td className="py-4 px-2 sm:px-4 border-b">
+                  {treatment.treatmentNo}
+                </td>
+                <td className="py-4 px-2 sm:px-4 border-b truncate">
+                  {treatment.date}
+                </td>
+                <td className="py-4 px-2 sm:px-4 border-b">
+                  <div id="treatmentDocument" style={{ display: 'none' }}>
+                    {treatment.document}
+                  </div>
+                  <button
+                    className="bg-[#2c4f50] text-white py-2 px-4 rounded-md hover:bg-[#3a6262] focus:outline-none"
+                    onClick={downloadPDF}
+                  >
+                    Download as PDF
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
         </>
       )}
     </div>

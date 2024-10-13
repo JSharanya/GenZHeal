@@ -1,5 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import html2pdf from 'html2pdf.js';
+
+const downloadPDF = () => {
+  const element = document.getElementById('treatmentDocument'); 
+  
+  html2pdf()
+    .from(element)
+    .set({
+      margin: 1,
+      filename: 'treatment.pdf', 
+      html2canvas: { scale: 2 }, 
+      jsPDF: { orientation: 'portrait' } 
+    })
+    .save();
+};
 
 const UserProfile = ({ activeMenu }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,7 +25,6 @@ const UserProfile = ({ activeMenu }) => {
     profileImage: "https://via.placeholder.com/150",
   });
 
-  // const isLoggedInUser = useSelector(isLoggedIn);
 
   const [formData, setFormData] = useState({ ...user });
   const [passwordData, setPasswordData] = useState({
@@ -21,10 +35,6 @@ const UserProfile = ({ activeMenu }) => {
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [userDetails, setUserDetails] = useState({});
-
-  // const isLoggedInUser = useSelector(isLoggedIn);
-
-  // const id = isLoggedInUser._id;
 
   const handlePasswordChange = (e) => {
     setPasswordData({
@@ -37,7 +47,6 @@ const UserProfile = ({ activeMenu }) => {
   const handlePasswordSave = async () => {
     const { currentPassword, newPassword, confirmPassword } = passwordData;
   
-    // Validate current password and confirm password match
     if (!currentPassword || !newPassword || !confirmPassword) {
       setPasswordError("All fields are required.");
       return;
@@ -57,7 +66,7 @@ const UserProfile = ({ activeMenu }) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${user?.token}`,  // Assuming token is stored in the user object
+          Authorization: `Bearer ${user?.token}`,  
         },
         body: JSON.stringify({
           currentPassword: currentPassword,
@@ -117,7 +126,7 @@ const UserProfile = ({ activeMenu }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle image changes
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -125,13 +134,13 @@ const UserProfile = ({ activeMenu }) => {
     }
   };
 
-  // Validate email format
+ 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  // Handle saving the updated user details
+ 
   const handleSave = async () => {
     if (!validateEmail(formData.email)) {
       setError("Enter a valid email address");
@@ -166,6 +175,7 @@ const UserProfile = ({ activeMenu }) => {
         setIsEditing(false);
         setError("");
         alert("Profile updated successfully");
+        console.log(formData?.address.street);
       } else {
         setError("Failed to update profile");
       }
@@ -181,16 +191,6 @@ const UserProfile = ({ activeMenu }) => {
     setError("");
   };
 
-  // const appointments = [
-  //   { appointNo: 1, date: "2023-12-14", time: "09:00 AM",Status: "Confirmed" },
-  //   { appointNo: 2, date: "2023-12-21", time: "11:00 AM",Status: "Confirmed" },
-  //   { appointNo: 3, date: "2024-01-01", time: "12:00 AM",Status: "Confirmed" },
-  //   { appointNo: 4, date: "2024-02-15", time: "11:00 AM",Status: "Confirmed" },
-  //   { appointNo: 5, date: "2024-06-08", time: "10:00 AM",Status: "Confirmed" },
-  //   { appointNo: 6, date: "2024-06-15", time: "11:00 AM",Status: "Cancelled" },
-  //   { appointNo: 7, date: "2024-06-22", time: "12:00 AM",Status: "Cancelled" },
-  //   { appointNo: 8, date: "2024-07-01", time: "11:00 AM",Status: "Cancelled" },
-  // ];
   const getFinished = (Status) => {
     switch (Status) {
       case "Confirmed":
@@ -357,7 +357,7 @@ const UserProfile = ({ activeMenu }) => {
                   id="address"
                   name="address"
                   type="text"
-                  value={formData?.address}
+                  value={formData?.address.street}
                   onChange={handleChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
@@ -412,7 +412,7 @@ const UserProfile = ({ activeMenu }) => {
                       Address
                     </td>
                     <td className="px-4 py-2 border-b border-gray-300 text-gray-700">
-                      {userDetails?.f}
+                    {userDetails?.address?.street || 'No street provided'}
                     </td>
                   </tr>
                 </tbody>
@@ -640,9 +640,12 @@ const UserProfile = ({ activeMenu }) => {
                       </td>
                       <td className="py-4 px-6 border-0">{treatment.time}</td>
                       <td className="py-4 px-6 border-0">
-                        <a href={`/${treatment.document}`} download>
-                          {treatment.document}
-                        </a>
+                      <div id="treatmentDocument" style={{ display: 'none' }}>
+                        {treatment.document}
+                      </div>
+                      <button onClick={downloadPDF}>
+                         Download as PDF
+                      </button>
                       </td>
                     </tr>
                   ))}

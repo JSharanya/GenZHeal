@@ -15,11 +15,6 @@ import axios from 'axios';
 import { jsPDF } from 'jspdf';
 import dotenv from "dotenv";
 
-dotenv.config();
-
-
-
-
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showForm, setShowForm] = useState(false);
@@ -131,7 +126,9 @@ const handleConvertToText = async () => {
   formData.append('file', file_audio);  // Append file
   formData.append('model', 'whisper-1');  // Append the model parameter
 
-  const apiKey = process.env.REACT_APP_API_KEY;
+
+  const apiKey = process.env.OPENAI_API_KEY;
+
   try {
     const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
       headers: {
@@ -156,6 +153,8 @@ const handleConvertToText = async () => {
   }
 };
 
+// console.log(apiKey);
+
 const generatePDF = (text) => {
   const doc = new jsPDF();
 
@@ -175,20 +174,19 @@ const generatePDF = (text) => {
 
 // Function to handle anonymization of personal data
 const handleTextEncryptor = async (transcriptionText) => {
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
 
   try {
     const response = await axios.post(
       'https://api.aphroheragames.com/chat',
       {
-
-        user_input: `${transcriptionText} replace with the word "[hidden]" any personal informations like names occures, and give back as same. Do not do any other changes.`,
+        api_key: apiKey,  // Place API key directly in the request body
+        user_input: `${transcriptionText} replace with the word "[hidden]" any personal information like names, and give back as same. Do not do any other changes.`,
       },
       {
         headers: {
-          Authorization: `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
-        }
+        },
       }
     );
 

@@ -11,6 +11,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Chatting from './Chatting';
 import "./FileUpload.css";
+import axios from 'axios';
+import { jsPDF } from 'jspdf';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 
@@ -37,6 +42,10 @@ const Dashboard = () => {
 
   const [allVirual, setAllVirual] = useState([]);
   const [allDoc, setAllDoc] = useState([]);
+  const [transcriptionText, setTranscriptionText] = useState("");
+  const [file_audio, setFile_audio] = useState(null);
+  const [isConverting, setIsConverting] = useState(false); // State to indicate conversion in progress
+
 
   useEffect(() => {
     fetch("http://localhost:3000/api/virualclub/all-virual").then(
@@ -61,6 +70,7 @@ const Dashboard = () => {
 
 
   }
+  
 
   useEffect(() => {
     fetch("http://localhost:3000/api/documents/all-doc").then(
@@ -88,6 +98,110 @@ const Dashboard = () => {
     setFile(e.target.files[0]);
   };
 
+  // const handleFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  // };
+
+  const handleFileChange_audio = (e) => {
+    setFile_audio(e.target.files[0]);
+  };
+
+// Handle file drop
+const handleDrop = (event) => {
+  event.preventDefault();
+  const droppedFile = event.dataTransfer.files[0];
+  setFile(droppedFile);
+};
+
+// Prevent default behavior for drag events
+const handleDragOver = (event) => {
+  event.preventDefault();
+};
+
+// Handle conversion to text (transcription)
+const handleConvertToText = async () => {
+  if (!file_audio) {
+    alert('Please choose or drop a file to transcribe.');
+    return;
+  }
+
+  setIsConverting(true);
+
+  const formData = new FormData();
+  formData.append('file', file_audio);  // Append file
+  formData.append('model', 'whisper-1');  // Append the model parameter
+
+  const apiKey = process.env.REACT_APP_API_KEY;
+  try {
+    const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+    setTranscriptionText(response.data.text);
+    const slicedText = response.data.text.slice(0, 900);
+
+
+    // Handle text anonymization after transcription
+    await handleTextEncryptor(slicedText);
+  } catch (error) {
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+    } else {
+      console.error('Error message:', error.message);
+    }
+  } finally {
+    setIsConverting(false);
+  }
+};
+
+const generatePDF = (text) => {
+  const doc = new jsPDF();
+
+  const pageWidth = doc.internal.pageSize.getWidth();
+        const margin = 10;
+        const textWidth = pageWidth - 2 * margin;
+
+        // Use splitTextToSize to automatically wrap text within the width
+        const wrappedText = doc.splitTextToSize(text, textWidth);
+
+        // Add the wrapped text to the PDF at position (x=10, y=10)
+        doc.text(wrappedText, margin, 10)
+
+  // Save the generated PDF with a filename
+  doc.save('sample.pdf');
+};
+
+// Function to handle anonymization of personal data
+const handleTextEncryptor = async (transcriptionText) => {
+  const apiKey = process.env.REACT_APP_API_KEY;
+
+  try {
+    const response = await axios.post(
+      'https://api.aphroheragames.com/chat',
+      {
+
+        user_input: `${transcriptionText} replace with the word "[hidden]" any personal informations like names occures, and give back as same. Do not do any other changes.`,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    // Set the anonymized text in state
+    setTranscriptionText(response.data.response); // Ensure you're accessing the correct property
+    generatePDF(response.data.response);
+  } catch (error) {
+    console.error('Error during anonymization:', error.response ? error.response.data : error.message);
+  }
+};
+
+
+
 
   const toggleEditVForm = () => {
     // setEditVData(data);
@@ -110,12 +224,9 @@ const Dashboard = () => {
   }
 
   const handleOpenEditDForm = (data) => {
-    if (data && data._id) {
-      setEditDData(data);
-      setEditDFormVisible(true);
-    } else {
-      console.error('Selected document does not contain _id:', data);
-    }
+    console.log(data);  // Check if _id is available here
+    setEditDData(data);
+    setEditDFormVisible(true);
   };
   
 
@@ -244,13 +355,21 @@ const handleDocSubmit = (e) => {
   const formData = new FormData();
   formData.append('docName', docName);
   formData.append('date', date);
-  formData.append('docum', docum);
+  formData.append('docum', editDData.docum);
 
   fetch("http://localhost:3000/api/documents/upload-doc", {
     method: "POST",
     body: formData,
   })
-    .then((res) => res.json())
+  .then((res) => {
+    // Check if the response's content-type is JSON
+    const contentType = res.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return res.json();  // Parse only if valid JSON
+    } else {
+      throw new Error('Response is not JSON');
+    }
+  })
     .then((data) => {
       toast.success("Documents are uploaded");
       setAllDoc([...allDoc, data]);
@@ -260,6 +379,11 @@ const handleDocSubmit = (e) => {
 
 
 const handleSubmitdocUpdate = () => {
+  if (!editDData._id) {
+    console.error('Document ID is missing');
+    return;
+  }
+
   const formData = new FormData();
   formData.append('docName', editDData.docName);
   formData.append('date', editDData.date);
@@ -277,6 +401,7 @@ const handleSubmitdocUpdate = () => {
     .catch(() => alert('Something went wrong'))
     .finally(() => setEditDFormVisible(false));
 };
+
 
 
 
@@ -493,19 +618,23 @@ const handleSubmitdocUpdate = () => {
                 </div>
               </div>
 
-              <div>
-                <div className="file-upload-container">
-                  <div className="file-upload-box" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                    <button className="choose-files-button" style={{ margin: '20px 0' }}>
-                      <i className="icon">📄</i> Choose Files
-                    </button>
-                    <p>Drop files here! </p>
-                    <p className="terms">
-                    to convert the audio files to a Word file.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <div className="file-upload-container" onDrop={handleDrop} onDragOver={handleDragOver}>
+        <div className="file-upload-box" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <input type="file" accept="audio/*" id="file-input" onChange={handleFileChange_audio} />
+          <label htmlFor="file-input">
+         
+            <button className="choose-files-button" style={{ margin: '20px 0' }}>
+              <i className="icon">📄</i> Choose Files
+            </button>
+          </label>
+          <p>Drop files here!</p>
+          <p className="terms">to convert the audio files to a Word file.</p>
+        </div>
+      </div>
+
+      <button onClick={handleConvertToText} disabled={isConverting} style={{ marginTop: '20px' }}>
+        {isConverting ? 'Converting...' : 'Convert to Text'}
+      </button>
 
             </div>
 

@@ -255,37 +255,31 @@ const UserProfile = ({ activeMenu }) => {
     {
       treatmentNo: 1,
       date: "2023-12-14",
-      time: "09:00 AM",
       document: "report1.pdf",
     },
     {
       treatmentNo: 2,
       date: "2023-12-21",
-      time: "11:00 AM",
       document: "report2.pdf",
     },
     {
       treatmentNo: 3,
       date: "2024-01-01",
-      time: "12:00 AM",
       document: "report3.pdf",
     },
     {
       treatmentNo: 4,
       date: "2024-02-15",
-      time: "11:00 AM",
       document: "report4.pdf",
     },
     {
       treatmentNo: 5,
       date: "2024-06-08",
-      time: "10:00 AM",
       document: "report5.pdf",
     },
     {
       treatmentNo: 6,
       date: "2024-06-15",
-      time: "11:00 AM",
       document: "report6.pdf",
     },
   ];
@@ -620,10 +614,7 @@ const UserProfile = ({ activeMenu }) => {
                     </th>
                     <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
                       Date
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Time
-                    </th>
+                    </th>                  
                     <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
                       Treatment Document
                     </th>
@@ -637,8 +628,7 @@ const UserProfile = ({ activeMenu }) => {
                       </td>
                       <td className="py-4 px-6 border-0 truncate">
                         {treatment.date}
-                      </td>
-                      <td className="py-4 px-6 border-0">{treatment.time}</td>
+                      </td>             
                       <td className="py-4 px-6 border-0">
                       <div id="treatmentDocument" style={{ display: 'none' }}>
                         {treatment.document}

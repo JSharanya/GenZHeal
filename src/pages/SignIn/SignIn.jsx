@@ -34,16 +34,26 @@ const SignIn = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
-      if (data.success === false) {
-        // dispatch(signInFailure(data.message))
+
+      // if (data.success === false) {
+      //   // dispatch(signInFailure(data.message))
+      //   return toast.error(data.message);
+      // }
+
+      if (!res.ok) {
         return toast.error(data.message);
       }
 
       if (res.ok) {
         dispatch(signInSuccess(data));
         toast.success("SignIn successful!");
-        navigate("/");
+        if (data.isAdmin) {
+          navigate('/admin/dashboard');  // Redirect to admin page if admin
+        } else {
+          navigate('/');  // Redirect to home page if a regular user
+        }
         localStorage.setItem("currentUser", JSON.stringify(data));
       }
     } catch (error) {

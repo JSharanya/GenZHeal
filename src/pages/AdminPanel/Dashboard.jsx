@@ -1,4 +1,3 @@
-// import React from 'react';
 import React, { useState, useRef, useEffect } from 'react';
 import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt, FaHeart } from 'react-icons/fa';
 import docimg from "../../images/doctor.png";
@@ -39,7 +38,7 @@ const Dashboard = () => {
   const [allDoc, setAllDoc] = useState([]);
   const [transcriptionText, setTranscriptionText] = useState("");
   const [file_audio, setFile_audio] = useState(null);
-  const [isConverting, setIsConverting] = useState(false); // State to indicate conversion in progress
+  const [isConverting, setIsConverting] = useState(false); 
 
 
   useEffect(() => {
@@ -71,6 +70,7 @@ const Dashboard = () => {
     fetch("http://localhost:3000/api/documents/all-doc").then(
       res => res.json()
     ).then(data => setAllDoc(data))
+
   }, [])
 
   const handleDeleteDoc = (id) => {
@@ -93,27 +93,20 @@ const Dashboard = () => {
     setFile(e.target.files[0]);
   };
 
-  // const handleFileChange = (e) => {
-  //   setFile(e.target.files[0]);
-  // };
-
   const handleFileChange_audio = (e) => {
     setFile_audio(e.target.files[0]);
   };
 
-// Handle file drop
 const handleDrop = (event) => {
   event.preventDefault();
   const droppedFile = event.dataTransfer.files[0];
   setFile(droppedFile);
 };
 
-// Prevent default behavior for drag events
 const handleDragOver = (event) => {
   event.preventDefault();
 };
 
-// Handle conversion to text (transcription)
 const handleConvertToText = async () => {
   if (!file_audio) {
     alert('Please choose or drop a file to transcribe.');
@@ -123,8 +116,8 @@ const handleConvertToText = async () => {
   setIsConverting(true);
 
   const formData = new FormData();
-  formData.append('file', file_audio);  // Append file
-  formData.append('model', 'whisper-1');  // Append the model parameter
+  formData.append('file', file_audio);  
+  formData.append('model', 'whisper-1');  
 
 
   const apiKey = process.env.OPENAI_API_KEY;
@@ -138,8 +131,6 @@ const handleConvertToText = async () => {
     setTranscriptionText(response.data.text);
     const slicedText = response.data.text.slice(0, 900);
 
-
-    // Handle text anonymization after transcription
     await handleTextEncryptor(slicedText);
   } catch (error) {
     if (error.response) {
@@ -153,7 +144,6 @@ const handleConvertToText = async () => {
   }
 };
 
-// console.log(apiKey);
 
 const generatePDF = (text) => {
   const doc = new jsPDF();
@@ -162,17 +152,14 @@ const generatePDF = (text) => {
         const margin = 10;
         const textWidth = pageWidth - 2 * margin;
 
-        // Use splitTextToSize to automatically wrap text within the width
         const wrappedText = doc.splitTextToSize(text, textWidth);
 
-        // Add the wrapped text to the PDF at position (x=10, y=10)
         doc.text(wrappedText, margin, 10)
 
-  // Save the generated PDF with a filename
   doc.save('sample.pdf');
 };
 
-// Function to handle anonymization of personal data
+
 const handleTextEncryptor = async (transcriptionText) => {
   const apiKey = process.env.OPENAI_API_KEY;
 
@@ -180,7 +167,7 @@ const handleTextEncryptor = async (transcriptionText) => {
     const response = await axios.post(
       'https://api.aphroheragames.com/chat',
       {
-        api_key: apiKey,  // Place API key directly in the request body
+        api_key: apiKey,  
         user_input: `${transcriptionText} replace with the word "[hidden]" any personal information like names, and give back as same. Do not do any other changes.`,
       },
       {
@@ -190,8 +177,8 @@ const handleTextEncryptor = async (transcriptionText) => {
       }
     );
 
-    // Set the anonymized text in state
-    setTranscriptionText(response.data.response); // Ensure you're accessing the correct property
+   
+    setTranscriptionText(response.data.response); 
     generatePDF(response.data.response);
   } catch (error) {
     console.error('Error during anonymization:', error.response ? error.response.data : error.message);
@@ -202,14 +189,13 @@ const handleTextEncryptor = async (transcriptionText) => {
 
 
   const toggleEditVForm = () => {
-    // setEditVData(data);
+    
 
     setEditVFormVisible(!isEditVFormVisible);
 
   };
 
   const toggleEditDForm = () => {
-    // setEditVData(data);
 
     setEditDFormVisible(!isEditDFormVisible);
 
@@ -222,7 +208,7 @@ const handleTextEncryptor = async (transcriptionText) => {
   }
 
   const handleOpenEditDForm = (data) => {
-    console.log(data);  // Check if _id is available here
+    console.log(data); 
     setEditDData(data);
     setEditDFormVisible(true);
   };
@@ -242,7 +228,7 @@ const handleDInputChange = (e) => {
   if (type === 'file') {
     setEditDData((prevData) => ({
       ...prevData,
-      [name]: files[0], // Store the file object
+      [name]: files[0], 
     }));
   } else {
     setEditDData((prevData) => ({
@@ -256,12 +242,11 @@ const handleDInputChange = (e) => {
   
 
   const handleSave = () => {
-    // Handle save logic here
-    toggleEditVForm(); // Close the form after saving
+   
+    toggleEditVForm(); 
   };
   const handleDSave = () => {
-    // Handle save logic here
-    toggleEditDForm(); // Close the form after saving
+    toggleEditDForm(); 
   };
 
 
@@ -342,64 +327,91 @@ const handleDInputChange = (e) => {
   }
 
 
-const handleDocSubmit = (e) => {
-  e.preventDefault();
-  const form = e.target;
+  const handleDocSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+  
+  
+    const docName = form.docName.value;
+    const date = form.date.value;
+    const docum = form.docum.files[0]; 
+  
+  
+    console.log("Form data before submission:");
+    console.log("docName:", docName);
+    console.log("date:", date);
+    console.log("docum (file):", docum);
+  
+    const formData = new FormData();
+    formData.append('docName', docName);
+    formData.append('date', date);
+    formData.append('pdf', docum); 
+  
+    console.log("FormData object:", formData);
+  
+    fetch("http://localhost:3000/api/documents/upload-doc", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => {
+        
+        console.log("Server response status:", res.status);
+        console.log("Server response headers:", res.headers);
+  
+      
+        const contentType = res.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          return res.json();
+        } else {
+          throw new Error('Response is not JSON');
+        }
+      })
+      .then((data) => {
+       
+        console.log("Server response data:", data);
+        toast.success("Documents are uploaded");
+  
+        
+        setAllDoc([...allDoc, data.data]); 
+      })
+      .catch((error) => {
+      
+        console.error("Error during document upload:", error);
+        alert('Something went wrong during the document upload');
+      })
+      .finally(() => {
+        setShowForm(false);
+      });
+  };
+  
 
-  const docName = form.docName.value;
-  const date = form.date.value;
-  const docum = form.docum.files[0]; // Use the file object
 
-  const formData = new FormData();
-  formData.append('docName', docName);
-  formData.append('date', date);
-  formData.append('docum', editDData.docum);
-
-  fetch("http://localhost:3000/api/documents/upload-doc", {
-    method: "POST",
-    body: formData,
-  })
-  .then((res) => {
-    // Check if the response's content-type is JSON
-    const contentType = res.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return res.json();  // Parse only if valid JSON
-    } else {
-      throw new Error('Response is not JSON');
+  const handleSubmitdocUpdate = () => {
+    console.log(editDData); 
+  
+    if (!editDData._id) {
+      console.error('Document ID is missing');
+      return;
     }
-  })
-    .then((data) => {
-      toast.success("Documents are uploaded");
-      setAllDoc([...allDoc, data]);
+  
+    const formData = new FormData();
+    formData.append('docName', editDData.docName);
+    formData.append('date', editDData.date);
+    formData.append('pdf', editDData.docum);
+  
+    fetch(`http://localhost:3000/api/documents/update-doc/${editDData._id}`, {
+      method: 'PUT',
+      body: formData,
     })
-    .finally(() => setShowForm(false));
-};
-
-
-const handleSubmitdocUpdate = () => {
-  if (!editDData._id) {
-    console.error('Document ID is missing');
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('docName', editDData.docName);
-  formData.append('date', editDData.date);
-  formData.append('docum', editDData.docum);
-
-  fetch(`http://localhost:3000/api/documents/update-doc/${editDData._id}`, {
-    method: 'PUT',
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      const updatedAllDoc = allDoc.map((docu) => (docu._id === data._id ? data : docu));
-      setAllDoc(updatedAllDoc);
-    })
-    .catch(() => alert('Something went wrong'))
-    .finally(() => setEditDFormVisible(false));
-};
-
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedAllDoc = allDoc.map((docu) => (docu._id === data._id ? data : docu));
+        setAllDoc(updatedAllDoc);
+      })
+      .catch(() => alert('Something went wrong'))
+      .finally(() => setEditDFormVisible(false));
+  };
+  
 
 
 
@@ -435,9 +447,6 @@ const handleSubmitdocUpdate = () => {
       case 'documents':
         documentsRef.current.scrollIntoView({ behavior: 'smooth' });
         break;
-      // case 'settings':
-      //   settingsRef.current.scrollIntoView({ behavior: 'smooth' });
-      //   break;
       case 'virtualclub':
         virtualclubRef.current.scrollIntoView({ behavior: 'smooth' });
         break;
@@ -472,16 +481,15 @@ const handleSubmitdocUpdate = () => {
 
   return (
     <div className="h-full h-screen overflow-y-auto pt-0 mt-0">
-      {/* Navbar */}
+     
       <nav className="fixed">
-        {/* Navbar content */}
-
+       
       </nav>
 
-      {/* Main content and sidebar container */}
+     
       <div className="flex h-full ">
 
-        {/* Sidebar */}
+       
         <aside className="bg-gray-200 w-64 p-4 mt-0 pt-0 h-full fixed">
 
           <img
@@ -538,16 +546,6 @@ const handleSubmitdocUpdate = () => {
                   <span>virtualclub</span>
                 </button>
               </li>
-
-              {/* <li className="mb-4">
-                <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('settings')}>
-                  <FaCog className="Icon" />
-                  <span>Settings</span>
-                </button>
-              </li> */}
-
-
-
               <li className="mb-4">
                 <button className="flex items-center w-full text-left p-2 rounded hover:bg-gray-300" onClick={() => navigateTo('logout')}>
                   <FaSignOutAlt className="Icon" />
@@ -560,9 +558,9 @@ const handleSubmitdocUpdate = () => {
 
 
 
-        {/* Main content */}
+     
         <section className="ml-80 mt-0 pt-0 h-full flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main content */}
+        
 
           <div ref={dashboardRef} className={`${activeSection === 'dashboard' ? 'block' : 'hidden'}`} >
             <div class="pt-24">
@@ -955,7 +953,7 @@ const handleSubmitdocUpdate = () => {
                   </button>
                 </div>
 
-                {/* Toggleable Form */}
+          
 
                 {showForm && (
                   <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -2027,8 +2025,7 @@ const handleSubmitdocUpdate = () => {
                             </div>
                             <div className="mb-8">
                               <button type="submit"
-                                onClick={handleSubmitdocUpdate}
-                                
+                                                              
                                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                               >
                                 Save
@@ -2103,159 +2100,6 @@ const handleSubmitdocUpdate = () => {
                                 </button>
                               </td>
                             </tr>
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
-                            {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">01/01/2021</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                patient1.pdf
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </a>
-                            </td>
-                          </tr> */}
-
                           </tbody>
                         ))}
                         {isEditDFormVisible && (
@@ -2485,22 +2329,7 @@ const handleSubmitdocUpdate = () => {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button
-                              onClick={toggleForm}
-                              type="button"
-                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={toggleForm}
-                              type="button"
-                              className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                            >
-                              Cancel
-                            </button>
-                          </div> */}
+
                         </div>
                       </div>
                     </div>
@@ -2565,7 +2394,7 @@ const handleSubmitdocUpdate = () => {
                                   </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                  {/* <Link to={`/admin/dashboard/${virual._id}`}> */}
+                                
                                   <button onClick={() => handleOpenEditForm(virual)} className="text-indigo-600 hover:text-indigo-900">
                                     Edit
                                   </button>
@@ -2714,198 +2543,6 @@ const handleSubmitdocUpdate = () => {
                           </div>
                         )}
 
-                        {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-
-                        {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-
-                        {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-
-                        {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-
-                        {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-
-                        {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-
-                        {/* <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-                        {/* 
-                          <tr>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="text-sm text-gray-500">
-                                video
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                                Edit
-                              </button>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                delete
-                              </a>
-                            </td>
-                          </tr> */}
-
 
                       </table>
                     </div>
@@ -2914,8 +2551,7 @@ const handleSubmitdocUpdate = () => {
               </div>
             </div>
 
-            {/* </div> */}
-          </div>
+                    </div>
 
 
 

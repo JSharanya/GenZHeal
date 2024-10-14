@@ -2,19 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import html2pdf from 'html2pdf.js';
 
-const downloadPDF = () => {
-  const element = document.getElementById('treatmentDocument'); 
-  
-  html2pdf()
-    .from(element)
-    .set({
-      margin: 1,
-      filename: 'treatment.pdf', 
-      html2canvas: { scale: 2 }, 
-      jsPDF: { orientation: 'portrait' } 
-    })
-    .save();
-};
 
 const UserProfile = ({ activeMenu }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -251,38 +238,99 @@ const UserProfile = ({ activeMenu }) => {
         return "";
     }
   };
-  const treatments = [
-    {
-      treatmentNo: 1,
-      date: "2023-12-14",
-      document: "report1.pdf",
-    },
-    {
-      treatmentNo: 2,
-      date: "2023-12-21",
-      document: "report2.pdf",
-    },
-    {
-      treatmentNo: 3,
-      date: "2024-01-01",
-      document: "report3.pdf",
-    },
-    {
-      treatmentNo: 4,
-      date: "2024-02-15",
-      document: "report4.pdf",
-    },
-    {
-      treatmentNo: 5,
-      date: "2024-06-08",
-      document: "report5.pdf",
-    },
-    {
-      treatmentNo: 6,
-      date: "2024-06-15",
-      document: "report6.pdf",
-    },
-  ];
+
+  const [treatments, setAllDoc]=useState([])
+
+  const[username,setUsername] = useState('');
+
+  useEffect(() => {
+
+    const currentUser = localStorage.getItem('currentUser');
+  
+    
+    if (currentUser) {
+      const userObject = JSON.parse(currentUser);
+      
+      const username = userObject.username;
+      setUsername(username)
+
+      console.log("Username:", username);
+    } else {
+      console.log("No user found in localStorage");
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      if (username) {
+        try {
+          const response = await fetch("http://localhost:3000/api/documents/all-doc");
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+  
+          const data = await response.json();
+
+          const filteredDocs = data.filter(doc => doc.docName === username);
+          setAllDoc(filteredDocs);
+  
+          console.log("Filtered Documents:", filteredDocs);
+        } catch (err) {
+          console.error("Error fetching data:", err);
+        }
+      }
+    };
+  
+    fetchDocuments();
+  }, [username]);
+
+  const downloadPDF = (treatment) => {
+   
+    const filename = treatment.docum.split('\\').pop(); 
+    const pdfFilename = `${filename}.pdf`;
+  
+    const url = `http://localhost:3000/api/documents/download-pdf/${filename}`; 
+  
+    
+    const link = document.createElement('a');
+    link.href = url; 
+    link.setAttribute('download', pdfFilename); 
+  
+    
+    document.body.appendChild(link);
+    link.click(); 
+  
+    document.body.removeChild(link);
+  };
+  
+  
+  useEffect(() => {
+    console.log("Treatments updated:", treatments);
+  }, [treatments]);
+  
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+  
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'short' }); 
+    const year = date.getFullYear();
+  
+
+    const getOrdinalSuffix = (day) => {
+      if (day > 3 && day < 21) return 'th';
+      switch (day % 10) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+      }
+    };
+  
+    const dayWithSuffix = day + getOrdinalSuffix(day);
+  
+    return `${dayWithSuffix} ${month} ${year}`;
+  };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-8 max-w-5xl mx-auto">
@@ -620,21 +668,27 @@ const UserProfile = ({ activeMenu }) => {
             </tr>
           </thead>
           <tbody className="bg-white">
-            {treatments.map((treatment) => (
-              <tr key={treatment.treatmentNo}>
+            {treatments.map((treatment, index) => (
+              <tr key={index}>
                 <td className="py-4 px-2 sm:px-4 border-b">
-                  {treatment.treatmentNo}
+                {index+1}
                 </td>
                 <td className="py-4 px-2 sm:px-4 border-b truncate">
-                  {treatment.date}
+                <div className="text-sm text-gray-500">
+                {formatDate(treatment.date)}
+
+                </div>
+                
                 </td>
                 <td className="py-4 px-2 sm:px-4 border-b">
                   <div id="treatmentDocument" style={{ display: 'none' }}>
-                    {treatment.document}
+                  <span className="text-sm text-gray-500">
+                                  {treatment.docum}
+                                </span>
                   </div>
                   <button
                     className="bg-[#2c4f50] text-white py-2 px-4 rounded-md hover:bg-[#3a6262] focus:outline-none"
-                    onClick={downloadPDF}
+                    onClick={() => downloadPDF(treatment)}
                   >
                     Download as PDF
                   </button>

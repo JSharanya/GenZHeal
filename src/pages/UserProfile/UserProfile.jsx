@@ -188,58 +188,8 @@ const UserProfile = ({ activeMenu }) => {
         return "";
     }
   };
-  const sessions = [
-    {
-      SessionNo: 1,
-      Date: "2023-12-14",
-      STime: "09:00 AM",
-      FTime: "09:30 AM",
-      Level: "High",
-    },
-    {
-      SessionNo: 2,
-      Date: "2023-12-21",
-      STime: "11:00 AM",
-      FTime: "11:30 AM",
-      Level: "Low",
-    },
-    {
-      SessionNo: 3,
-      Date: "2024-01-01",
-      STime: "12:00 AM",
-      FTime: "12:30 AM",
-      Level: "Average",
-    },
-    {
-      SessionNo: 4,
-      Date: "2024-01-16",
-      STime: "11:00 AM",
-      FTime: "12:30 AM",
-      Level: "Low",
-    },
-    {
-      SessionNo: 5,
-      Date: "2024-01-01",
-      STime: "12:00 PM",
-      FTime: "01:00 PM",
-      Level: "Average",
-    },
-  ];
-
-  const getLevelClass = (level) => {
-    switch (level) {
-      case "High":
-        return "bg-green-500";
-      case "Average":
-        return "bg-yellow-500";
-      case "Low":
-        return "bg-red-500";
-      default:
-        return "";
-    }
-  };
-
-  const [treatments, setAllDoc]=useState([])
+ 
+ const [treatments, setAllDoc]=useState([])
 
   const[username,setUsername] = useState('');
 
@@ -594,60 +544,7 @@ const UserProfile = ({ activeMenu }) => {
 
         </>
       )}
-      {activeMenu === "Sessions" && (
-        <>
-          {/* <h2>Sessions</h2> */}
 
-          <div>
-            <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
-              <table class="w-full table-fixed border-collapse">
-                <thead>
-                  <tr class="bg-gray-100">
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Session No
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Session Date
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      StartTime
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      FinishedTime
-                    </th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-                      Session Level
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white">
-                  {sessions.map((session) => (
-                    <tr key={session.SessionNo}>
-                      <td className="py-4 px-6 border-0">
-                        {session.SessionNo}
-                      </td>
-                      <td className="py-4 px-6 border-0 truncate">
-                        {session.Date}
-                      </td>
-                      <td className="py-4 px-6 border-0">{session.STime}</td>
-                      <td className="py-4 px-6 border-0">{session.FTime}</td>
-                      <td className="py-4 px-6 border-0">
-                        <span
-                          className={`${getLevelClass(
-                            session.Level
-                          )} text-white py-1 px-2 rounded-full text-xs`}
-                        >
-                          {session.Level}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </>
-      )}
       {activeMenu === "TreatmentHistory" && (
         <>
           {/* <h2>Treatment History</h2> */}

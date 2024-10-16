@@ -22,7 +22,7 @@ const UserDashboard = () => {
             <PiBrainBold className="inline-block" /> GenZHeal
           </Link>
         </div>
-        <div className="Menu w-full space-y-4"> 
+        <div className="Menu w-full space-y-8"> 
           <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={() => handleMenuClick('My Profile')}>
             <FaUserCircle className="mr-2" /> My Profile
           </div>
@@ -31,9 +31,6 @@ const UserDashboard = () => {
           </div>
           <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={() => handleMenuClick('Appointments')}>
             <FaCalendarAlt className="mr-2" /> Appointments
-          </div>
-          <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={() => handleMenuClick('Sessions')}>
-            <FaClock className="mr-2" /> Sessions
           </div>
           <div className="MenuItem cursor-pointer py-2 px-4 flex items-center hover:bg-gray-700" onClick={() => handleMenuClick('TreatmentHistory')}>
             <FaHistory className="mr-2" /> Treatment History
@@ -51,7 +48,6 @@ const UserDashboard = () => {
         {activeMenu === 'My Profile' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'Settings' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'Appointments' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}  
-        {activeMenu === 'Sessions' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />}
         {activeMenu === 'TreatmentHistory' && <UserProfile setActiveMenu={setActiveMenu} activeMenu={activeMenu} />} 
         {activeMenu === 'Chat' && <UserChat/>}
        

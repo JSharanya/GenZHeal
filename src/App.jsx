@@ -13,7 +13,6 @@ import "./styles/custom.css";
 import Quiz from "./pages/Quiz/Quiz";
 import UserDashboard from "./pages/UserProfile/UserDashboard";
 import UserProfile from "./pages/UserProfile/UserProfile";
-import "./pages/UserProfile/Profile.css";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import { ToastContainer } from "react-toastify";
 import Chatting from "./pages/AdminPanel/Chatting";

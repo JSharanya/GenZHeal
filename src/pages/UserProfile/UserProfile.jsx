@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import html2pdf from 'html2pdf.js';
+import axios from 'axios';
 
 
 const UserProfile = ({ activeMenu }) => {
@@ -80,7 +81,41 @@ const UserProfile = ({ activeMenu }) => {
   };
   
 
-  const [appointments, setappointements] = useState([]);
+ //edit start
+ const[appointments,setAppointments]=useState([]);
+ const[loading, setLoading]=useState(false);
+
+ useEffect(() => {
+   const fetchAppointments = async () => {
+     try {
+       const response = await axios.get('http://localhost:3000/api/appointment/getAppointment');
+       console.log(response.data); // Check if data is being returned correctly
+
+       const currentUserEmail = localStorage.getItem('currentUser') 
+       ? JSON.parse(localStorage.getItem('currentUser')).email 
+       : '';
+       
+       const filteredAppointments = response.data.filter(
+        (appointment) => appointment.email === currentUserEmail
+      );
+      console.log("appointment data",filteredAppointments)
+
+      console.log(emailID);
+
+
+      setAppointments(filteredAppointments);
+     } catch (err) {
+       console.error('Error fetching data:', err);
+       setError(err.message);
+     } finally {
+       setLoading(false);
+     }
+   };
+ 
+   fetchAppointments();
+ }, []);
+ 
+//edit end
 
   useEffect(() => {
     const userdataaa = localStorage.getItem("currentUser");
@@ -242,6 +277,7 @@ const UserProfile = ({ activeMenu }) => {
   const [treatments, setAllDoc]=useState([])
 
   const[username,setUsername] = useState('');
+  const[emailID,setEmail]  = useState('');
 
   useEffect(() => {
 
@@ -252,9 +288,13 @@ const UserProfile = ({ activeMenu }) => {
       const userObject = JSON.parse(currentUser);
       
       const username = userObject.username;
+      const email = userObject.email;
+
       setUsername(username)
+      setEmail(email)
 
       console.log("Username:", username);
+      console.log(email)
     } else {
       console.log("No user found in localStorage");
     }
@@ -542,56 +582,62 @@ const UserProfile = ({ activeMenu }) => {
           </div>
         </div>
       )}
-      {activeMenu === "Appointments" && (
+       {activeMenu === "Appointments" && (
         <>
           {/* <h2>Appointments</h2> */}
-  <div className="mx-2 sm:mx-4 md:mx-8 lg:mx-10">
-  <div className="shadow-lg rounded-lg overflow-hidden">
-    <table className="w-full table-auto border-collapse">
-      <thead>
-        <tr className="bg-gray-100">
-          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-            Appointment No
-          </th>
-          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-            Date
-          </th>
-          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-            Time
-          </th>
-          <th className="w-1/4 sm:w-1/5 py-4 px-2 sm:px-4 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
-            Status
-          </th>
-        </tr>
-      </thead>
-      <tbody className="bg-white">
-        {appointments.map((appointment, index) => (
-          <tr key={index}>
-            <td className="py-4 px-2 sm:px-4 border-b">
-              {appointment.appointNo}
-            </td>
-            <td className="py-4 px-2 sm:px-4 border-b truncate">
-              {appointment.date}
-            </td>
-            <td className="py-4 px-2 sm:px-4 border-b">
-              {appointment.time}
-            </td>
-            <td className="py-4 px-2 sm:px-4 border-b">
-              <span
-                className={`${getFinished(
-                  appointment.Status
-                )} text-white py-1 px-3 rounded-full text-xs`}
-              >
-                {appointment.Status}
-              </span>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</div>
+{/* edit 2 start */}
+          <div>
+            <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
+              <table class="w-full table-fixed border-collapse">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                      Appointment Id
+                    </th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                      Date
+                    </th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                      Time
+                    </th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                      Payment Status
+                    </th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-100 font-bold uppercase bg-[#2c4f50]">
+                      Status
+                    </th>
 
+                  </tr>
+                </thead>
+                <tbody class="bg-white">
+                  {appointments.map((appointment, index) => (
+                    <tr key={appointment}>
+                      <td class="py-4 px-6 border-b border-0">
+                        {appointment.appointmentId}
+                      </td>
+                      <td class="py-4 px-6 border-b border-0 truncate">
+                        {new Date(appointment.appointmentDate).toLocaleDateString()}
+                      </td>
+                      <td class="py-4 px-6 border-b border-0">
+                        {new Date(appointment.appointmentDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </td>
+                      <td className="py-4 px-6 border-b border-0">
+  <span
+    className={appointment.paymentStatus ? 'text-green-500' : 'text-red-500'}
+  >
+    {appointment.paymentStatus ? 'Paid' : 'Pending'}
+  </span>
+</td>
+                      <td className="py-4 px-6 border-b border-0">
+                          {appointment.status}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+{/* edit 2 end */}
+            </div>
+          </div>
         </>
       )}
       {activeMenu === "Sessions" && (

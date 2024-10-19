@@ -14,6 +14,7 @@ import axios from 'axios';
 import { jsPDF } from 'jspdf';
 import dotenv from "dotenv";
 
+
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showForm, setShowForm] = useState(false);
@@ -39,6 +40,59 @@ const Dashboard = () => {
   const [transcriptionText, setTranscriptionText] = useState("");
   const [file_audio, setFile_audio] = useState(null);
   const [isConverting, setIsConverting] = useState(false); 
+   const [appointments, setAppointments] = useState([]);
+
+   const setAppointmentsData = (data) => {
+    // Map through each appointment and conditionally modify the email field
+    const updatedData = data.map((appointment) => {
+      if (appointment.type !== "Normal") {
+        // If appointment type is not "Normal", hide the email
+        return {
+          ...appointment,
+          email: undefined
+        };
+      }
+      return appointment; // Otherwise, keep the original data
+    });
+  
+    setAppointments(updatedData);
+  };
+  
+ 
+
+  // Fetch appointments from the backend API
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/appointment/getAppointment');
+        setAppointmentsData(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+      }
+    };
+
+    fetchAppointments();
+  }, []);
+
+  // Function to handle status change
+  const updateStatus = async (id, status) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/appointment/update-status/${id}`, {
+        status: status, // 'Accepted' or 'Rejected'
+      });
+      // Update appointment list with new status
+      setAppointments((prevAppointments) =>
+        prevAppointments.map((appointment) =>
+          appointment._id === id ? { ...appointment, status: status } : appointment
+        )
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
 
   useEffect(() => {
@@ -1745,88 +1799,67 @@ const handleDInputChange = (e) => {
                     </button>
                   </div>
 
-                  <div className="h-auto">
-
-                    <div class="w-full px-2 mb-2 mt-4">
-                      <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                        <img
-                          width="30"
-                          src={p1img}
-                          alt="patient1"
-                          className="rounded-full mr-3"
-                        />
-                        <p class="text-base font-medium text-body-color">Sankavi</p>
-                        <p class="ml-auto mr-2">finished</p>
-                      </div>
-                    </div>
-
-                    <div class="w-full px-2 mb-2 mt-4">
-                      <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                        <img
-                          width="30"
-                          src={p2img}
-                          alt="patient1"
-                          className="rounded-full mr-3"
-                        />
-                        <p class="text-base font-medium text-body-color">PID002</p>
-                        <p class="ml-auto mr-2">12:00</p>
-                      </div>
-                    </div>
-
-                    <div class="w-full px-2 mb-2 mt-4">
-                      <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                        <img
-                          width="30"
-                          src={p2img}
-                          alt="patient1"
-                          className="rounded-full mr-3"
-                        />
-                        <p class="text-base font-medium text-body-color">PID001</p>
-                        <p class="ml-auto mr-2">12:30</p>
-                      </div>
-                    </div>
-
-                    <div class="w-full px-2 mb-2 mt-4">
-                      <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                        <img
-                          width="30"
-                          src={p1img}
-                          alt="patient1"
-                          className="rounded-full mr-3"
-                        />
-                        <p class="text-base font-medium text-body-color">Sangu</p>
-                        <p class="ml-auto mr-2">01:00</p>
-                      </div>
-                    </div>
-
-                    <div class="w-full px-2 mb-2 mt-4">
-                      <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                        <img
-                          width="30"
-                          src={p1img}
-                          alt="patient1"
-                          className="rounded-full mr-3"
-                        />
-                        <p class="text-base font-medium text-body-color">Sangu</p>
-                        <p class="ml-auto mr-2">01:00</p>
-                      </div>
-                    </div>
-
-                    <div class="w-full px-2 mb-2 mt-4">
-                      <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                        <img
-                          width="30"
-                          src={p1img}
-                          alt="patient1"
-                          className="rounded-full mr-3"
-                        />
-                        <p class="text-base font-medium text-body-color">Sangu</p>
-                        <p class="ml-auto mr-2">01:00</p>
-                      </div>
-                    </div>
-
-                  </div>
-
+                  <div className="admin-appointment-table-container container mx-auto px-4 sm:px-6 lg:px-8">
+  {appointments.length === 0 ? (
+    <p>No appointments found</p>
+  ) : (
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white border-collapse">
+        <thead>
+          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th className="py-3 px-6 text-left">Appointment Id</th>
+            <th className="py-3 px-6 text-left">Appointment Date</th>
+            <th className="py-3 px-6 text-left">Type</th>
+            <th className="py-3 px-6 text-left">Name</th>
+            <th className="py-3 px-6 text-left">Email</th>
+            <th className="py-3 px-6 text-left">Gender</th>
+            <th className="py-3 px-6 text-left">Age</th>
+            <th className="py-3 px-6 text-left">Session Number</th>
+            <th className="py-3 px-6 text-left">Payment Status</th>
+            <th className="py-3 px-6 text-left">Status</th>
+            <th className="py-3 px-6 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody className="text-gray-600 text-sm font-light">
+          {appointments.map((appointment) => (
+            <tr key={appointment._id} className="border-b border-gray-200 hover:bg-gray-100">
+              <td className="py-3 px-6 text-left whitespace-nowrap">{appointment.appointmentId}</td>
+              <td className="py-3 px-6 text-left whitespace-nowrap">{new Date(appointment.appointmentDate).toLocaleDateString()}</td>
+              <td className="py-3 px-6 text-left">{appointment.type}</td>
+              <td className="py-3 px-6 text-left">{appointment.name || 'N/A'}</td>
+              <td className="py-3 px-6 text-left">{appointment.email || 'N/A'}</td>
+              <td className="py-3 px-6 text-left">{appointment.gender}</td>
+              <td className="py-3 px-6 text-left">{appointment.age}</td>
+              <td className="py-3 px-6 text-left">{appointment.sessionNumber}</td>
+              <td className="py-3 px-6 text-left">{appointment.paymentStatus ? 'Paid' : 'Pending'}</td>
+              <td className="py-3 px-6 text-left">{appointment.status}</td>
+              <td className="py-3 px-6 text-left">
+                {appointment.status === 'Pending' ? (
+                  <>
+                    <button
+                      className="mr-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                      onClick={() => updateStatus(appointment._id, 'Accepted')}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                      onClick={() => updateStatus(appointment._id, 'Rejected')}
+                    >
+                      Reject 
+                    </button>
+                  </>
+                ) : (
+                  <span>{appointment.status}</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+</div>
                 </div>
               </div>
             </div>

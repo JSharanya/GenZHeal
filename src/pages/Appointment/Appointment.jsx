@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { v4 as uuidv4 } from 'uuid';
 
 const Appointment = () => {
   const formArray = [1, 2, 3];
@@ -13,7 +14,9 @@ const Appointment = () => {
   const [appointmentType, setAppointmentType] = useState("normal");
   const [state, setState] = useState({
     name: "",
-    email: "",
+    email: localStorage.getItem('currentUser') 
+    ? JSON.parse(localStorage.getItem('currentUser')).email 
+    : '',
     age: "",
     gender: "",
     date: null,
@@ -22,6 +25,8 @@ const Appointment = () => {
     minute: "",
     period: "AM",
   });
+
+
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -71,38 +76,38 @@ const Appointment = () => {
   };
 
   const finalSubmit = async () => {
-    const { name, email, age, gender, date, sessionNo, hour, minute, period } =
-      state;
+    const { name, email, age, gender, date, sessionNo, hour, minute, period } = state;
     const appointmentDate = new Date(date);
-    appointmentDate.setHours(
-      period === "AM" ? hour : parseInt(hour) + 12,
-      minute
-    );
-
+    appointmentDate.setHours(period === "AM" ? hour : parseInt(hour) + 12, minute);
+  
     const appointmentData = {
       type: appointmentType === "normal" ? "Normal" : "Anonymous",
       name: appointmentType === "normal" ? name : undefined,
-      email: appointmentType === "normal" ? email : undefined,
+      email: localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')).email:undefined,
       age,
       gender,
+      paymentStatus:true,
+      status: "Pending",
       sessionNumber: sessionNo,
       appointmentDate: appointmentDate.toISOString(),
+      appointmentId:uuidv4(),
     };
-
+  
+    console.log('Sending appointment data:', JSON.stringify(appointmentData));
+  
     try {
-      const res = await fetch(
-        "http://localhost:3000/api/appointment/book-appointment",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(appointmentData),
-        }
-      );
-
+      const res = await fetch("http://localhost:3000/api/appointment/book-appointment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(appointmentData),
+      });
+  
       if (!res.ok) {
+        const errorData = await res.json();
+        console.error("Error response from server:", errorData);
         throw new Error("Failed to create appointment");
       }
-
+  
       const data = await res.json();
       const { sessionUrl } = data;
       window.location.href = sessionUrl;
@@ -111,6 +116,7 @@ const Appointment = () => {
       console.error(error);
     }
   };
+  
 
   return (
     <div className="h-screen overflow-y-auto">

@@ -118,6 +118,7 @@ const UserProfile = ({ activeMenu }) => {
 
 
   useEffect(() => {
+
     const userdataaa = localStorage.getItem("currentUser");
     const user = userdataaa ? JSON.parse(userdataaa) : null;
     const id = user?._id;
@@ -128,14 +129,16 @@ const UserProfile = ({ activeMenu }) => {
           `http://localhost:3000/api/user/profile/${id}`
         );
         const data = await response.json();
+
         setUserDetails(data);
         setFormData({
           username: data?.username || "",
           email: data?.email || "",
-          address: data?.address || "",
+          address: data?.address.street || "",
           profileImage:
             data?.profilePicture || "https://via.placeholder.com/150",
         });
+
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
@@ -151,11 +154,19 @@ const UserProfile = ({ activeMenu }) => {
   
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setFormData({ ...formData, profileImage: URL.createObjectURL(file) });
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, profileImage: reader.result });  
+        console.log(formData.profileImage)
+      };
+      reader.readAsDataURL(file); 
+    } else {
+      alert('Please select a valid image file');
     }
   };
-
+  
+  
  
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -393,7 +404,7 @@ const UserProfile = ({ activeMenu }) => {
                   id="address"
                   name="address"
                   type="text"
-                  value={formData?.address.street}
+                  value={formData?.address}
                   onChange={handleChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
@@ -539,7 +550,7 @@ const UserProfile = ({ activeMenu }) => {
        {activeMenu === "Appointments" && (
         <>
           {/* <h2>Appointments</h2> */}
-{/* edit 2 start */}
+
           <div>
             <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
               <table class="w-full table-fixed border-collapse">
@@ -589,7 +600,7 @@ const UserProfile = ({ activeMenu }) => {
                   ))}
                 </tbody>
               </table>
-{/* edit 2 end */}
+
             </div>
           </div>
         </>

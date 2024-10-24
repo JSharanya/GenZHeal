@@ -81,7 +81,7 @@ const UserProfile = ({ activeMenu }) => {
   };
   
 
- //edit start
+
  const[appointments,setAppointments]=useState([]);
  const[loading, setLoading]=useState(false);
 
@@ -89,7 +89,7 @@ const UserProfile = ({ activeMenu }) => {
    const fetchAppointments = async () => {
      try {
        const response = await axios.get('http://localhost:3000/api/appointment/getAppointment');
-       console.log(response.data); // Check if data is being returned correctly
+       console.log(response.data); 
 
        const currentUserEmail = localStorage.getItem('currentUser') 
        ? JSON.parse(localStorage.getItem('currentUser')).email 
@@ -115,7 +115,7 @@ const UserProfile = ({ activeMenu }) => {
    fetchAppointments();
  }, []);
  
-//edit end
+
 
   useEffect(() => {
     const userdataaa = localStorage.getItem("currentUser");
@@ -187,8 +187,11 @@ const UserProfile = ({ activeMenu }) => {
             address: formData.address,
             profilePicture: formData.profileImage,
           }),
+
         }
       );
+      console.log(formData.address)
+
 
       if (response.ok) {
         const updatedUser = await response.json();
@@ -198,6 +201,7 @@ const UserProfile = ({ activeMenu }) => {
         setError("");
         alert("Profile updated successfully");
         console.log(formData?.address.street);
+        window.location.reload();
       } else {
         setError("Failed to update profile");
       }

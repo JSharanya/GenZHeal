@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt, FaHeart } from 'react-icons/fa';
+import { FaCog, FaCalendarAlt, FaFilm, FaComments, FaSignOutAlt, FaTachometerAlt, FaUsers, FaRegFileAlt, FaFileAlt } from 'react-icons/fa';
 import docimg from "../../images/doctor.png";
 import p1img from "../../images/patient1.jpeg";
 import p2img from "../../images/patient2.png";
@@ -21,10 +21,10 @@ const Dashboard = () => {
   const [isEditVFormVisible, setEditVFormVisible] = useState(false);
   const [editVData, setEditVData] = useState();
   const [isEditDFormVisible, setEditDFormVisible] = useState(false);
-  const [editDData, setEditDData]=useState({
+  const [editDData, setEditDData] = useState({
     docName: '',
     date: '',
-    docum: null, 
+    docum: null,
   });
   const [file, setFile] = useState(null);
   const [docName, setDocName] = useState('');
@@ -39,10 +39,10 @@ const Dashboard = () => {
   const [allDoc, setAllDoc] = useState([]);
   const [transcriptionText, setTranscriptionText] = useState("");
   const [file_audio, setFile_audio] = useState(null);
-  const [isConverting, setIsConverting] = useState(false); 
-   const [appointments, setAppointments] = useState([]);
+  const [isConverting, setIsConverting] = useState(false);
+  const [appointments, setAppointments] = useState([]);
 
-   const setAppointmentsData = (data) => {
+  const setAppointmentsData = (data) => {
     // Map through each appointment and conditionally modify the email field
     const updatedData = data.map((appointment) => {
       if (appointment.type !== "Normal") {
@@ -54,11 +54,11 @@ const Dashboard = () => {
       }
       return appointment; // Otherwise, keep the original data
     });
-  
+
     setAppointments(updatedData);
   };
-  
- 
+
+
 
   // Fetch appointments from the backend API
   useEffect(() => {
@@ -118,7 +118,7 @@ const Dashboard = () => {
 
 
   }
-  
+
 
   useEffect(() => {
     fetch("http://localhost:3000/api/documents/all-doc").then(
@@ -151,99 +151,99 @@ const Dashboard = () => {
     setFile_audio(e.target.files[0]);
   };
 
-const handleDrop = (event) => {
-  event.preventDefault();
-  const droppedFile = event.dataTransfer.files[0];
-  setFile(droppedFile);
-};
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files[0];
+    setFile(droppedFile);
+  };
 
-const handleDragOver = (event) => {
-  event.preventDefault();
-};
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
 
-const handleConvertToText = async () => {
-  if (!file_audio) {
-    alert('Please choose or drop a file to transcribe.');
-    return;
-  }
-
-  setIsConverting(true);
-
-  const formData = new FormData();
-  formData.append('file', file_audio);  
-  formData.append('model', 'whisper-1');  
-
-
-  const apiKey = process.env.OPENAI_API_KEY;
-
-  try {
-    const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
-    setTranscriptionText(response.data.text);
-    const slicedText = response.data.text.slice(0, 900);
-
-    await handleTextEncryptor(slicedText);
-  } catch (error) {
-    if (error.response) {
-      console.error('Error response data:', error.response.data);
-      console.error('Error response status:', error.response.status);
-    } else {
-      console.error('Error message:', error.message);
+  const handleConvertToText = async () => {
+    if (!file_audio) {
+      alert('Please choose or drop a file to transcribe.');
+      return;
     }
-  } finally {
-    setIsConverting(false);
-  }
-};
+
+    setIsConverting(true);
+
+    const formData = new FormData();
+    formData.append('file', file_audio);
+    formData.append('model', 'whisper-1');
 
 
-const generatePDF = (text) => {
-  const doc = new jsPDF();
+    const apiKey = process.env.OPENAI_API_KEY;
 
-  const pageWidth = doc.internal.pageSize.getWidth();
-        const margin = 10;
-        const textWidth = pageWidth - 2 * margin;
-
-        const wrappedText = doc.splitTextToSize(text, textWidth);
-
-        doc.text(wrappedText, margin, 10)
-
-  doc.save('sample.pdf');
-};
-
-
-const handleTextEncryptor = async (transcriptionText) => {
-  const apiKey = process.env.OPENAI_API_KEY;
-
-  try {
-    const response = await axios.post(
-      'https://api.aphroheragames.com/chat',
-      {
-        api_key: apiKey,  
-        user_input: `${transcriptionText} replace with the word "[hidden]" any personal information like names, and give back as same. Do not do any other changes.`,
-      },
-      {
+    try {
+      const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
         },
-      }
-    );
+      });
+      setTranscriptionText(response.data.text);
+      const slicedText = response.data.text.slice(0, 900);
 
-   
-    setTranscriptionText(response.data.response); 
-    generatePDF(response.data.response);
-  } catch (error) {
-    console.error('Error during anonymization:', error.response ? error.response.data : error.message);
-  }
-};
+      await handleTextEncryptor(slicedText);
+    } catch (error) {
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+      } else {
+        console.error('Error message:', error.message);
+      }
+    } finally {
+      setIsConverting(false);
+    }
+  };
+
+
+  const generatePDF = (text) => {
+    const doc = new jsPDF();
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 10;
+    const textWidth = pageWidth - 2 * margin;
+
+    const wrappedText = doc.splitTextToSize(text, textWidth);
+
+    doc.text(wrappedText, margin, 10)
+
+    doc.save('sample.pdf');
+  };
+
+
+  const handleTextEncryptor = async (transcriptionText) => {
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    try {
+      const response = await axios.post(
+        'https://api.aphroheragames.com/chat',
+        {
+          api_key: apiKey,
+          user_input: `${transcriptionText} replace with the word "[hidden]" any personal information like names, and give back as same. Do not do any other changes.`,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+
+      setTranscriptionText(response.data.response);
+      generatePDF(response.data.response);
+    } catch (error) {
+      console.error('Error during anonymization:', error.response ? error.response.data : error.message);
+    }
+  };
 
 
 
 
   const toggleEditVForm = () => {
-    
+
 
     setEditVFormVisible(!isEditVFormVisible);
 
@@ -262,11 +262,11 @@ const handleTextEncryptor = async (transcriptionText) => {
   }
 
   const handleOpenEditDForm = (data) => {
-    console.log(data); 
+    console.log(data);
     setEditDData(data);
     setEditDFormVisible(true);
   };
-  
+
 
 
 
@@ -277,30 +277,30 @@ const handleTextEncryptor = async (transcriptionText) => {
   };
 
 
-const handleDInputChange = (e) => {
-  const { name, type, value, files } = e.target;
-  if (type === 'file') {
-    setEditDData((prevData) => ({
-      ...prevData,
-      [name]: files[0], 
-    }));
-  } else {
-    setEditDData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }
-};
+  const handleDInputChange = (e) => {
+    const { name, type, value, files } = e.target;
+    if (type === 'file') {
+      setEditDData((prevData) => ({
+        ...prevData,
+        [name]: files[0],
+      }));
+    } else {
+      setEditDData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
 
 
-  
+
 
   const handleSave = () => {
-   
-    toggleEditVForm(); 
+
+    toggleEditVForm();
   };
   const handleDSave = () => {
-    toggleEditDForm(); 
+    toggleEditDForm();
   };
 
 
@@ -384,35 +384,35 @@ const handleDInputChange = (e) => {
   const handleDocSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-  
-  
+
+
     const docName = form.docName.value;
     const date = form.date.value;
-    const docum = form.docum.files[0]; 
-  
-  
+    const docum = form.docum.files[0];
+
+
     console.log("Form data before submission:");
     console.log("docName:", docName);
     console.log("date:", date);
     console.log("docum (file):", docum);
-  
+
     const formData = new FormData();
     formData.append('docName', docName);
     formData.append('date', date);
-    formData.append('pdf', docum); 
-  
+    formData.append('pdf', docum);
+
     console.log("FormData object:", formData);
-  
+
     fetch("http://localhost:3000/api/documents/upload-doc", {
       method: "POST",
       body: formData,
     })
       .then((res) => {
-        
+
         console.log("Server response status:", res.status);
         console.log("Server response headers:", res.headers);
-  
-      
+
+
         const contentType = res.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
           return res.json();
@@ -421,15 +421,15 @@ const handleDInputChange = (e) => {
         }
       })
       .then((data) => {
-       
+
         console.log("Server response data:", data);
         toast.success("Documents are uploaded");
-  
-        
-        setAllDoc([...allDoc, data.data]); 
+
+
+        setAllDoc([...allDoc, data.data]);
       })
       .catch((error) => {
-      
+
         console.error("Error during document upload:", error);
         alert('Something went wrong during the document upload');
       })
@@ -437,22 +437,22 @@ const handleDInputChange = (e) => {
         setShowForm(false);
       });
   };
-  
+
 
 
   const handleSubmitdocUpdate = () => {
-    console.log(editDData); 
-  
+    console.log(editDData);
+
     if (!editDData._id) {
       console.error('Document ID is missing');
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('docName', editDData.docName);
     formData.append('date', editDData.date);
     formData.append('pdf', editDData.docum);
-  
+
     fetch(`http://localhost:3000/api/documents/update-doc/${editDData._id}`, {
       method: 'PUT',
       body: formData,
@@ -465,7 +465,25 @@ const handleDInputChange = (e) => {
       .catch(() => alert('Something went wrong'))
       .finally(() => setEditDFormVisible(false));
   };
-  
+
+  const [patients, setPatients] = useState([]);
+
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/api/user/profile')
+      .then((response) => {
+        // Store the correct data in the patients state
+        if (Array.isArray(response.data)) {
+          setPatients(response.data); // If data is already an array
+          console.log("pat",); // Check what the API returns
+        } else if (response.data && Array.isArray(response.data.patients)) {
+          setPatients(response.data.patients); // Access patients array
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user profiles:', error);
+      });
+  }, []);
 
 
 
@@ -535,15 +553,15 @@ const handleDInputChange = (e) => {
 
   return (
     <div className="h-full h-screen overflow-y-auto pt-0 mt-0">
-     
+
       <nav className="fixed">
-       
+
       </nav>
 
-     
+
       <div className="flex h-full ">
 
-       
+
         <aside className="bg-gray-200 w-64 p-4 mt-0 pt-0 h-full fixed">
 
           <img
@@ -612,9 +630,9 @@ const handleDInputChange = (e) => {
 
 
 
-     
+
         <section className="ml-80 mt-0 pt-0 h-full flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
 
           <div ref={dashboardRef} className={`${activeSection === 'dashboard' ? 'block' : 'hidden'}`} >
             <div class="pt-24">
@@ -630,7 +648,7 @@ const handleDInputChange = (e) => {
                         Patients
                       </p>
                     </div>
-                    <p class="text-xl font-bold text-black mt-2">100</p>
+                    <p class="text-xl font-bold text-black mt-2">{`${patients.length}`}</p>
                   </div>
                 </div>
                 <div class="mb-9 w-64 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
@@ -641,50 +659,53 @@ const handleDInputChange = (e) => {
                         Appointments
                       </p>
                     </div>
-                    <p class="text-xl font-bold text-black mt-2">100</p>
+                    <p class="text-xl font-bold text-black mt-2">{`${appointments.length}`}</p>
                   </div>
                 </div>
                 <div class="mb-9 w-64 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
                   <div class="flex flex-col items-start">
                     <div class="flex items-center">
-                      <FaHeart className="text-2xl mr-2" />
+                      <FaFileAlt className="text-2xl mr-2" />
                       <p class="text-xl font-bold text-black">
-                        Treatments
+                        Documents
                       </p>
                     </div>
-                    <p class="text-xl font-bold text-black mt-2">100</p>
+                    <p class="text-xl font-bold text-black mt-2">{`${allDoc.length}`}</p>
                   </div>
                 </div>
                 <div class="mb-9 w-64 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
                   <div class="flex flex-col items-start">
                     <div class="flex items-center">
-                      <FaUsers className="text-2xl mr-2" />
+                      <FaFilm className="text-2xl mr-2" />
                       <p class="text-xl font-bold text-black">
-                        Patients
+                        Virtual contents
                       </p>
                     </div>
-                    <p class="text-xl font-bold text-black mt-2">100</p>
+                    <p class="text-xl font-bold text-black mt-2">{`${allVirual.length}`}</p>
                   </div>
                 </div>
               </div>
 
               <div className="file-upload-container" onDrop={handleDrop} onDragOver={handleDragOver}>
-        <div className="file-upload-box" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <input type="file" accept="audio/*" id="file-input" onChange={handleFileChange_audio} />
-          <label htmlFor="file-input">
-         
-            <button className="choose-files-button" style={{ margin: '20px 0' }}>
-              <i className="icon">📄</i> Choose Files
-            </button>
-          </label>
-          <p>Drop files here!</p>
-          <p className="terms">to convert the audio files to a Word file.</p>
-        </div>
-      </div>
+                <div className="file-upload-box" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                  <input type="file" accept="audio/*" id="file-input" onChange={handleFileChange_audio} />
+                  <label htmlFor="file-input">
 
-      <button onClick={handleConvertToText} disabled={isConverting} style={{ marginTop: '20px' }}>
-        {isConverting ? 'Converting...' : 'Convert to Text'}
-      </button>
+                    {/* <button className="choose-files-button" style={{ margin: '20px 0' }}>
+                      <i className="icon">📄</i> Choose Files
+                    </button> */}
+                  </label>
+                  <p>Drop files here!</p>
+                  <p className="terms">to convert the audio files to a Word file.</p>
+                  <button onClick={handleConvertToText} disabled={isConverting} style={{ marginTop: '20px' }}>
+                    {isConverting ? 'Converting...' : 'Click here convert to Text !'}
+                  </button>
+                </div>
+              </div>
+
+              {/* <button onClick={handleConvertToText} disabled={isConverting} style={{ marginTop: '20px' }}>
+                {isConverting ? 'Converting...' : 'Convert to Text'}
+              </button> */}
 
             </div>
 
@@ -697,98 +718,66 @@ const handleDInputChange = (e) => {
                       <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                         Appointments
                       </h3>
-                      <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                      {/* <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
                         Edit
-                      </button>
+                      </button> */}
                     </div>
 
-                    <div class="h-72 overflow-y-auto">
-
-                      <div class="w-full px-2 mb-2 mt-4">
-                        <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                          <img
-                            width="30"
-                            src={p1img}
-                            alt="patient1"
-                            className="rounded-full mr-3"
-                          />
-                          <p class="text-base font-medium text-body-color">Sankavi</p>
-                          <p class="ml-auto mr-2">finished</p>
+                    <div className="admin-appointment-table-container container mx-auto px-4 sm:px-6 lg:px-8 h-72 overflow-y-auto">
+                      {appointments.length === 0 ? (
+                        <p>No appointments found</p>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="min-w-full bg-white border-collapse">
+                            <thead>
+                              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th className="py-3 px-6 text-left">Appointment Id</th>
+                                <th className="py-3 px-6 text-left">Appointment Date</th>
+                                <th className="py-3 px-6 text-left">Type</th>
+                                <th className="py-3 px-6 text-left">Session Number</th>
+                                <th className="py-3 px-6 text-left">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody className="text-gray-600 text-sm font-light">
+                              {appointments.map((appointment) => (
+                                <tr key={appointment._id} className="border-b border-gray-200 hover:bg-gray-100">
+                                  <td className="py-3 px-6 text-left whitespace-nowrap">{appointment.appointmentId}</td>
+                                  <td className="py-3 px-6 text-left whitespace-nowrap">{new Date(appointment.appointmentDate).toLocaleDateString()}</td>
+                                  <td className="py-3 px-6 text-left">{appointment.type}</td>
+                                  <td className="py-3 px-6 text-left">{appointment.sessionNumber}</td>
+                                  <td className="py-3 px-6 text-left">
+                                    {appointment.status === 'Pending' ? (
+                                      <>
+                                        <button
+                                          className="mr-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                          onClick={() => updateStatus(appointment._id, 'Accepted')}
+                                        >
+                                          Accept
+                                        </button>
+                                        <button
+                                          className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                                          onClick={() => updateStatus(appointment._id, 'Rejected')}
+                                        >
+                                          Reject
+                                        </button>
+                                      </>
+                                    ) : (
+                                      <span>{appointment.status}</span>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
                         </div>
-                      </div>
-
-                      <div class="w-full px-2 mb-2 mt-4">
-                        <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                          <img
-                            width="30"
-                            src={p2img}
-                            alt="patient1"
-                            className="rounded-full mr-3"
-                          />
-                          <p class="text-base font-medium text-body-color">PID002</p>
-                          <p class="ml-auto mr-2">12:00</p>
-                        </div>
-                      </div>
-
-                      <div class="w-full px-2 mb-2 mt-4">
-                        <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                          <img
-                            width="30"
-                            src={p2img}
-                            alt="patient1"
-                            className="rounded-full mr-3"
-                          />
-                          <p class="text-base font-medium text-body-color">PID001</p>
-                          <p class="ml-auto mr-2">12:30</p>
-                        </div>
-                      </div>
-
-                      <div class="w-full px-2 mb-2 mt-4">
-                        <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                          <img
-                            width="30"
-                            src={p1img}
-                            alt="patient1"
-                            className="rounded-full mr-3"
-                          />
-                          <p class="text-base font-medium text-body-color">Sangu</p>
-                          <p class="ml-auto mr-2">01:00</p>
-                        </div>
-                      </div>
-
-                      <div class="w-full px-2 mb-2 mt-4">
-                        <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                          <img
-                            width="30"
-                            src={p1img}
-                            alt="patient1"
-                            className="rounded-full mr-3"
-                          />
-                          <p class="text-base font-medium text-body-color">Sangu</p>
-                          <p class="ml-auto mr-2">01:00</p>
-                        </div>
-                      </div>
-
-                      <div class="w-full px-2 mb-2 mt-4">
-                        <div class="flex items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3">
-                          <img
-                            width="30"
-                            src={p1img}
-                            alt="patient1"
-                            className="rounded-full mr-3"
-                          />
-                          <p class="text-base font-medium text-body-color">Sangu</p>
-                          <p class="ml-auto mr-2">01:00</p>
-                        </div>
-                      </div>
-
+                      )}
                     </div>
 
                   </div>
                 </div>
               </div>
 
-              <div className="w-full px-2">
+              {/* <div className="w-full px-2">
                 <div className="w-full px-2">
                   <div class="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9 overflow-hidden">
 
@@ -884,7 +873,7 @@ const handleDInputChange = (e) => {
 
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div class="w-full px-2">
@@ -894,102 +883,32 @@ const handleDInputChange = (e) => {
                   <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                     Patients
                   </h3>
-                  <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                  {/* <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
                     Edit
-                  </button>
+                  </button> */}
                 </div>
 
-                <div class="flex overflow-x-auto space-x-8 pb-4 px-4">
-                  <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                    <img
-                      width="150"
-                      src={p1img}
-                      alt="patient1"
-                      className="rounded-full mb-3"
-                    />
-                    <p class="text-base font-medium text-body-color mb-1">
-                      Sankavi
-                    </p>
-                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                      See detail
-                    </button>
-                  </div>
+                <div className="flex flex-wrap -mx-4 overflow-x-auto space-x-8 pb-4 px-4">
+                    {/* Mapping through the patients array to display each patient */}
+                    {patients.map((patient, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4"
+                      >
+                        {/* Display the first letter of the patient's username */}
+                        <div
+                          className="flex items-center justify-center bg-blue-500 text-white font-bold rounded-full mb-3"
+                          style={{ width: "100px", height: "100px", fontSize: "40px" }}
+                        >
+                          {patient.username.charAt(0).toUpperCase()}
+                        </div>
 
-                  <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                    <img
-                      width="150"
-                      src={p1img}
-                      alt="patient1"
-                      className="rounded-full mb-3"
-                    />
-                    <p class="text-base font-medium text-body-color mb-1">
-                      Sankavi
-                    </p>
-                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                      See detail
-                    </button>
+                        <p className="text-base font-medium text-body-color mb-1">
+                          {patient.username}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-
-                  <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                    <img
-                      width="150"
-                      src={p1img}
-                      alt="patient1"
-                      className="rounded-full mb-3"
-                    />
-                    <p class="text-base font-medium text-body-color mb-1">
-                      Sankavi
-                    </p>
-                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                      See detail
-                    </button>
-                  </div>
-
-                  <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                    <img
-                      width="150"
-                      src={p1img}
-                      alt="patient1"
-                      className="rounded-full mb-3"
-                    />
-                    <p class="text-base font-medium text-body-color mb-1">
-                      Sankavi
-                    </p>
-                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                      See detail
-                    </button>
-                  </div>
-
-                  <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                    <img
-                      width="150"
-                      src={p1img}
-                      alt="patient1"
-                      className="rounded-full mb-3"
-                    />
-                    <p class="text-base font-medium text-body-color mb-1">
-                      Sankavi
-                    </p>
-                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                      See detail
-                    </button>
-                  </div>
-
-                  <div class="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3  shadow-md shadow-gray-500 flex-shrink-0">
-                    <img
-                      width="150"
-                      src={p1img}
-                      alt="patient1"
-                      className="rounded-full mb-3"
-                    />
-                    <p class="text-base font-medium text-body-color mb-1">
-                      Sankavi
-                    </p>
-                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                      See detail
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -999,15 +918,15 @@ const handleDInputChange = (e) => {
                   <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                     Documents
                   </h3>
-                  <button
+                  {/* <button
                     onClick={toggleForm}
                     className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
                   >
                     Add file
-                  </button>
+                  </button> */}
                 </div>
 
-          
+
 
                 {showForm && (
                   <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -1019,44 +938,55 @@ const handleDInputChange = (e) => {
                       <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
                       <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                        <form className="mt-4">
+                        <form className="mt-4" onSubmit={handleDocSubmit}>
                           <div className="mb-4">
-                            <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="docName" className="block text-sm font-medium text-gray-700">
                               Patient Name
                             </label>
                             <input
                               type="text"
-                              id="documentName"
-                              name="documentName"
+                              id="docName"
+                              name="docName"
+                              value={editDData?.docName}
+                              // onChange={(e) => setDocName(e.target.value)}
+                              onChange={handleDInputChange}
                               className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                           </div>
                           <div className="mb-4">
-                            <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="date" className="block text-sm font-medium text-gray-700">
                               Date
                             </label>
                             <input
-                              type="text"
-                              id="documentURL"
-                              name="documentURL"
+                              type="date"
+                              id="date"
+                              name="date"
+                              value={editDData?.date}
+                              // onChange={(e) => setDate(e.target.value)}
+                              onChange={handleDInputChange}
                               className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                           </div>
                           <div className="mb-4">
-                            <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="docum" className="block text-sm font-medium text-gray-700">
                               Document
                             </label>
                             <input
-                              type="text"
-                              id="documentType"
-                              name="documentType"
+                              type="file"
+                              id="docum"
+                              name="docum"
+                              accept=".pdf,.doc,.docx"
+                              // value={editDData?.docum}
+                              // onChange={handleFileChange}
+                              onChange={handleDInputChange}
+
                               className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                           </div>
                           <div className="mb-8">
-                            <button
-                              type="submit"
-                              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            <button type="submit"
+
+                              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                             >
                               Save
                             </button>
@@ -1074,7 +1004,7 @@ const handleDInputChange = (e) => {
                   </div>
                 )}
 
-                <div class="h-72 overflow-y-auto">
+                <div className="h-auto">
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
@@ -1100,181 +1030,124 @@ const handleDInputChange = (e) => {
                           <th scope="col" className="relative px-6 py-3">
                             <span className="sr-only">Edit</span>
                           </th>
+                          <th scope="col" className="relative px-6 py-3">
+                            <span className="sr-only">Delete</span>
+                          </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                      {allDoc.map((doc, index) => (
+                        <tbody className="bg-white divide-y divide-gray-200" key={doc._id}>
+                          <tr>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm font-medium text-gray-900"> {doc.docName}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-500">{doc.date}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="text-sm text-gray-500">
+                                {doc.docum}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button onClick={() => handleOpenEditDForm(doc)} className="text-indigo-600 hover:text-indigo-900">
+                                Edit
+                              </button>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button onClick={() => handleDeleteDoc(doc._id)} className="text-indigo-600 hover:text-indigo-900">
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      ))}
+                      {isEditDFormVisible && (
+                        <div className="fixed z-50 inset-0 overflow-y-auto">
+                          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <div className="fixed inset-0 transition-opacity">
+                              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                            </div>
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                            <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div className="sm:flex sm:items-start">
+                                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                      Edit Details
+                                    </h3>
+                                    <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
+                                      <div className="mb-4">
+                                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                          Patient Name
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="docName"
+                                          name="docName"
+                                          onChange={handleDInputChange}
+                                          value={editDData.docName}
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                      </div>
+                                      <div className="mb-4">
+                                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                          Date
+                                        </label>
+                                        <input
+                                          type="date"
+                                          id="date"
+                                          onChange={handleDInputChange}
+                                          name="date"
+                                          value={editDData.date}
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                      </div>
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                                      <div className="mb-4">
+                                        <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                          Document
+                                        </label>
+                                        <input
+                                          type="file"
+                                          id="docum"
+                                          name="docum"
+                                          accept=".pdf,.doc,.docx"
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                                          onChange={handleDInputChange}
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                      </div>
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button
+                                  onClick={handleSubmitdocUpdate}
+                                  type="button"
+                                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={toggleEditDForm}
+                                  type="button"
+                                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">Patient 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">01/01/2021</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              patient1.pdf
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-
-                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -1287,18 +1160,18 @@ const handleDInputChange = (e) => {
                   <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                     Virtualclub
                   </h3>
-                  <button
+                  {/* <button
                     onClick={toggleForm}
                     className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
                   >
                     Add file
-                  </button>
+                  </button> */}
                 </div>
 
                 {/* Toggleable Form */}
 
                 {showForm && (
-                  <div className="fixed z-10 inset-0 overflow-y-auto">
+                  <div className="fixed z-50 inset-2 overflow-y-auto">
                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                       <div className="fixed inset-0 transition-opacity">
                         <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -1313,7 +1186,7 @@ const handleDInputChange = (e) => {
                               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
                                 Add Document
                               </h3>
-                              <form className="mt-4">
+                              <form className="mt-4" onSubmit={handleVirualSubmit} >
                                 <div className="mb-4">
                                   <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
                                     Document Name
@@ -1340,25 +1213,32 @@ const handleDInputChange = (e) => {
                                   <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
                                     Document Type
                                   </label>
-                                  <input
-                                    type="text"
+                                  <select
                                     id="documentType"
                                     name="documentType"
+                                    value={selectedVirualType}
+                                    onChange={handleChangeSelectedType}
                                     className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                  />
+                                  >
+                                    {
+                                      virualTypes.map((option) => <option key={option} value={option}>{option}</option>)
+                                    }
+                                  </select>
                                 </div>
                                 <div className="mb-4">
                                   <label htmlFor="category" className="block text-sm font-medium text-gray-700">
                                     Category
                                   </label>
                                   <select
-                                    id="category"
-                                    name="category"
+                                    id="categoryName"
+                                    name="categoryName"
+                                    value={selectedVirualCategory}
+                                    onChange={handleChangeSelectedValue}
                                     className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                   >
-                                    <option value="video">Video</option>
-                                    <option value="article">Article</option>
-                                    <option value="music">Music</option>
+                                    {
+                                      virualCategories.map((option) => <option key={option} value={option}>{option}</option>)
+                                    }
                                   </select>
                                 </div>
                                 <div className="mb-4">
@@ -1384,26 +1264,29 @@ const handleDInputChange = (e) => {
                                   />
                                 </div>
 
+
+
+                                <button
+                                  type="submit"
+                                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={toggleForm}
+                                  type="button"
+                                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                  Cancel
+                                </button>
+
+
+
                               </form>
                             </div>
                           </div>
                         </div>
-                        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                          <button
-                            onClick={toggleForm}
-                            type="button"
-                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                          >
-                            Save
-                          </button>
-                          <button
-                            onClick={toggleForm}
-                            type="button"
-                            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                          >
-                            Cancel
-                          </button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -1441,347 +1324,183 @@ const handleDInputChange = (e) => {
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
+                      {
+                        allVirual.map((virual, index) =>
 
-                        {isEditVFormVisible && (
-                          <div className="fixed z-10 inset-0 overflow-y-auto">
-                            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                              <div className="fixed inset-0 transition-opacity">
-                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                              </div>
+                          <tbody className="bg-white divide-y divide-gray-200" key={virual._id}>
+                            <tr>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="text-sm font-medium text-gray-900">{virual.title}</div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="text-sm text-gray-500">{virual.link}</div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="text-sm text-gray-500">
+                                  {virual.type}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="text-sm text-gray-500">
+                                  {virual.category}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 
-                              <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+                                <button onClick={() => handleOpenEditForm(virual)} className="text-indigo-600 hover:text-indigo-900">
+                                  Edit
+                                </button>
+                                {/* </Link> */}
 
-                              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                  <div className="sm:flex sm:items-start">
-                                    <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                                      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
-                                        Edit Document
-                                      </h3>
-                                      <form className="mt-4">
-                                        <div className="mb-4">
-                                          <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
-                                            Document Name
-                                          </label>
-                                          <input
-                                            type="text"
-                                            id="documentName"
-                                            name="name"
-                                            // value={editVData.name}
-                                            onChange={handleInputChange}
-                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                          />
-                                        </div>
-                                        <div className="mb-4">
-                                          <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
-                                            Document URL
-                                          </label>
-                                          <input
-                                            type="text"
-                                            id="documentURL"
-                                            name="url"
-                                            // value={editVData.url}
-                                            onChange={handleInputChange}
-                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                          />
-                                        </div>
-                                        <div className="mb-4">
-                                          <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
-                                            Document Type
-                                          </label>
-                                          <input
-                                            type="text"
-                                            id="documentType"
-                                            name="type"
-                                            // value={editVData.type}
-                                            onChange={handleInputChange}
-                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                          />
-                                        </div>
-                                        <div className="mb-4">
-                                          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                                            Category
-                                          </label>
-                                          <select
-                                            id="category"
-                                            name="category"
-                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                          >
-                                            <option value="video">Video</option>
-                                            <option value="article">Article</option>
-                                            <option value="music">Music</option>
-                                          </select>
-                                        </div>
-                                        <div className="mb-4">
-                                          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                                            Content
-                                          </label>
-                                          <textarea
-                                            id="content"
-                                            name="content"
-                                            rows="4"
-                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                          />
-                                        </div>
-                                        <div className="mb-4">
-                                          <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-                                            Image Link
-                                          </label>
-                                          <input
-                                            type="text"
-                                            id="imageLink"
-                                            name="imageLink"
-                                            className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                          />
-                                        </div>
-                                      </form>
-                                    </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button onClick={() => handleDelete(virual._id)} className="text-indigo-600 hover:text-indigo-900">
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>  </tbody>
+                        )
+                      }
+
+                      {isEditVFormVisible && (
+                        <div className="fixed z-50 inset-0 overflow-y-auto">
+                          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <div className="fixed inset-0 transition-opacity">
+                              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                            </div>
+
+                            <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div className="sm:flex sm:items-start">
+                                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-2">
+                                      Edit Document
+                                    </h3>
+                                    <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
+                                      <div className="mb-4">
+                                        <label htmlFor="documentName" className="block text-sm font-medium text-gray-700">
+                                          Document Name
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="documentName"
+                                          name="title"
+                                          onChange={handleInputChange}
+                                          value={editVData.title}
+
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                      </div>
+                                      <div className="mb-4">
+                                        <label htmlFor="documentURL" className="block text-sm font-medium text-gray-700">
+                                          Document URL
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="documentURL"
+                                          onChange={handleInputChange}
+                                          name="link"
+                                          value={editVData.link}
+
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                      </div>
+                                      <div className="mb-4">
+                                        <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">
+                                          Document Type
+                                        </label>
+                                        <select
+                                          id="documentType"
+                                          name="type"
+                                          value={editVData.type}
+                                          onChange={handleInputChange}
+
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        >
+                                          {
+                                            virualTypes.map((option) => <option key={option} value={option}>{option}</option>)
+                                          }
+                                        </select>
+                                      </div>
+                                      <div className="mb-4">
+                                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                                          Category
+                                        </label>
+                                        <select
+                                          id="categoryName"
+                                          name="category"
+                                          onChange={handleInputChange}
+                                          value={editVData.category}
+
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        >
+                                          {
+                                            virualCategories.map((option) => <option key={option} value={option}>{option}</option>)
+                                          }
+                                        </select>
+                                      </div>
+                                      <div className="mb-4">
+                                        <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+                                          Content
+                                        </label>
+                                        <textarea
+                                          id="content"
+                                          name="content"
+                                          onChange={handleInputChange}
+                                          value={editVData.content}
+                                          rows="4"
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                      </div>
+                                      <div className="mb-4">
+                                        <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
+                                          Image Link
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="imageLink"
+                                          name="image"
+                                          onChange={handleInputChange}
+                                          value={editVData.image}
+                                          className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                      </div>
+
+
+                                    </form>
                                   </div>
                                 </div>
-                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                  <button
-                                    onClick={handleDSave}
-                                    type="button"
-                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                  >
-                                    Save
-                                  </button>
-                                  <button
-                                    onClick={toggleEditVForm}
-                                    type="button"
-                                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                  >
-                                    Cancel
-                                  </button>
-                                </div>
+                              </div>
+                              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button
+                                  onClick={handleSubmitUpdate}
+                                  type="button"
+                                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={toggleEditVForm}
+                                  type="button"
+                                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                  Cancel
+                                </button>
                               </div>
                             </div>
                           </div>
-                        )}
+                        </div>
+                      )}
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
 
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">calm video 1</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="text-sm text-gray-500">
-                              video
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onClick={() => toggleEditVForm({ name: ' ', url: '', type: '' })} className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              delete
-                            </a>
-                          </td>
-                        </tr>
-
-                      </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
-            ...
+         
           </div>
 
 
@@ -1794,189 +1513,113 @@ const handleDInputChange = (e) => {
                     <h3 class="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Appointments
                     </h3>
-                    <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                    {/* <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
                       Edit
-                    </button>
+                    </button> */}
                   </div>
 
                   <div className="admin-appointment-table-container container mx-auto px-4 sm:px-6 lg:px-8">
-  {appointments.length === 0 ? (
-    <p>No appointments found</p>
-  ) : (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border-collapse">
-        <thead>
-          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Appointment Id</th>
-            <th className="py-3 px-6 text-left">Appointment Date</th>
-            <th className="py-3 px-6 text-left">Type</th>
-            <th className="py-3 px-6 text-left">Name</th>
-            <th className="py-3 px-6 text-left">Email</th>
-            <th className="py-3 px-6 text-left">Gender</th>
-            <th className="py-3 px-6 text-left">Age</th>
-            <th className="py-3 px-6 text-left">Session Number</th>
-            <th className="py-3 px-6 text-left">Payment Status</th>
-            <th className="py-3 px-6 text-left">Status</th>
-            <th className="py-3 px-6 text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody className="text-gray-600 text-sm font-light">
-          {appointments.map((appointment) => (
-            <tr key={appointment._id} className="border-b border-gray-200 hover:bg-gray-100">
-              <td className="py-3 px-6 text-left whitespace-nowrap">{appointment.appointmentId}</td>
-              <td className="py-3 px-6 text-left whitespace-nowrap">{new Date(appointment.appointmentDate).toLocaleDateString()}</td>
-              <td className="py-3 px-6 text-left">{appointment.type}</td>
-              <td className="py-3 px-6 text-left">{appointment.name || 'N/A'}</td>
-              <td className="py-3 px-6 text-left">{appointment.email || 'N/A'}</td>
-              <td className="py-3 px-6 text-left">{appointment.gender}</td>
-              <td className="py-3 px-6 text-left">{appointment.age}</td>
-              <td className="py-3 px-6 text-left">{appointment.sessionNumber}</td>
-              <td className="py-3 px-6 text-left">{appointment.paymentStatus ? 'Paid' : 'Pending'}</td>
-              <td className="py-3 px-6 text-left">{appointment.status}</td>
-              <td className="py-3 px-6 text-left">
-                {appointment.status === 'Pending' ? (
-                  <>
-                    <button
-                      className="mr-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-                      onClick={() => updateStatus(appointment._id, 'Accepted')}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                      onClick={() => updateStatus(appointment._id, 'Rejected')}
-                    >
-                      Reject 
-                    </button>
-                  </>
-                ) : (
-                  <span>{appointment.status}</span>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )}
-</div>
+                    {appointments.length === 0 ? (
+                      <p>No appointments found</p>
+                    ) : (
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full bg-white border-collapse">
+                          <thead>
+                            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                              <th className="py-3 px-6 text-left">Appointment Id</th>
+                              <th className="py-3 px-6 text-left">Appointment Date</th>
+                              <th className="py-3 px-6 text-left">Type</th>
+                              <th className="py-3 px-6 text-left">Name</th>
+                              <th className="py-3 px-6 text-left">Email</th>
+                              <th className="py-3 px-6 text-left">Gender</th>
+                              <th className="py-3 px-6 text-left">Age</th>
+                              <th className="py-3 px-6 text-left">Session Number</th>
+                              <th className="py-3 px-6 text-left">Payment Status</th>
+                              <th className="py-3 px-6 text-left">Status</th>
+                              <th className="py-3 px-6 text-left">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody className="text-gray-600 text-sm font-light">
+                            {appointments.map((appointment) => (
+                              <tr key={appointment._id} className="border-b border-gray-200 hover:bg-gray-100">
+                                <td className="py-3 px-6 text-left whitespace-nowrap">{appointment.appointmentId}</td>
+                                <td className="py-3 px-6 text-left whitespace-nowrap">{new Date(appointment.appointmentDate).toLocaleDateString()}</td>
+                                <td className="py-3 px-6 text-left">{appointment.type}</td>
+                                <td className="py-3 px-6 text-left">{appointment.name || 'N/A'}</td>
+                                <td className="py-3 px-6 text-left">{appointment.email || 'N/A'}</td>
+                                <td className="py-3 px-6 text-left">{appointment.gender}</td>
+                                <td className="py-3 px-6 text-left">{appointment.age}</td>
+                                <td className="py-3 px-6 text-left">{appointment.sessionNumber}</td>
+                                <td className="py-3 px-6 text-left">{appointment.paymentStatus ? 'Paid' : 'Pending'}</td>
+                                <td className="py-3 px-6 text-left">{appointment.status}</td>
+                                <td className="py-3 px-6 text-left">
+                                  {appointment.status === 'Pending' ? (
+                                    <>
+                                      <button
+                                        className="mr-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                        onClick={() => updateStatus(appointment._id, 'Accepted')}
+                                      >
+                                        Accept
+                                      </button>
+                                      <button
+                                        className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                                        onClick={() => updateStatus(appointment._id, 'Rejected')}
+                                      >
+                                        Reject
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <span>{appointment.status}</span>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
 
-           
-         { activeSection=="messages" && <Chatting activeSection={activeSection} messagesRef={messagesRef} />
-      }
-          
+
+            {activeSection == "messages" && <Chatting activeSection={activeSection} messagesRef={messagesRef} />
+            }
+
 
             <div ref={patientsRef} className={`${activeSection === 'patients' ? 'block' : 'hidden'}`}>
               <div className="w-full px-2 pt-24">
                 <div className="mb-9 rounded-xl py-8 px-7 shadow-lg transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
-
                   <div className="flex justify-between mb-2">
                     <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
                       Patients
                     </h3>
-                    <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                    {/* <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
                       Edit
-                    </button>
+                    </button> */}
                   </div>
 
                   <div className="flex flex-wrap -mx-4">
-                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p className="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
+                    {/* Mapping through the patients array to display each patient */}
+                    {patients.map((patient, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4"
+                      >
+                        {/* Display the first letter of the patient's username */}
+                        <div
+                          className="flex items-center justify-center bg-blue-500 text-white font-bold rounded-full mb-3"
+                          style={{ width: "100px", height: "100px", fontSize: "40px" }}
+                        >
+                          {patient.username.charAt(0).toUpperCase()}
+                        </div>
 
-                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p className="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
-
-
-                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p className="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
-
-                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p className="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
-
-                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p className="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
-
-
-                    <div className="flex flex-col items-center rounded-xl transition-all bg-blue-100 sm:p-2 xl:px-3 shadow-md shadow-gray-500 flex-shrink-0 mx-4 mb-4">
-                      <img
-                        width="150"
-                        src={p1img}
-                        alt="patient1"
-                        className="rounded-full mb-3"
-                      />
-                      <p className="text-base font-medium text-body-color mb-1">
-                        Sankavi
-                      </p>
-                      <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                        See detail
-                      </button>
-                    </div>
-
-
-
+                        <p className="text-base font-medium text-body-color mb-1">
+                          {patient.username}
+                        </p>
+                      </div>
+                    ))}
                   </div>
 
                 </div>
@@ -2022,7 +1665,7 @@ const handleDInputChange = (e) => {
                                 name="docName"
                                 value={editDData?.docName}
                                 // onChange={(e) => setDocName(e.target.value)}
-                                onChange={handleDInputChange} 
+                                onChange={handleDInputChange}
                                 className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                             </div>
@@ -2036,7 +1679,7 @@ const handleDInputChange = (e) => {
                                 name="date"
                                 value={editDData?.date}
                                 // onChange={(e) => setDate(e.target.value)}
-                                onChange={handleDInputChange} 
+                                onChange={handleDInputChange}
                                 className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                             </div>
@@ -2051,14 +1694,14 @@ const handleDInputChange = (e) => {
                                 accept=".pdf,.doc,.docx"
                                 // value={editDData?.docum}
                                 // onChange={handleFileChange}
-                                onChange={handleDInputChange} 
+                                onChange={handleDInputChange}
 
                                 className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                               />
                             </div>
                             <div className="mb-8">
                               <button type="submit"
-                                                              
+
                                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                               >
                                 Save
@@ -2180,21 +1823,21 @@ const handleDInputChange = (e) => {
                                             className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                           />
                                         </div>
-                                       
+
                                         <div className="mb-4">
                                           <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                                          Document
+                                            Document
                                           </label>
                                           <input
-                                           type="file"
-                                           id="docum"
-                                           name="docum"
-                                           accept=".pdf,.doc,.docx"
-                                         
-                                           onChange={handleDInputChange}
+                                            type="file"
+                                            id="docum"
+                                            name="docum"
+                                            accept=".pdf,.doc,.docx"
+
+                                            onChange={handleDInputChange}
                                             className="mt-1 px-3 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                           />
-                                        </div>                     
+                                        </div>
 
                                       </form>
                                     </div>
@@ -2358,6 +2001,7 @@ const handleDInputChange = (e) => {
                                   </button>
 
 
+
                                 </form>
                               </div>
                             </div>
@@ -2427,7 +2071,7 @@ const handleDInputChange = (e) => {
                                   </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                
+
                                   <button onClick={() => handleOpenEditForm(virual)} className="text-indigo-600 hover:text-indigo-900">
                                     Edit
                                   </button>
@@ -2584,7 +2228,7 @@ const handleDInputChange = (e) => {
               </div>
             </div>
 
-                    </div>
+          </div>
 
 
 
